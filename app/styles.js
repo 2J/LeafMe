@@ -3,9 +3,11 @@
 import { StyleSheet } from 'react-native';
 
 const COLORS = {
+    green1: '#ccf6c2',
     green3: '#7eea6c',
     green5: '#00dd00', //Main Theme colour
     green7: '#00b700',
+    green9: '#007f00',
     grey1: '#f8f9fa', //Background behind cards
     grey3: '#d5dde5', 
     grey5: '#aebecd',
