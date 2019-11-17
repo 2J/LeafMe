@@ -13,7 +13,7 @@ import PlantSettings from './PlantSettings/PlantSettings';
 import Metrics from './Metrics/Metrics';
 
 //Style Imports
-import COLORS from './styles';
+import { COLORS } from './styles';
 
 const OverviewStack = createStackNavigator({
   Overview: { 
