@@ -4,6 +4,9 @@ import { Text, View, ScrollView } from 'react-native';
 import { Banner } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+//Component Imports
+import InfoCard from './InfoCard';
+
 //Style Imports
 import { COLORS, CONTAINERS, FONTS } from '../styles';
 
@@ -32,21 +35,36 @@ export default class Overview extends Component {
           </Banner>
 
           <View style={CONTAINERS.main}>
-            <Text style={FONTS.h2}>Plant Status</Text>
-            <Text style={FONTS.h1}>Your plant is doing poorly :( </Text>
+            <Text style={FONTS.h1}>Your plant is great :) </Text>
 
-            <Text style={_.assignIn(FONTS.h4, {paddingTop: 10})}>Plant Conditions </Text>
+            <Text style={FONTS.h4}>Plant Conditions </Text>
             
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{width: 160, height: 160, backgroundColor: 'powderblue'}} />
-              <View style={{width: 160, height: 160, backgroundColor: 'skyblue'}} />
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 20}}>
+              <InfoCard 
+                title='Soil Moisture'
+                iconName='ios-water'
+                status='Wet'
+              />
+              <InfoCard 
+                title='Brightness'
+                iconName='lightbulb-o'
+                status='High'
+              />
             </View> 
 
-            <Text style={_.assignIn(FONTS.h4, {paddingTop: 10})}>Ambient Conditions </Text>
+            <Text style={FONTS.h4}>Ambient Conditions </Text>
             
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{width: 160, height: 160, backgroundColor: 'steelblue'}} />
-              <View style={{width: 160, height: 160, backgroundColor: 'turquoise'}} />
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 20}}>
+              <InfoCard 
+                title='Temperature'
+                iconName='thermometer-3'
+                status='73F'
+              />
+              <InfoCard 
+                title='Humidity'
+                iconName='md-cloud'
+                status='50%'
+              />
             </View>
           </View>
 

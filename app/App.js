@@ -53,10 +53,10 @@ const AccountStack = createStackNavigator({
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Overview: OverviewStack,
-    Metrics: MetricsStack, 
-    PlantSettings: PlantSettingsStack,
-    Account: AccountStack
+    Overview: Overview,
+    Metrics: Metrics, 
+    PlantSettings: PlantSettings,
+    Account: Account
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -73,14 +73,14 @@ const TabNavigator = createBottomTabNavigator(
           iconName = 'wrench';
         }
 
-        return <Icon name={iconName} size={35} color={tintColor} />;
+        return <Icon name={iconName} size={30} color={tintColor} />;
       },
     }),
     tabBarOptions: {
       activeTintColor: COLORS.white,
       inactiveTintColor: COLORS.green3,
-      showLabel: false,
       style: {
+        height: 50,
         backgroundColor: COLORS.green5,
       }
     },
