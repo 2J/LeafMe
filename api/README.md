@@ -1,21 +1,26 @@
 # LeafMe API
 
-## Build
+## Build image
 
 ```
-make build
+$ make build
 ```
 
 ## Run
 
 ```
-./api.bin
+$ make tag
+$ make run
+```
+
+## Push image
+```
+$ make push
 ```
 
 
 ## TODO
 
-- Dockerize
 - Upload docker file to server
 - Models
 - Connect to database

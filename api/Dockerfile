@@ -1,7 +1,16 @@
+# Build binary
+FROM golang:1.13-alpine AS builder
 
-FROM debian:jessie
+RUN apk add --no-cache git
+WORKDIR /go/src/github.com/2J/LeafMe/api/
+COPY . .
+RUN go get
+RUN go build -o /bin/api.bin .
 
-RUN apt-get update && apt-get install -y ca-certificates curl
-RUN mkdir /app
-COPY api.bin /app/api.bin
-CMD ["/app/api.bin"]
+# Run binary
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates curl
+COPY --from=builder /bin/api.bin /bin/api.bin
+
+CMD ["/bin/api.bin"]
