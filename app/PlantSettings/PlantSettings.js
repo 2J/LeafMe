@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Button } from 'react-native';
 import _ from 'lodash';
 
 //Model imports
 import Schedule from '../Models/Schedule';
 import Event from '../Models/Event';
+
+//Component Imports
+import CalendarView from './CalendarView';
+import ListView from './ListView';
 
 export default class PlantSettings extends Component {
   state = {
@@ -15,7 +19,7 @@ export default class PlantSettings extends Component {
   };
 
   async componentDidMount(){
-     let wateringSchedule = await Schedule.getSchedule().then( data => {
+     let scheduleData = await Schedule.getSchedule().then( data => {
       this.setState({
         wateringSchedule: data.watering_schedules, 
         lightingSchedule: data.lighting_schedules
@@ -27,17 +31,33 @@ export default class PlantSettings extends Component {
     });
   }
 
-  render() {
-    let events = []; 
-    _.forEach(this.state.events, event => {
-      events.push(<Text key={event.id}> {JSON.stringify(event)}</Text>);
+  toggleView = () => {
+    this.setState({
+      calendarView: !this.state.calendarView
     });
-    
+  }
+
+  render() {
+    let childView = <View></View>;
+    if(this.state.calendarView) {
+      childView = <CalendarView 
+                    events={this.state.events}>
+                  </CalendarView>
+    } else {
+      childView = <ListView 
+                    wateringSchedule={this.state.wateringSchedule} 
+                    lightingSchedule={this.state.lightingSchedule}>
+                  </ListView>
+    }
+
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView>
-          <Text>Plant Settings!</Text>
-            {events}
+            <Button 
+              title={this.state.calendarView ? 'List View' : 'Calendar View'}
+              onPress={this.toggleView}>
+            </Button>
+            {childView}
         </ScrollView>
       </View>
     );
