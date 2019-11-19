@@ -24,6 +24,7 @@ func NewServer(listenAddress string, httpLogger io.Writer) (server *http.Server,
 func NewRouter() *mux.Router {
 	router := mux.NewRouter()
 
+	router.HandleFunc("/", addDefaultHeaders(IndexGetHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/test", addDefaultHeaders(TestGetHandler)).Methods("GET", "OPTIONS")
 
 	return router
