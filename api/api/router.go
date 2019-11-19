@@ -26,6 +26,7 @@ func NewRouter() *mux.Router {
 
 	router.HandleFunc("/", addDefaultHeaders(IndexGetHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/test", addDefaultHeaders(TestGetHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/test", addDefaultHeaders(TestPostHandler)).Methods("POST", "OPTIONS")
 
 	return router
 }

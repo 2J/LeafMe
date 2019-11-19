@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"github.com/2J/LeafMe/api/models"
+	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -36,6 +37,18 @@ func TestGetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	responseJson, err := json.Marshal(test)
+	if err != nil {
+		writeErrorResponse(w, 500, "125")
+		return
+	}
+	writeJsonResponse(w, 200, responseJson)
+}
+
+func TestPostHandler(w http.ResponseWriter, r *http.Request) {
+	body, _ := ioutil.ReadAll(r.Body)
+	response := "You have posted with the data:\n" + string(body)
+
+	responseJson, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
