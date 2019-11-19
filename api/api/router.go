@@ -29,6 +29,7 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/test", addDefaultHeaders(TestPostHandler)).Methods("POST", "OPTIONS")
 
 	router.HandleFunc("/test_schedules", addDefaultHeaders(TestGetSchedulesHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/test_events", addDefaultHeaders(TestGetEventsHandler)).Methods("GET", "OPTIONS")
 
 	return router
 }

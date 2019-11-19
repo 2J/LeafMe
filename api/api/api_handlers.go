@@ -5,6 +5,7 @@ import (
 	"github.com/2J/LeafMe/api/models"
 	"io/ioutil"
 	"net/http"
+	"sort"
 	"time"
 )
 
@@ -50,7 +51,7 @@ func TestPostHandler(w http.ResponseWriter, r *http.Request) {
 	writeJsonResponse(w, 200, responseJson)
 }
 
-func TestGetSchedulesHandler(w http.ResponseWriter, r *http.Request) {
+func getTestSchedules() ([]models.LightingSchedule, []models.WateringSchedule) {
 	sometime := time.Date(2019, 11, 19, 20, 0, 0, 0, time.UTC)
 
 	lightingSchedules := []models.LightingSchedule{
@@ -103,12 +104,92 @@ func TestGetSchedulesHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
+	return lightingSchedules, wateringSchedules
+}
+
+func TestGetSchedulesHandler(w http.ResponseWriter, r *http.Request) {
+	lightingSchedules, wateringSchedules := getTestSchedules()
 	response := struct {
 		LightingSchedules []models.LightingSchedule `json:"lighting_schedules"`
 		WateringSchedules []models.WateringSchedule `json:"watering_schedules"`
 	}{
 		lightingSchedules,
 		wateringSchedules,
+	}
+
+	responseJson, err := json.Marshal(response)
+	if err != nil {
+		writeErrorResponse(w, 500, "125")
+		return
+	}
+	writeJsonResponse(w, 200, responseJson)
+}
+
+func TestGetEventsHandler(w http.ResponseWriter, r *http.Request) {
+	startTime := time.Date(2019, 11, 18, 20, 0, 0, 0, time.UTC)
+	endTime := time.Date(2020, 5, 18, 20, 0, 0, 0, time.UTC)
+	lightingSchedules, wateringSchedules := getTestSchedules()
+
+	// Generate events based on schedule
+	eventIndex := 1
+	lightingEvents := []models.LightingEvent{}
+	for _, lightingSchedule := range lightingSchedules {
+		currTime := lightingSchedule.Schedule.Time
+		for currTime.Before(endTime) && currTime.Before(lightingSchedule.Schedule.RepeatEndDate) {
+			if currTime.After(startTime) {
+				// Add to slice
+				lightingEvent := models.LightingEvent{
+					ID:                 eventIndex,
+					PlantID:            lightingSchedule.PlantID,
+					LightingScheduleID: lightingSchedule.ID,
+					StartTime:          currTime,
+					Length:             lightingSchedule.Length,
+					Finished:           currTime.Before(time.Now()),
+				}
+				lightingEvents = append(lightingEvents, lightingEvent)
+				eventIndex++
+			}
+			currTime = currTime.Add(time.Hour * 24 * time.Duration(lightingSchedule.Schedule.RepeatDays))
+		}
+	}
+
+	eventIndex = 1
+	wateringEvents := []models.WateringEvent{}
+	for _, wateringSchedule := range wateringSchedules {
+		currTime := wateringSchedule.Schedule.Time
+		for currTime.Before(endTime) && currTime.Before(wateringSchedule.Schedule.RepeatEndDate) {
+			if currTime.After(startTime) {
+				// Add to slice
+				wateringEvent := models.WateringEvent{
+					ID:                 eventIndex,
+					PlantID:            wateringSchedule.PlantID,
+					WateringScheduleID: wateringSchedule.ID,
+					StartTime:          currTime,
+					Amount:             wateringSchedule.Amount,
+					Finished:           currTime.Before(time.Now()),
+				}
+				wateringEvents = append(wateringEvents, wateringEvent)
+				eventIndex++
+			}
+			currTime = currTime.Add(time.Hour * 24 * time.Duration(wateringSchedule.Schedule.RepeatDays))
+		}
+	}
+
+	// Sort events
+	sort.Slice(lightingEvents, func(i, j int) bool {
+		return lightingEvents[i].StartTime.Before(lightingEvents[j].StartTime)
+	})
+
+	sort.Slice(wateringEvents, func(i, j int) bool {
+		return wateringEvents[i].StartTime.Before(wateringEvents[j].StartTime)
+	})
+
+	response := struct {
+		LightingEvents []models.LightingEvent `json:"lighting_events"`
+		WateringEvents []models.WateringEvent `json:"watering_events"`
+	}{
+		lightingEvents,
+		wateringEvents,
 	}
 
 	responseJson, err := json.Marshal(response)

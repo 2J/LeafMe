@@ -25,7 +25,7 @@ type WateringSchedule struct {
 	ID       int      `json:"id" validate:"required"`
 	PlantID  int      `json:"plant_id" validate:"required"`
 	Schedule Schedule `json:"schedule" validate:"required"`
-	Amount   int      `json:"length" validate:"required"`
+	Amount   int      `json:"amount" validate:"required"`
 	Active   bool     `json:"active" validate:"required"`
 }
 
@@ -34,10 +34,8 @@ type LightingEvent struct {
 	ID                 int       `json:"id" validate:"required"`
 	PlantID            int       `json:"plant_id" validate:"required"`
 	LightingScheduleID int       `json:"lighting_schedule_id" validate:"required"`
-	Schedule           Schedule  `json:"schedule" validate:"required"`
-	Length             int       `json:"length" validate:"required"`
 	StartTime          time.Time `json:"start_time"`
-	EndTime            time.Time `json:"end_time"`
+	Length             int       `json:"length" validate:"required"`
 	Finished           bool      `json:"finished"`
 }
 
@@ -46,9 +44,7 @@ type WateringEvent struct {
 	ID                 int       `json:"id" validate:"required"`
 	PlantID            int       `json:"plant_id" validate:"required"`
 	WateringScheduleID int       `json:"watering_schedule_id" validate:"required"`
-	Schedule           Schedule  `json:"schedule" validate:"required"`
-	Amount             int       `json:"amount" validate:"required"`
 	StartTime          time.Time `json:"start_time"`
-	EndTime            time.Time `json:"end_time"`
+	Amount             int       `json:"amount" validate:"required"`
 	Finished           bool      `json:"finished"`
 }
