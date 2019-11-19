@@ -12,9 +12,9 @@ type Schedule struct {
 }
 ```
 
-`Time`: The start time of the schedule
-`RepeatDays`: It should repeat every X days
-`RepeatEndDate`: It should stop repeating at this date
+`Time`: The start time of the schedule  
+`RepeatDays`: It should repeat every X days  
+`RepeatEndDate`: It should stop repeating at this date  
 
 ### LightingSchedule
 
@@ -28,11 +28,11 @@ type LightingSchedule struct {
 }
 ```
 
-`ID`: ID
-`PlantID`: Plant ID
-`Schedule`: Schedule
-`Length`: How long to power the lights in minutes
-`Active`: Whether this schedule is active
+`ID`: ID  
+`PlantID`: Plant ID  
+`Schedule`: Schedule  
+`Length`: How long to power the lights in minutes  
+`Active`: Whether this schedule is active  
 
 ### WateringSchedule
 
@@ -46,11 +46,11 @@ type WateringSchedule struct {
 }
 ```
 
-`ID`: ID
-`PlantID`: Plant ID
-`Schedule`: Schedule
-`Amount`: How much water should be supplied in mL
-`Active`: Whether this schedule is active
+`ID`: ID  
+`PlantID`: Plant ID  
+`Schedule`: Schedule  
+`Amount`: How much water should be supplied in mL  
+`Active`: Whether this schedule is active  
 
 
 ### LightingEvent
@@ -66,12 +66,12 @@ type LightingEvent struct {
 }
 ```
 
-`ID`: ID
-`PlantID`: Plant ID
-`LightingScheduleID`: Which lighting schedule this event was generated from
-`StartTime`: When this event starts
-`Length`: How long lights should be powered in minutes
-`Finished`: Whether this event has been processed
+`ID`: ID  
+`PlantID`: Plant ID  
+`LightingScheduleID`: Which lighting schedule this event was generated from  
+`StartTime`: When this event starts  
+`Length`: How long lights should be powered in minutes  
+`Finished`: Whether this event has been processed  
 
 ### WateringEvent
 
@@ -86,9 +86,9 @@ type WateringEvent struct {
 }
 ```
 
-`ID`: ID
-`PlantID`: Plant ID
-`WateringScheduleID`: Which watering schedule this event was generated from
-`StartTime`: When this event starts
-`Amount`: How much water should be supplied in mL
-`Finished`: Whether this event has been processed
+`ID`: ID  
+`PlantID`: Plant ID  
+`WateringScheduleID`: Which watering schedule this event was generated from  
+`StartTime`: When this event starts  
+`Amount`: How much water should be supplied in mL  
+`Finished`: Whether this event has been processed  
