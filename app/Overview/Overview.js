@@ -8,12 +8,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import InfoCard from './InfoCard';
 
 //Style Imports
-import { COLORS, CONTAINERS, FONTS } from '../styles';
+import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class Overview extends Component {
   state = {
     visible: true,
-    username: "Captain America"
+    username: "Steve Rogers"
   };
   render() {
     return (
@@ -22,15 +22,12 @@ export default class Overview extends Component {
           <Banner 
             visible={this.state.visible}
             actions={[]} //required attribute, but we don't have any buttons in this banner
-              style={{
-                backgroundColor: COLORS.green5, 
-                padding: 5
-              }}
+              style={COMPONENTS.banner}
             icon={({ size }) =>
               <Icon name='ios-sunny' size={80} color={COLORS.yellow} />
             }
           >
-            <Text style={FONTS.banner}>Good Morning, </Text>
+            <Text style={FONTS.banner}>Good morning, </Text>
             <Text style={FONTS.banner}>{this.state.username}.</Text>
           </Banner>
 

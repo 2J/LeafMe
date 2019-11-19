@@ -3,11 +3,11 @@
 import { StyleSheet } from 'react-native';
 
 export const COLORS = {
-    green1: '#ccf6c2',
-    green3: '#7eea6c', //Inactive tab icon
-    green5: '#00dd00', //Main Theme colour
-    green7: '#00b700',
-    green9: '#007f00',
+    green1: '#c9f0c0',
+    green3: '#79da69', //Inactive tab icon
+    green5: '#11C90E', //Main Theme colour
+    green7: '#00a400',
+    green9: '#006d00',
     grey1: '#f8f9fa', //Background behind cards
     grey3: '#d5dde5', 
     grey5: '#aebecd',
@@ -16,6 +16,18 @@ export const COLORS = {
     white: '#ffffff',  
     yellow: '#ffc927', //Warning
     red: '#B71C1C' //Errors
+}
+
+export const COMPONENTS = {
+    banner: {
+        backgroundColor: COLORS.white, 
+        padding: 5,
+        shadowColor: COLORS.grey9, 
+        shadowOffset: {
+            width: 5, 
+            height: 5
+        }
+      }
 }
 
 export const CONTAINERS = {
@@ -27,7 +39,7 @@ export const CONTAINERS = {
         width: 160, 
         height: 160, 
         backgroundColor: COLORS.white,
-        shadowColor: '#000000', 
+        shadowColor: COLORS.grey9, 
         shadowOffset: {
             width: 1, 
             height: 1
@@ -39,7 +51,7 @@ export const CONTAINERS = {
 export const FONTS = {
     banner: {
         fontSize: 36, 
-        color: COLORS.white, 
+        color: COLORS.grey9, 
         fontWeight: 'bold', 
         paddingBottom: 10
     }, 
