@@ -38,7 +38,8 @@ export default class CalendarView extends Component {
 
     let selectedDate = new Date();
     let allEvents = [...lightingEventData, ...wateringEventData];
-
+    
+    //TODO: make finished=true events lighter colour than finished=false 
     return (
       <View style={CONTAINERS.calendar.container}>
         

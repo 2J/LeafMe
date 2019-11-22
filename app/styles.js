@@ -12,20 +12,16 @@ export const COLORS = {
     grey7: '#6e7a8a', //Subheadings
     grey9: '#202833', //Important headings and shadows
     white: '#ffffff',  
-    blue: '#0099ff',
+    blue: '#0099ff', //water event finished = false 
     yellow: '#ffc927', //Warning
     red: '#B71C1C' //Errors
 }
 
 export const COMPONENTS = {
     banner: {
+        height: 150,
         backgroundColor: COLORS.white, 
-        padding: 5,
-        shadowColor: COLORS.grey9, 
-        shadowOffset: {
-            width: 5, 
-            height: 5
-        }
+        padding: 5
       }
 }
 

@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
+import CustomBanner from '../Components/CustomBanner';
 
 export default class Account extends Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Account Settings!</Text>
-      </View>
+      <ScrollView>
+        <CustomBanner 
+          parent='Account Settings'
+          emoji='cat'
+        />
+      </ScrollView>
     );
   }
 }

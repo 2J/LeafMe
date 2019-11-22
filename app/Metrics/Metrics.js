@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Text, View, Dimensions } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
 import { COLORS } from '../styles';
+import CustomBanner from '../Components/CustomBanner';
 
 export default class Metrics extends Component {
   render() {
@@ -26,15 +27,18 @@ export default class Metrics extends Component {
     };
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Metrics!</Text>
+      <ScrollView>
+        <CustomBanner 
+          parent='Metrics'
+          emoji='chart_with_upwards_trend'
+        />
         <LineChart
           data={data}
           width={Dimensions.get("window").width} // from react-native
           height={220}
           chartConfig={chartConfig}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

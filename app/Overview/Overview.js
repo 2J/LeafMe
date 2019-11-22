@@ -1,36 +1,23 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import { Text, View, ScrollView } from 'react-native';
-import { Banner } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 //Component Imports
 import InfoCard from './InfoCard';
+import CustomBanner from '../Components/CustomBanner';
 
 //Style Imports
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class Overview extends Component {
-  state = {
-    visible: true,
-    username: "Steve Rogers"
-  };
   render() {
     return (
-      <View>
         <ScrollView>
-          <Banner 
-            visible={this.state.visible}
-            actions={[]} //required attribute, but we don't have any buttons in this banner
-              style={COMPONENTS.banner}
-            icon={({ size }) =>
-              <Icon name='ios-sunny' size={80} color={COLORS.yellow} />
-            }
-          >
-            <Text style={FONTS.banner}>Good morning, </Text>
-            <Text style={FONTS.banner}>{this.state.username}.</Text>
-          </Banner>
-
+          <CustomBanner 
+            parent='Overview'
+            emoji='sunny'
+          />
+            
           <View style={CONTAINERS.main}>
             <Text style={FONTS.h1}>Your plant is great :) </Text>
 
@@ -66,7 +53,6 @@ export default class Overview extends Component {
           </View>
 
         </ScrollView>
-      </View>
     );
   }
 }

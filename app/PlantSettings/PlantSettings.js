@@ -9,6 +9,7 @@ import Event from '../Models/Event';
 //Component Imports
 import CalendarView from './CalendarView';
 import ListView from './ListView';
+import CustomBanner from '../Components/CustomBanner';
 
 export default class PlantSettings extends Component {
   state = {
@@ -41,7 +42,7 @@ export default class PlantSettings extends Component {
   }
 
   render() {
-    let childView = <View></View>;
+    let childView;
     if(this.state.calendarView) {
       childView = <CalendarView 
                     wateringEvents={this.state.wateringEvents}
@@ -57,16 +58,17 @@ export default class PlantSettings extends Component {
     }
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView>
-          <Text>Plant Settings!</Text>
+          <CustomBanner 
+            parent='Plant Settings'
+            emoji='seedling'
+          />
             <Button 
               title={this.state.calendarView ? 'List View' : 'Calendar View'}
               onPress={this.toggleView}>
             </Button>
             {childView}
         </ScrollView>
-      </View>
     );
   }
 }
