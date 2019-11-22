@@ -1,7 +1,5 @@
 //GLOBAL STYLESHEET
 
-import { StyleSheet } from 'react-native';
-
 export const COLORS = {
     green1: '#c9f0c0',
     green3: '#79da69', //Inactive tab icon
