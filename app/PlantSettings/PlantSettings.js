@@ -14,7 +14,8 @@ export default class PlantSettings extends Component {
   state = {
     wateringSchedule: 'stuff',
     lightingSchedule: 'stuff', 
-    events: 'more stuff', 
+    wateringEvents: 'more stuff', 
+    lightingEvents: 'more stuff',
     calendarView: false
   };
 
@@ -27,7 +28,9 @@ export default class PlantSettings extends Component {
     });
 
     let eventData = await Event.getEvent().then(data => {
-      this.setState({ events: data });
+      this.setState({ 
+        wateringEvents: data.watering_events,
+        lightingEvents: data.lighting_events });
     });
   }
 
@@ -41,18 +44,22 @@ export default class PlantSettings extends Component {
     let childView = <View></View>;
     if(this.state.calendarView) {
       childView = <CalendarView 
-                    events={this.state.events}>
+                    wateringEvents={this.state.wateringEvents}
+                    lightingEvents={this.state.lightingEvents}
+                  >
                   </CalendarView>
     } else {
       childView = <ListView 
                     wateringSchedule={this.state.wateringSchedule} 
-                    lightingSchedule={this.state.lightingSchedule}>
+                    lightingSchedule={this.state.lightingSchedule}
+                  >
                   </ListView>
     }
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView>
+          <Text>Plant Settings!</Text>
             <Button 
               title={this.state.calendarView ? 'List View' : 'Calendar View'}
               onPress={this.toggleView}>

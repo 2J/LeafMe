@@ -2,78 +2,52 @@ import React, {Component} from 'react';
 import { Text, View, StyleSheet, Alert } from 'react-native';
 import _ from 'lodash';
 import WeekView from 'react-native-week-view';
+import moment from 'moment';
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FFF',
-      paddingTop: 22,
-    },
-    headerStyle: {
-      backgroundColor: '#4286f4',
-    },
-  });
+import { COLORS, CONTAINERS } from '../styles';
 
 export default class CalendarView extends Component {
 
   render() {
-   /* const events = [
-        {
-          id: 1,
-          description: 'Event 1',
-          startDate: this.generateDates(0),
-          endDate: this.generateDates(2),
-          color: 'blue',
-        },
-        {
-          id: 2,
-          description: 'Event 2',
-          startDate: this.generateDates(1),
-          endDate: this.generateDates(4),
-          color: 'red',
-        },
-        {
-          id: 3,
-          description: 'Event 3',
-          startDate: this.generateDates(-5),
-          endDate: this.generateDates(-3),
-          color: 'green',
-        },
-      ];*/
 
-    let eventData = []; 
-    _.forEach(this.props.events, event => {
-        let start = new Date(event.start_time);
-        let end = start.setMinutes(start.getMinutes() + event.length);
-        let description;
-        let color;
-
-        if(event['lighting_schedule_id']) {
-            description = 'Lighting Event';
-            color = 'yellow';
-        } else {
-            description = 'Watering Event';
-            color = 'blue';
-        }
-      eventData.push({
-          id: event.id,
-          description: description,
+    let lightingEventData = []; 
+    _.forEach(this.props.lightingEvents, event => {
+      let start = new Date(event.start_time);
+      let end = moment(start).add(event.length, 'minutes').toDate();
+      lightingEventData.push({
+        id: event.id,
+        description: 'Lighting Event',
         startDate: start, 
         endDate: end,
-        color: color
-
+        color: COLORS.yellow
       });
     });
-    selectedDate = new Date();
+
+    let wateringEventData = []; 
+    _.forEach(this.props.wateringEvents, event => {
+      let start = new Date(event.start_time);
+      let end = moment(start).add(60, 'minutes').toDate();
+      wateringEventData.push({
+        id: event.id,
+        description: 'Watering Event',
+        startDate: start, 
+        endDate: end,
+        color: COLORS.blue
+      });
+    });
+
+    let selectedDate = new Date();
+    let allEvents = [...lightingEventData, ...wateringEventData];
 
     return (
-      <View style={styles.container}>
-        <Text>Calendar View!</Text>
+      <View style={CONTAINERS.calendar.container}>
+        
         <WeekView
-          events={eventData}
-          selectedDate={this.selectedDate}
-          numberOfDays={7}
-          headerStyle={styles.headerStyle}
+          events={allEvents}
+          selectedDate={selectedDate}
+          numberOfDays={3}
+          onEventPress={(event) => Alert.alert('eventId:' + JSON.stringify(event.start_time))}
+          headerStyle={CONTAINERS.calendar.headerStyle}
           formatDateHeader="MMM D"
           locale="fr"
         />

@@ -14,6 +14,7 @@ export const COLORS = {
     grey7: '#6e7a8a', //Subheadings
     grey9: '#202833', //Important headings and shadows
     white: '#ffffff',  
+    blue: '#0099ff',
     yellow: '#ffc927', //Warning
     red: '#B71C1C' //Errors
 }
@@ -45,6 +46,18 @@ export const CONTAINERS = {
             height: 1
         }, 
         borderRadius: 10
+    },
+    calendar: {
+        container: {
+          backgroundColor: COLORS.white,
+          paddingTop: 22,
+        },
+        headerStyle: {
+            overflow: 'hidden',
+          backgroundColor: COLORS.green5,
+          position: 'fixed', 
+          top: 0
+        },
     }
 }
 
