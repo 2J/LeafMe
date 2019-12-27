@@ -22,7 +22,13 @@ export const COMPONENTS = {
         height: 150,
         backgroundColor: COLORS.white, 
         padding: 5
-      }
+    },
+    calendarListToggle: {
+        backgroundColor: COLORS.green5,
+        fontWeight: 'bold',
+        right: 0,
+        width: '50%'
+    }
 }
 
 export const CONTAINERS = {
@@ -47,7 +53,7 @@ export const CONTAINERS = {
           paddingTop: 22,
         },
         headerStyle: {
-            overflow: 'hidden',
+          overflow: 'hidden',
           backgroundColor: COLORS.green5,
           position: 'fixed', 
           top: 0

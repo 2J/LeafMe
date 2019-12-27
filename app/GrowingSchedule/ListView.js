@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import { Text, View } from 'react-native';
 import _ from 'lodash';
 
+import ListViewCard from './ListViewCard';
+
+import { COLORS, CONTAINERS } from '../styles';
+
 export default class ListView extends Component {
   render() {
     let watering = []; 
@@ -10,9 +14,12 @@ export default class ListView extends Component {
     });
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={CONTAINERS.main}>
         <Text>List View!</Text>
-        {watering}
+        <ListViewCard
+          items={watering}
+          type='watering'
+        />
       </View>
     );
   }

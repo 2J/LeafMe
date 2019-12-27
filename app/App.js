@@ -9,7 +9,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 //Component Imports
 import Overview from './Overview/Overview';
 import Account from './Account/Account';
-import PlantSettings from './PlantSettings/PlantSettings';
+import GrowingSchedule from './GrowingSchedule/GrowingSchedule';
 import Metrics from './Metrics/Metrics';
 
 //Style Imports
@@ -33,11 +33,11 @@ const MetricsStack = createStackNavigator({
   }
 });
 
-const PlantSettingsStack = createStackNavigator({
-  PlantSettings: {
-    screen: PlantSettings, 
+const GrowingScheduleStack = createStackNavigator({
+  GrowingSchedule: {
+    screen: GrowingSchedule, 
     navigationOptions: ({ navigation }) => ({
-      title: 'Plant Settings'
+      title: 'Growing Schedule'
     })
   }
 });
@@ -55,7 +55,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     Overview: Overview,
     Metrics: Metrics, 
-    PlantSettings: PlantSettings,
+    GrowingSchedule: GrowingSchedule,
     Account: Account
   },
   {
@@ -65,7 +65,7 @@ const TabNavigator = createBottomTabNavigator(
         let iconName;
         if (routeName === 'Overview') {
           iconName = 'home';
-        } else if (routeName === 'PlantSettings') {
+        } else if (routeName === 'GrowingSchedule') {
           iconName = 'seedling';
         } else if (routeName === 'Metrics') {
           iconName = 'chart-line';
