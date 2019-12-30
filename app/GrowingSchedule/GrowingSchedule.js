@@ -17,10 +17,10 @@ import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class GrowingSchedule extends Component {
   state = {
-    wateringSchedule: 'stuff',
-    lightingSchedule: 'stuff', 
-    wateringEvents: 'more stuff', 
-    lightingEvents: 'more stuff',
+    wateringSchedule: ' ',
+    lightingSchedule: ' ', 
+    wateringEvents: ' ', 
+    lightingEvents: ' ',
     plantType: 'Basil',
     calendarView: false
   };
