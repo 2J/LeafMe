@@ -23,7 +23,7 @@ export default class InfoCard extends Component {
     }
 
     return (
-    <Card style={CONTAINERS.overviewCard}>
+    <Card style={CONTAINERS.infoCard}>
       <Card.Content>
         <Text style={_.assignIn(FONTS.h3, {textAlign: 'center'})}>{this.props.title}</Text>
         <View style={{ 

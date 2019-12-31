@@ -23,7 +23,7 @@ export const COMPONENTS = {
         backgroundColor: COLORS.white, 
         padding: 5
     },
-    calendarListToggle: {
+    calendarToggleButton: {
         backgroundColor: COLORS.green5,
         fontWeight: 'bold',
         right: 0,
@@ -36,9 +36,23 @@ export const CONTAINERS = {
         padding: '5%',
         backgroundColor: COLORS.grey1
     }, 
-    overviewCard: {
+    spaceBetween: {
+        flex: 1, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between',
+    },
+    infoCard: {
         width: 160, 
         height: 160, 
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.grey9, 
+        shadowOffset: {
+            width: 1, 
+            height: 1
+        }, 
+        borderRadius: 10
+    },
+    listViewCard: {
         backgroundColor: COLORS.white,
         shadowColor: COLORS.grey9, 
         shadowOffset: {

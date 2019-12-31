@@ -70,11 +70,11 @@ export default class GrowingSchedule extends Component {
           />
           <View  style={CONTAINERS.main}>
             <Text style={FONTS.h1}>Currently Growing: {this.state.plantType}</Text>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={_.merge(FONTS.h2, {paddingBottom: 10, width: '50%'})}>Schedule </Text>
+            <View style={CONTAINERS.spaceBetween}>
+              <Text style={_.assignIn(FONTS.h2, {paddingBottom: 10, width: '50%'})}>Schedule </Text>
               <Button 
                 mode='contained'
-                style={COMPONENTS.calendarListToggle}
+                style={COMPONENTS.calendarToggleButton}
                 onPress={this.toggleView}>
                 {this.state.calendarView ? 'List View' : 'Calendar View'}
               </Button>

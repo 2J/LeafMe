@@ -23,7 +23,7 @@ export default class Overview extends Component {
 
             <Text style={FONTS.h4}>Plant Conditions </Text>
             
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 20}}>
+            <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
               <InfoCard 
                 title='Soil Moisture'
                 iconName='ios-water'
@@ -38,7 +38,7 @@ export default class Overview extends Component {
 
             <Text style={FONTS.h4}>Ambient Conditions </Text>
             
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 20}}>
+            <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
               <InfoCard 
                 title='Temperature'
                 iconName='thermometer-3'

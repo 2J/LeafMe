@@ -10,11 +10,6 @@ import { COLORS, CONTAINERS, FONTS } from '../styles';
 export default class ListView extends Component {
   render() {
     let watering = []; 
-    let wateringEvent = {
-      date: '',
-      time: '',
-      amount: ''
-    }
 
     _.forEach(this.props.wateringSchedule, schedule => {
       if(schedule.active) {
