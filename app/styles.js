@@ -53,8 +53,10 @@ export const CONTAINERS = {
         borderRadius: 10
     },
     listViewCard: {
+        width: '100%',
         backgroundColor: COLORS.white,
         shadowColor: COLORS.grey9, 
+        marginBottom: 10,
         shadowOffset: {
             width: 1, 
             height: 1

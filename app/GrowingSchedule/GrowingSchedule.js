@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Alert, Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import _ from 'lodash';
 
@@ -40,6 +40,53 @@ export default class GrowingSchedule extends Component {
     });
   }
 
+  waterNow = () => { //confirmation message or something probably
+    Alert.alert(
+      'water now',
+      'My Alert Msg',
+      [
+        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+    );
+  }
+
+  addWaterSchedule = () => { //rerender list view so that it shows the schedule that was just added
+    Alert.alert(
+      'Add water schedule',
+      'My Alert Msg',
+      [
+        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
+      ]
+    );
+  }
+
+  turnLightOn = () => { //show confirmation message
+    Alert.alert(
+      'Turn light on',
+      'My Alert Msg',
+      [
+        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
+      ]
+    );
+  }
+
+  addLightingSchedule = () => { //rerender list view so that it shows the schedule that was just added
+    Alert.alert(
+      'Add lighting schedule',
+      'My Alert Msg',
+      [
+        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
+      ]
+    );
+  }
+
   toggleView = () => {
     this.setState({
       calendarView: !this.state.calendarView
@@ -58,6 +105,10 @@ export default class GrowingSchedule extends Component {
       childView = <ListView 
                     wateringSchedule={this.state.wateringSchedule} 
                     lightingSchedule={this.state.lightingSchedule}
+                    waterNow={this.waterNow}
+                    addWaterSchedule={this.addWaterSchedule}
+                    turnLightOn={this.turnLightOn}
+                    addLightingSchedule={this.addLightingSchedule}
                   >
                   </ListView>
     }
@@ -71,7 +122,7 @@ export default class GrowingSchedule extends Component {
           <View  style={CONTAINERS.main}>
             <Text style={FONTS.h1}>Currently Growing: {this.state.plantType}</Text>
             <View style={CONTAINERS.spaceBetween}>
-              <Text style={_.assignIn(FONTS.h2, {paddingBottom: 10, width: '50%'})}>Schedule </Text>
+              <Text style={_.assignIn(FONTS.h2, {paddingBottom: 10, width: '50%'})}>Schedule</Text>
               <Button 
                 mode='contained'
                 style={COMPONENTS.calendarToggleButton}

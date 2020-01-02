@@ -10,17 +10,37 @@ import { COLORS, CONTAINERS, FONTS } from '../styles';
 export default class ListView extends Component {
   render() {
     let watering = []; 
+    let lighting = [];
 
     _.forEach(this.props.wateringSchedule, schedule => {
       if(schedule.active) {
         let start = new Date(schedule.schedule.time);
         let end = new Date(schedule.schedule.repeat_end_date);
         while(start <= end) {
-
+          
+          let formattedAmount = schedule.amount.toString() + ' ml';
           watering.push({
             date: moment(start).format("DD MMM"),
             time: moment(start).format("h:mm a"),
-            amount: schedule.amount
+            amount: formattedAmount
+          });
+
+          start = moment(start).add(schedule.schedule.repeat_days, 'd');
+        }
+      }
+    });
+
+    _.forEach(this.props.lightingSchedule, schedule => {
+      if(schedule.active) {
+        let start = new Date(schedule.schedule.time);
+        let end = new Date(schedule.schedule.repeat_end_date);
+        while(start <= end) {
+          
+          let formattedLength = (schedule.length/60).toString() + "h " + (schedule.length % 60).toString() + "min";
+          lighting.push({
+            date: moment(start).format("DD MMM"),
+            time: moment(start).format("h:mm a"),
+            amount: formattedLength
           });
 
           start = moment(start).add(schedule.schedule.repeat_days, 'd');
@@ -34,7 +54,18 @@ export default class ListView extends Component {
         <ListViewCard
           items={watering}
           iconName='ios-water'
+          message='Your plant needs very wet soil'
           mainButtonName='Water Now'
+          mainButtonFunction={this.props.waterNow}
+          addSchedule={this.props.addWaterSchedule}
+        />
+        <ListViewCard
+          items={lighting}
+          message='Your plant needs a lot of light'
+          iconName='lightbulb-o'
+          mainButtonName='Turn Light On'
+          mainButtonFunction={this.props.turnLightOn}
+          addSchedule={this.props.addLightingSchedule}
         />
       </View>
     );
