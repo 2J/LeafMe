@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { Card } from 'react-native-paper';
 import { Text, View, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 //Component Imports
 import InfoCard from './InfoCard';
@@ -21,7 +23,7 @@ export default class Overview extends Component {
           <View style={CONTAINERS.main}>
             <Text style={FONTS.h1}>Your plant is great :) </Text>
 
-            <Text style={FONTS.h4}>Plant Conditions </Text>
+            <Text style={FONTS.h4}>Plant Conditions</Text>
             
             <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
               <InfoCard 
@@ -36,7 +38,7 @@ export default class Overview extends Component {
               />
             </View> 
 
-            <Text style={FONTS.h4}>Ambient Conditions </Text>
+            <Text style={FONTS.h4}>Ambient Conditions</Text>
             
             <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
               <InfoCard 
@@ -50,6 +52,26 @@ export default class Overview extends Component {
                 status='50%'
               />
             </View>
+
+            <Text style={FONTS.h4}>Water Tank Level</Text>
+
+            <Card style={CONTAINERS.wateringCard}>
+              <Card.Content>
+                <View style={{ 
+                  flexDirection: 'row',
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingTop: '5%'
+                }}> 
+                  <Icon name='ios-beaker' size={100} color={COLORS.green5}/>
+                  <View style={{flexDirection: 'column', textAlign: 'center', width: 225}}>
+                    <Text style={_.assignIn(FONTS.h1, {textAlign: 'center'})}>Good</Text>
+                    <Text style={FONTS.h3}>Refill in approximately 10 days</Text>
+                  </View>
+                </View>
+              </Card.Content>
+            </Card>
+
           </View>
 
         </ScrollView>

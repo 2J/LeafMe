@@ -52,6 +52,27 @@ export const CONTAINERS = {
         }, 
         borderRadius: 10
     },
+    wateringCard: {
+        height: 160, 
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.grey9, 
+        shadowOffset: {
+            width: 1, 
+            height: 1
+        }, 
+        borderRadius: 10
+    },
+    chartCard: {
+        height: 290, 
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.grey9, 
+        shadowOffset: {
+            width: 1, 
+            height: 1
+        }, 
+        borderRadius: 10, 
+        marginBottom: 20
+    },
     listViewCard: {
         width: '100%',
         backgroundColor: COLORS.white,
