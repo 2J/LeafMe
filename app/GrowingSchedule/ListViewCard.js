@@ -84,6 +84,7 @@ export default class ListViewCard extends Component {
           }}>
             <AddScheduleForm
               hide={this.setModalVisible}
+              parent={this.props.iconName}
             />
           </Modal>
 
@@ -99,7 +100,7 @@ export default class ListViewCard extends Component {
               paddingBottom: 15}}>
             <Button 
               mode='text'
-              color={COLORS.green5}
+              color={COLORS.grey5}
               onPress={() => this.viewMore(eventList)}>
               View More
             </Button>
@@ -112,14 +113,20 @@ export default class ListViewCard extends Component {
               onPress={this.props.mainButtonFunction}>
               {this.props.mainButtonName /*water now or turn light on*/}
             </Button>
-            <Button 
-              mode='text'
-              color={COLORS.green5}
-              onPress={() => {
-                this.setModalVisible(true);
-              }}>
-              Add Schedule
-            </Button>
+              <Text               
+                onPress={() => {
+                  this.setModalVisible(true);
+                }}
+                style={{
+                  color: COLORS.green5,
+                  width: 150,
+                  textTransform: 'uppercase',
+                  paddingLeft: 25,
+                  fontWeight: 'bold'
+                }}
+              >
+                Add/Remove Schedules
+              </Text>
           </View>
         </Card.Content>
       </Card>

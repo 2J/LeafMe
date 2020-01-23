@@ -5,9 +5,10 @@ import { StyleSheet, Modal, Text, TouchableHighlight, View, Platform} from 'reac
 import Icon from 'react-native-vector-icons/Ionicons';
 import { default as AwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-material-dropdown';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 import { COLORS, CONTAINERS, COMPONENTS, FONTS } from '../styles';
+import { LIGHTINGLABELS, WATERINGLABELS } from './AddScheduleSelects';
 
 export default class AddScheduleForm extends Component {
   state = {
@@ -27,7 +28,7 @@ export default class AddScheduleForm extends Component {
 
   show = mode => {
     this.setState({
-      show: true,
+      show: !this.state.show,
       mode,
     });
   }
@@ -48,40 +49,69 @@ export default class AddScheduleForm extends Component {
     }, {
       value: 'Pear',
     }];
+
     const { show, date, mode } = this.state;
+
+    let labels;
+    if(this.props.iconName == 'ios-water') {
+      labels = WATERINGLABELS;
+    } else {
+      labels = LIGHTINGLABELS;
+    }
+
     return (
       <Card style={CONTAINERS.listViewCard}>
         <Card.Content>
-          
-          <Button 
+          <View style={CONTAINERS.spaceBetween}>
+            <Button 
             mode='text'
-            color={COLORS.green5}
+            color={COLORS.grey5}
             style={{
-              paddingTop: 50
+              width: '20%'
             }}
             onPress={() => this.props.hide(false)}>
-            Hide Modal 
-          </Button>
+            Close 
+            </Button>
+            <Text style={FONTS.h3}>Current Schedules</Text>
+          </View>
+          <Divider />
+          <Text style={{paddingBottom: 25}}>None</Text> {/* TODO: Add schedule data here if they have them, if not say something like "no schedules added" or something */}
+          
+          <Text style={FONTS.h3}>Add a New Schedule</Text>
+          <Divider />
 
           <Text>Duration to keep lights on</Text>
           <Dropdown
             label='Select a number of hours'
             data={data}
           />
-          <Text>Turn on every ____ days</Text>
+          <Text>Repeat every ____ days</Text>
             <Dropdown
               label='Select a number of days'
               data={data}
             />
 
-          <Button onPress={this.datepicker} title="Show date picker!" />
-          <Button onPress={this.timepicker} title="Show time picker!" />
+          <Button 
+            onPress={this.datepicker}
+            mode='text'
+            color={COLORS.green5}> 
+            Show date picker
+          </Button>
+          <Button 
+            onPress={this.timepicker}
+            mode='text'
+            color={COLORS.green5}> 
+            Show time picker
+          </Button>
 
-          { show && <DateTimePicker value={date}
+          { show && <RNDateTimePicker value={date}
                     mode={mode}
                     is24Hour={true}
-                    display="default"
-                    onChange={this.setDate} />
+                    onChange={this.setDate} 
+                    style={{
+                      color: COLORS.grey9,
+                      backgroundColor: COLORS.grey1
+                    }}/>
           }
         </Card.Content>
       </Card>
