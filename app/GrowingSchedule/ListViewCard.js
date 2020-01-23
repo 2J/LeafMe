@@ -1,17 +1,25 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import { Button, Card, Divider } from 'react-native-paper';
-import { Text, View } from 'react-native';
+import { StyleSheet, Modal, Text, TouchableHighlight, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { default as AwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 
 import { COLORS, CONTAINERS, COMPONENTS, FONTS } from '../styles';
+import AddScheduleForm from './AddScheduleForm';
 
 export default class ListViewCard extends Component {
   state = {
     eventListEnd: 6, //initially the list has 3 elements, the array is from 0 to 2, then add the dividers
-    viewable: true //remove View More button if end of eventList is reached
+    viewable: true, //remove View More button if end of eventList is reached
+    modalVisible: false,
+    count: 0
   }
+
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
+  }
+
 
   viewMore = (eventList) => {
     if(this.state.eventListEnd + 6 > eventList.length ){
@@ -66,6 +74,19 @@ export default class ListViewCard extends Component {
               </Text>
             </View>
           </View>
+          
+          <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+            <AddScheduleForm
+              hide={this.setModalVisible}
+            />
+          </Modal>
+
 
           <Text style={{paddingBottom: 10}}>Upcoming Events</Text>
           { _.slice(eventList, 0, this.state.eventListEnd)}
@@ -94,7 +115,9 @@ export default class ListViewCard extends Component {
             <Button 
               mode='text'
               color={COLORS.green5}
-              onPress={this.props.addSchedule}>
+              onPress={() => {
+                this.setModalVisible(true);
+              }}>
               Add Schedule
             </Button>
           </View>
@@ -103,3 +126,71 @@ export default class ListViewCard extends Component {
     );
   }
 }
+
+/***** MODAL EXAMPLE 
+ *import React, { Component } from 'react';
+import { StyleSheet, Modal, Text, TouchableHighlight, View } from 'react-native';
+
+const styles = StyleSheet.create({
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default class LotsOfStyles extends Component {
+  state = {
+    modalVisible: false,
+    count: 0
+  };
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
+  render() {
+    return (
+      <View style={{marginTop: 22}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                      this.setState({
+      count: this.state.count+1
+    })
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <TouchableHighlight
+          onPress={() => {
+            this.setModalVisible(true);
+          }}>
+          <Text>Show Modal</Text>
+        </TouchableHighlight>
+                  <Text style={[styles.countText]}>
+            { this.state.count !== 0 ? this.state.count: null}
+          </Text>
+      </View>
+    );
+  }
+}
+
+ */
