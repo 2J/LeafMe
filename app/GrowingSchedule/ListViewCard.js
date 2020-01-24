@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import { Button, Card, Divider } from 'react-native-paper';
-import { StyleSheet, Modal, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, Modal, Text, TouchableHighlight, View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { default as AwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 
@@ -64,6 +64,22 @@ export default class ListViewCard extends Component {
 
     return (  
       <Card style={CONTAINERS.listViewCard}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+            <ScrollView>
+                          <AddScheduleForm
+              hide={this.setModalVisible}
+              parent={this.props.iconName}
+              schedules={this.props.fullSchedule}
+            />
+            </ScrollView>
+
+          </Modal>
         <Card.Content>
           <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingTop: '12%'})}> 
             {iconComponent}
@@ -74,20 +90,6 @@ export default class ListViewCard extends Component {
               </Text>
             </View>
           </View>
-          
-          <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-            <AddScheduleForm
-              hide={this.setModalVisible}
-              parent={this.props.iconName}
-            />
-          </Modal>
-
 
           <Text style={{paddingBottom: 10}}>Upcoming Events</Text>
           { _.slice(eventList, 0, this.state.eventListEnd)}
@@ -113,20 +115,20 @@ export default class ListViewCard extends Component {
               onPress={this.props.mainButtonFunction}>
               {this.props.mainButtonName /*water now or turn light on*/}
             </Button>
-              <Text               
-                onPress={() => {
-                  this.setModalVisible(true);
-                }}
-                style={{
-                  color: COLORS.green5,
-                  width: 150,
-                  textTransform: 'uppercase',
-                  paddingLeft: 25,
-                  fontWeight: 'bold'
-                }}
-              >
-                Add/Remove Schedules
-              </Text>
+            <Text               
+              onPress={() => {
+                this.setModalVisible(true);
+              }}
+              style={{
+                color: COLORS.green5,
+                width: 150,
+                textTransform: 'uppercase',
+                paddingLeft: 25,
+                fontWeight: 'bold'
+              }}
+            >
+              Add/Remove Schedules
+            </Text>
           </View>
         </Card.Content>
       </Card>

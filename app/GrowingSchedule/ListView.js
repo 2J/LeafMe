@@ -36,7 +36,7 @@ export default class ListView extends Component {
         let end = new Date(schedule.schedule.repeat_end_date);
         while(start <= end) {
           
-          let formattedLength = (schedule.length/60).toString() + "h " + (schedule.length % 60).toString() + "min";
+          let formattedLength = (schedule.length/60).toString() + " hrs";
           lighting.push({
             date: moment(start).format("DD MMM"),
             time: moment(start).format("h:mm a"),
@@ -58,6 +58,7 @@ export default class ListView extends Component {
           mainButtonName='Water Now'
           mainButtonFunction={this.props.waterNow}
           addSchedule={this.props.addWaterSchedule}
+          fullSchedule={this.props.wateringSchedule}
         />
         <ListViewCard
           items={lighting}
@@ -66,6 +67,7 @@ export default class ListView extends Component {
           mainButtonName='Turn Light On'
           mainButtonFunction={this.props.turnLightOn}
           addSchedule={this.props.addLightingSchedule}
+          fullSchedule={this.props.lightingSchedule}
         />
       </View>
     );
