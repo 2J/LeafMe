@@ -13,63 +13,50 @@ import { LIGHTINGLABELS, WATERINGLABELS } from './AddScheduleSelects';
 
 export default class AddScheduleForm extends Component {
   state = {
-    date: new Date('2020-06-12T14:42:42'),
-    mode: 'date',
-    show: false,
+    startDate: new Date(),
+    endDate: new Date(),
+    showStartDate: false, 
+    showEndDate: false,
+    unitsValue: '',
+    repeatValue:''
   }
 
-  setDate = (event, date) => {
-    date = date || this.state.date;
- 
+  setStartDate = (event, date) => {
+    date = date || this.state.startDate;
     this.setState({
-      show: Platform.OS === 'ios' ? true : false,
-      date,
+      startDate: date,
     });
   }
 
-  show = mode => {
+  setEndDate = (event, date) => {
+    date = date || this.state.startDate;
     this.setState({
-      show: !this.state.show,
-      mode,
+      endDate: date,
     });
   }
- 
-  datepicker = () => {
-    this.show('date');
+
+  showStartDate = () => {
+    this.setState({
+      showStartDate: !this.state.showStartDate
+    });
   }
- 
-  timepicker = () => {
-    this.show('time');
+
+  showEndDate = () => {
+    this.setState({
+      showEndDate: !this.state.showEndDate
+    });
   }
  
   render() {
-    let data = [{
-      value: 'Banana',
-    }, {
-      value: 'Mango',
-    }, {
-      value: 'Pear',
-    }, {
-      value: 'Banana',
-    }, {
-      value: 'Mango',
-    }, {
-      value: 'Pear',
-    }, {
-      value: 'Banana',
-    }, {
-      value: 'Mango',
-    }, {
-      value: 'Pear',
-    }, {
-      value: 'Banana',
-    }, {
-      value: 'Mango',
-    }, {
-      value: 'Pear',
-    }];
 
-    const { show, date, mode } = this.state;
+    const {
+      startDate,
+      endDate,
+      showStartDate, 
+      showEndDate,
+      unitsValue,
+      repeatValue
+    } = this.state;
 
     let labels;
     if(this.props.parent == 'ios-water') {
@@ -91,8 +78,9 @@ export default class AddScheduleForm extends Component {
         } else {
           magnitude = (schedule.length/60).toString() + " hrs";
         }
-      
-        currentSchedules.push(
+        
+      //TODO: add delete button + function to delete, delete should bubble up and render all the children that depend on this value so the thing that was just deleted doesn't show anymore
+        currentSchedules.push( 
           <View style={{padding: 10}}>
             <Text>Starts On: {moment(start).format("DD MMM")}</Text>
             <Text>Start Time: {moment(start).format("h:mm a")}</Text>
@@ -135,45 +123,90 @@ export default class AddScheduleForm extends Component {
             }}>
               Current Schedules
           </Text>
-          {/*<Text style={{paddingBottom: 25}}>None</Text>  TODO: Add schedule data here if they have them, if not say something like "no schedules added" or something */}
           
           {currentSchedules}
           
           <View style={{paddingBottom: 15}}></View>
           <Text style={FONTS.h3}>Add a New Schedule</Text>
-          <Divider />
+          <Divider style={{marginBottom: 15, marginTop: 5}}/>
 
-          <Text>Duration to keep lights on</Text>
+          <Text style={{paddingBottom: 5}}>Duration to keep lights on</Text>
           <Dropdown
             label='Select a number of hours'
-            data={data}
+            data={labels.unitsData}
+            containerStyle={{
+              backgroundColor: COLORS.grey1,
+              borderRadius: 5, 
+              marginBottom: 10
+            }}
+            dropdownOffset = {{
+              top: 10
+            }}
+            rippleOpacity={0}
+            baseColor={COLORS.grey7}
+            fontSize={14}
           />
-          <Text>Repeat every ____ days</Text>
+          <Text style={{paddingBottom: 5}}>Repeat every ____ days</Text>
             <Dropdown
               label='Select a number of days'
-              data={data}
+              data={labels.repeatData}
+              containerStyle={{
+                backgroundColor: COLORS.grey1,
+                borderRadius: 5,
+                marginBottom: 10
+              }}
+              dropdownOffset = {{
+                top: 10, 
+                left: 0
+              }}
+              rippleOpacity={0}
+              baseColor={COLORS.grey7}
+              fontSize={14}
             />
 
-          <Button 
-            onPress={this.datepicker}
-            mode='text'
-            color={COLORS.green5}> 
-            Show date picker
-          </Button>
-          <Button 
-            onPress={this.timepicker}
-            mode='text'
-            color={COLORS.green5}> 
-            Show time picker
-          </Button>
-
-          { show && <RNDateTimePicker value={date}
-                    mode={mode}
+          <Text style={{paddingBottom: 5}}>{labels.startSelect}</Text>
+          <TouchableHighlight
+            onPress={this.showStartDate}
+            style={{
+              backgroundColor: COLORS.grey1,
+              borderRadius: 5,
+              padding: 10,
+              marginBottom: 10
+            }}
+          >
+          <Text style={{color: COLORS.grey7}}>{moment(startDate).format("DD MMM YYYY h:mm a")}</Text>
+          </TouchableHighlight>
+          { showStartDate && <RNDateTimePicker value={startDate}
+                    mode="datetime"
                     is24Hour={true}
-                    onChange={this.setDate} 
+                    onChange={this.setStartDate} 
                     style={{
                       color: COLORS.grey9,
-                      backgroundColor: COLORS.grey9
+                      backgroundColor: COLORS.grey9, 
+                      marginBottom: 10
+                    }}/>
+          }
+
+          <Text style={{paddingBottom: 5}}>{labels.endSelect}</Text>
+          <TouchableHighlight
+            onPress={this.showEndDate}
+            style={{
+              backgroundColor: COLORS.grey1,
+              borderRadius: 5,
+              padding: 10,
+              marginBottom: 10
+            }}
+          >
+            <Text style={{color: COLORS.grey7}}>{moment(endDate).format("DD MMM YYYY")}</Text>
+          </TouchableHighlight>
+          { showEndDate && <RNDateTimePicker value={endDate}
+                    mode="date"
+                    is24Hour={true}
+                    onChange={this.setEndDate} 
+                    style={{
+                      color: COLORS.grey9,
+                      backgroundColor: COLORS.grey9, 
+                      marginBottom: 10
                     }}/>
           }
         </Card.Content>

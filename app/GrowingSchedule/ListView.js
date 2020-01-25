@@ -49,7 +49,7 @@ export default class ListView extends Component {
     });
 
     return (
-      <View style={CONTAINERS.main}>
+      <View>
         <Text style={FONTS.h4}>Watering Schedule</Text>
         <ListViewCard
           items={watering}
