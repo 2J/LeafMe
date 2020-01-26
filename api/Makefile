@@ -9,7 +9,15 @@ tag:
 	docker tag $(IMAGE_NAME):$(TAG_NAME) $(IMAGE_CLOUD_NAME):$(TAG_NAME)
 
 run:
-	docker run --rm -p 8000:8000 $(IMAGE_CLOUD_NAME):$(TAG_NAME)
+	docker run --rm -p 8000:8000 --name=leafmeapi --network=leafme $(IMAGE_CLOUD_NAME):$(TAG_NAME)
+
+rundb:
+	docker run -d --restart always \
+	--name mysql \
+	--network=leafme \
+	-e MYSQL_ROOT_PASSWORD=1mLJZrSRAfUV10Wi7io \
+	-p 3306:3306 \
+	mysql:5
 
 push: build tag
 	docker push $(IMAGE_CLOUD_NAME):$(TAG_NAME)
