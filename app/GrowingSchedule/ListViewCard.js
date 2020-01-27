@@ -72,11 +72,12 @@ export default class ListViewCard extends Component {
             Alert.alert('Modal has been closed.');
           }}>
             <ScrollView>
-                          <AddScheduleForm
-              hide={this.setModalVisible}
-              parent={this.props.iconName}
-              schedules={this.props.fullSchedule}
-            />
+              <AddScheduleForm
+                hide={this.setModalVisible}
+                parent={this.props.iconName}
+                schedules={this.props.fullSchedule}
+                addSchedule={this.props.addSchedule}
+              />
             </ScrollView>
 
           </Modal>

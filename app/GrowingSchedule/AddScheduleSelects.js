@@ -11,7 +11,7 @@ export const LIGHTINGLABELS = {
   unitLabel: "Duration",
   units: "hrs",
   unitsSelect: 'Duration to keep lights on',
-  unitsPlaceholder: "Number of hours",
+  unitsPlaceholder: "Select the number of hours",
   unitsData: [{
     value: 1,
   }, {
@@ -62,7 +62,7 @@ export const LIGHTINGLABELS = {
     value: 24,
   }], //TODO: does it make sense to leave the light on for 24 hours a day 
   repeatSelect: "Turn light on every ____ days",
-  repeatPlaceholder: "Number of days",
+  repeatPlaceholder: 'Select the number of days',
   repeatData: [{
     value: 1,
   }, {

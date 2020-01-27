@@ -28,6 +28,22 @@ export const COMPONENTS = {
         fontWeight: 'bold',
         right: 0,
         width: '50%'
+    }, 
+    dropdown: {
+        backgroundColor: COLORS.grey1,
+        borderRadius: 5,
+        marginBottom: 10
+    }, 
+    datepickerButton: { //touchable highlight that opens the datepicker
+        backgroundColor: COLORS.grey1,
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10
+    }, 
+    datepicker: { //the actual datepicker
+        color: COLORS.grey9,
+        backgroundColor: COLORS.grey9, 
+        marginBottom: 10          
     }
 }
 

@@ -46,9 +46,20 @@ export default class AddScheduleForm extends Component {
       showEndDate: !this.state.showEndDate
     });
   }
+
+  setUnits = (text) => {
+    this.setState({
+      unitsValue: text
+    })
+  }
+
+  setRepeat = (text) => {
+    this.setState({
+      repeatValue: text
+    })
+  }
  
   render() {
-
     const {
       startDate,
       endDate,
@@ -130,31 +141,28 @@ export default class AddScheduleForm extends Component {
           <Text style={FONTS.h3}>Add a New Schedule</Text>
           <Divider style={{marginBottom: 15, marginTop: 5}}/>
 
-          <Text style={{paddingBottom: 5}}>Duration to keep lights on</Text>
+          <Text style={{paddingBottom: 5}}>{labels.unitsSelect}</Text>
           <Dropdown
-            label='Select a number of hours'
+            label={labels.unitsPlaceholder}
             data={labels.unitsData}
-            containerStyle={{
-              backgroundColor: COLORS.grey1,
-              borderRadius: 5, 
-              marginBottom: 10
-            }}
+            value={unitsValue}
+            containerStyle={COMPONENTS.dropdown}
             dropdownOffset = {{
-              top: 10
+              top: 10, 
+              left: 0
             }}
             rippleOpacity={0}
             baseColor={COLORS.grey7}
             fontSize={14}
+            onChangeText={this.setUnits}
           />
-          <Text style={{paddingBottom: 5}}>Repeat every ____ days</Text>
+
+          <Text style={{paddingBottom: 5}}>{labels.repeatSelect}</Text>
             <Dropdown
-              label='Select a number of days'
+              label={labels.repeatPlaceholder}
               data={labels.repeatData}
-              containerStyle={{
-                backgroundColor: COLORS.grey1,
-                borderRadius: 5,
-                marginBottom: 10
-              }}
+              value={repeatValue}
+              containerStyle={COMPONENTS.dropdown}
               dropdownOffset = {{
                 top: 10, 
                 left: 0
@@ -162,17 +170,14 @@ export default class AddScheduleForm extends Component {
               rippleOpacity={0}
               baseColor={COLORS.grey7}
               fontSize={14}
+              onChangeText={this.setRepeat}
             />
+            <Text style={{paddingBottom: 5}}>Days</Text>
 
           <Text style={{paddingBottom: 5}}>{labels.startSelect}</Text>
           <TouchableHighlight
             onPress={this.showStartDate}
-            style={{
-              backgroundColor: COLORS.grey1,
-              borderRadius: 5,
-              padding: 10,
-              marginBottom: 10
-            }}
+            style={COMPONENTS.datepickerButton}
           >
           <Text style={{color: COLORS.grey7}}>{moment(startDate).format("DD MMM YYYY h:mm a")}</Text>
           </TouchableHighlight>
@@ -180,22 +185,13 @@ export default class AddScheduleForm extends Component {
                     mode="datetime"
                     is24Hour={true}
                     onChange={this.setStartDate} 
-                    style={{
-                      color: COLORS.grey9,
-                      backgroundColor: COLORS.grey9, 
-                      marginBottom: 10
-                    }}/>
+                    style={COMPONENTS.datepicker}/>
           }
 
           <Text style={{paddingBottom: 5}}>{labels.endSelect}</Text>
           <TouchableHighlight
             onPress={this.showEndDate}
-            style={{
-              backgroundColor: COLORS.grey1,
-              borderRadius: 5,
-              padding: 10,
-              marginBottom: 10
-            }}
+            style={COMPONENTS.datepickerButton}
           >
             <Text style={{color: COLORS.grey7}}>{moment(endDate).format("DD MMM YYYY")}</Text>
           </TouchableHighlight>
@@ -203,12 +199,22 @@ export default class AddScheduleForm extends Component {
                     mode="date"
                     is24Hour={true}
                     onChange={this.setEndDate} 
-                    style={{
-                      color: COLORS.grey9,
-                      backgroundColor: COLORS.grey9, 
-                      marginBottom: 10
-                    }}/>
+                    style={COMPONENTS.datepicker}/>
           }
+          <Button 
+            mode='contained'
+            color={COLORS.green5}
+            onPress={() => this.props.addSchedule(this.state)}
+            style={{
+              marginBottom: 10, 
+              marginTop: 10,
+              marginLeft: 170,
+              width: 160,
+            }}
+          >
+            Save Schedule
+          </Button>
+
         </Card.Content>
       </Card>
     )

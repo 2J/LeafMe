@@ -57,14 +57,18 @@ export default class GrowingSchedule extends Component {
     );
   }
 
-  addWaterSchedule = () => { //rerender list view so that it shows the schedule that was just added
-    Alert.alert(
-      'Add water schedule',
-      'My Alert Msg',
-      [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
-      ]
-    );
+  addWaterSchedule = (schedule) => { //rerender list view so that it shows the schedule that was just added
+    let save = {
+      schedule: {
+        time: schedule.startDate, 
+        repeat_days: schedule.repeatValue,
+        repeat_end_date: schedule.endDate
+      }, 
+      amount: schedule.unitsValue,
+      active: true
+    };
+
+    console.log(save)
   }
 
   turnLightOn = () => { //show confirmation message
@@ -77,14 +81,18 @@ export default class GrowingSchedule extends Component {
     );
   }
 
-  addLightingSchedule = () => { //rerender list view so that it shows the schedule that was just added
-    Alert.alert(
-      'Add lighting schedule',
-      'My Alert Msg',
-      [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
-      ]
-    );
+  addLightingSchedule = (schedule) => { //rerender list view so that it shows the schedule that was just added
+    let save = {
+      schedule: {
+        time: schedule.startDate, 
+        repeat_days: schedule.repeatValue,
+        repeat_end_date: schedule.endDate
+      }, 
+      length: schedule.unitsValue*60,
+      active: true
+    };
+
+    console.log(save)
   }
 
   toggleView = () => {
