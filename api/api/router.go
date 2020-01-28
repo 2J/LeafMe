@@ -26,7 +26,7 @@ func NewRouter() *mux.Router {
 
 	router.HandleFunc("/", addDefaultHeaders(IndexGetHandler)).Methods("GET", "OPTIONS")
 
-	// Schedule Handler
+	// Schedule handlers
 	router.HandleFunc("/plant/{plantId}/schedules", addDefaultHeaders(GetSchedulesByPlantIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/light/{scheduleId}", addDefaultHeaders(GetLightingScheduleByIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/water/{scheduleId}", addDefaultHeaders(GetWateringScheduleByIdHandler)).Methods("GET", "OPTIONS")
@@ -34,6 +34,10 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/plant/{plantId}/schedules/water/create", addDefaultHeaders(CreateWateringScheduleHandler)).Methods("POST", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/light/delete/{scheduleId}", addDefaultHeaders(DeleteLightingScheduleHandler)).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/water/delete/{scheduleId}", addDefaultHeaders(DeleteWateringScheduleHandler)).Methods("DELETE", "OPTIONS")
+
+	// Sensor handlers
+	router.HandleFunc("/plant/{plantId}/sensors", addDefaultHeaders(GetLatestSensorReadings)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/sensors/history/{type}", addDefaultHeaders(GetLatestSensorReadingsForType)).Methods("GET", "OPTIONS")
 
 	return router
 }
