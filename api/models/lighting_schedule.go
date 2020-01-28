@@ -18,9 +18,7 @@ type LightingSchedule struct {
 	Active   bool     `json:"active" validate:"required"`
 }
 
-func (lightingSchedule *LightingSchedule) Validate() error {
-	var err error
-	// TODO
+func (lightingSchedule *LightingSchedule) Validate() (err error) {
 	return err
 }
 

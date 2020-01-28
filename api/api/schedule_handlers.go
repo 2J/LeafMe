@@ -81,3 +81,49 @@ func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 
 	writeJsonResponse(w, 200, []byte(""))
 }
+
+func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
+	body, _ := ioutil.ReadAll(r.Body)
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+
+	wateringSchedule := models.WateringSchedule{}
+	json.Unmarshal(body, &wateringSchedule)
+
+	wateringSchedule.PlantID = plantID
+
+	// TODO: Validate
+
+	response := struct {
+		Success bool `json:"success"`
+		Id      int  `json:"id"`
+	}{
+		false,
+		0,
+	}
+	responseJson, _ := json.Marshal(response)
+
+	var err error
+	response.Id, err = wateringSchedule.Create()
+
+	if err != nil {
+		writeJsonResponse(w, 500, responseJson)
+		return
+	}
+
+	response.Success = true
+	responseJson, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJson)
+}
+
+func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+
+	err := models.DeleteWateringSchedule(scheduleID)
+
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed delete: "+err.Error())
+		return
+	}
+
+	writeJsonResponse(w, 200, []byte(""))
+}
