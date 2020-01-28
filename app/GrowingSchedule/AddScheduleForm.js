@@ -88,6 +88,7 @@ export default class AddScheduleForm extends Component {
     let currentSchedules = [];
     _.forEach(this.props.schedules, schedule => {
       if(schedule.active) {
+        console.log(schedule);
         currentSchedules.push(<Divider />);
         let start = new Date(schedule.schedule.time);
         let end = new Date(schedule.schedule.repeat_end_date);
@@ -112,6 +113,7 @@ export default class AddScheduleForm extends Component {
               <Text>Starts On: {moment(start).format("DD MMM")}</Text>
               <Text>Start Time: {moment(start).format("h:mm a")}</Text>
               <Text>Ends On: {moment(end).format("DD MMM")}</Text>
+              <Text>Repeats Every: {schedule.schedule.repeat_days} days</Text>
               <Text>{labels.unitLabel}: {magnitude}</Text>
             </View>
 

@@ -15,7 +15,14 @@ export default class ListView extends Component {
     _.forEach(this.props.wateringSchedule, schedule => {
       if(schedule.active) {
         let start = new Date(schedule.schedule.time);
-        let end = new Date(schedule.schedule.repeat_end_date);
+        let end;
+        
+        if (!schedule.schedule.repeat_end_date) {
+          end = moment(start).add(30, 'd');
+        } else {
+          end = new Date(schedule.schedule.repeat_end_date);
+        }
+
         while(start <= end) {
           
           let formattedAmount = schedule.amount.toString() + ' ml';
@@ -33,7 +40,14 @@ export default class ListView extends Component {
     _.forEach(this.props.lightingSchedule, schedule => {
       if(schedule.active) {
         let start = new Date(schedule.schedule.time);
-        let end = new Date(schedule.schedule.repeat_end_date);
+        let end;
+        
+        if (!schedule.schedule.repeat_end_date) {
+          end = moment(start).add(30, 'd');
+        } else {
+          end = new Date(schedule.schedule.repeat_end_date);
+        }
+        
         while(start <= end) {
           
           let formattedLength = (schedule.length/60).toString() + " hrs";

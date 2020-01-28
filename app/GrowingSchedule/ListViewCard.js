@@ -64,6 +64,12 @@ export default class ListViewCard extends Component {
         );
     });
 
+    if(eventList.length === 0) {
+      eventList.push(
+        <Text style={{textAlign: 'center', paddingBottom: 15}}>No events to show.</Text>
+      );
+    }
+
     return (  
       <Card style={CONTAINERS.listViewCard}>
         <Modal
@@ -139,71 +145,3 @@ export default class ListViewCard extends Component {
     );
   }
 }
-
-/***** MODAL EXAMPLE 
- *import React, { Component } from 'react';
-import { StyleSheet, Modal, Text, TouchableHighlight, View } from 'react-native';
-
-const styles = StyleSheet.create({
-  bigBlue: {
-    color: 'blue',
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-  red: {
-    color: 'red',
-  },
-});
-
-export default class LotsOfStyles extends Component {
-  state = {
-    modalVisible: false,
-    count: 0
-  };
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
-  render() {
-    return (
-      <View style={{marginTop: 22}}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                      this.setState({
-      count: this.state.count+1
-    })
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
-                  <Text style={[styles.countText]}>
-            { this.state.count !== 0 ? this.state.count: null}
-          </Text>
-      </View>
-    );
-  }
-}
-
- */

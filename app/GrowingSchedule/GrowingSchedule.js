@@ -25,8 +25,8 @@ export default class GrowingSchedule extends Component {
     calendarView: false
   };
 
-  async componentDidMount(){
-     let scheduleData = await Schedule.getSchedule().then( data => {
+  getSchedules = async () => {
+    let scheduleData = await Schedule.getSchedule().then( data => {
       this.setState({
         wateringSchedule: data.watering_schedules, 
         lightingSchedule: data.lighting_schedules
@@ -38,6 +38,10 @@ export default class GrowingSchedule extends Component {
         wateringEvents: data.watering_events,
         lightingEvents: data.lighting_events });
     });
+  }
+
+  async componentDidMount(){
+    await this.getSchedules();
   }
 
   waterNow = () => { //confirmation message or something probably
@@ -57,28 +61,43 @@ export default class GrowingSchedule extends Component {
     );
   }
 
-  addWaterSchedule = (schedule) => { //rerender list view so that it shows the schedule that was just added
+  addWaterSchedule  = async (schedule) => { //rerender list view so that it shows the schedule that was just added
     let save = {
       schedule: {
         time: schedule.startDate, 
         repeat_days: schedule.repeatValue,
         repeat_end_date: schedule.endDate
       }, 
-      amount: schedule.unitsValue,
-      active: true
+      amount: schedule.unitsValue
     };
 
-    console.log(save);
-    Alert.alert(
-      'Watering Schedule added successfully'
-    );
+    await Schedule.createWaterSchedule(save).then( data => {
+      Alert.alert(
+        'Watering Schedule added successfully'
+      );
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error adding watering schedule: ' + error
+      );
+    });
+    
+    await this.getSchedules();
   }
 
-  deleteWateringSchedule = (scheduleId) => {
-    Alert.alert(
-      'Watering Schedule deleted successfully'
-    );
-    console.log(scheduleId);
+  deleteWateringSchedule = async (scheduleId) => {
+    await Schedule.deleteWaterSchedule(scheduleId).then( data => {
+      Alert.alert(
+        'Watering Schedule deleted successfully'
+      );
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error deleting watering schedule: ' + error
+      );
+    });
+
+    await this.getSchedules();
   }
 
   turnLightOn = () => { //show confirmation message
@@ -91,28 +110,43 @@ export default class GrowingSchedule extends Component {
     );
   }
 
-  addLightingSchedule = (schedule) => { //rerender list view so that it shows the schedule that was just added
+  addLightingSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
     let save = {
       schedule: {
         time: schedule.startDate, 
         repeat_days: schedule.repeatValue,
         repeat_end_date: schedule.endDate
       }, 
-      length: schedule.unitsValue*60,
-      active: true
+      length: schedule.unitsValue*60
     };
 
-    console.log(save);
-    Alert.alert(
-      'Lighting Schedule added successfully'
-    );
+    await Schedule.createLightingSchedule(save).then( data => {
+      Alert.alert(
+        'Watering Schedule added successfully'
+      );
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error adding watering schedule: ' + error
+      );
+    });
+    
+    await this.getSchedules();
   }
 
-  deleteLightingSchedule = (scheduleId) => {
-    Alert.alert(
-      'Lighting Schedule deleted successfully'
-    );
-    console.log(scheduleId);
+  deleteLightingSchedule = async (scheduleId) => {
+    await Schedule.deleteLightingSchedule(scheduleId).then( data => {
+      Alert.alert(
+        'Watering Schedule deleted successfully'
+      );
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error deleting watering schedule: ' + error
+      );
+    });
+
+    await this.getSchedules();
   }
 
   toggleView = () => {
