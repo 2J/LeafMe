@@ -110,17 +110,17 @@ DELETE https://leafme.jj.ai/plant/{plantId}/schedules/water/delete/{scheduleId}
 ### Get stats for dashboard
 
 ```
-GET localhost:8000/plant/{plantId}/sensors
+GET https://leafme.jj.ai/plant/{plantId}/sensors
 - plantId: int
 ```
 
 ### Get history for a type of sensor
 
 ```
-GET localhost:8000/plant/1/sensors/history/SOIL_MOISTURE
-GET localhost:8000/plant/1/sensors/history/BRIGHTNESS
-GET localhost:8000/plant/1/sensors/history/AMBIENT_TEMPERATURE
-GET localhost:8000/plant/1/sensors/history/AMBIENT_HUMIDITY
+GET https://leafme.jj.ai/plant/1/sensors/history/SOIL_MOISTURE
+GET https://leafme.jj.ai/plant/1/sensors/history/BRIGHTNESS
+GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_TEMPERATURE
+GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_HUMIDITY
 ```
 
 NOTE: In progress, currently retrieves all data for type. Will be changed to only show requested history using start and end times. 
