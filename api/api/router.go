@@ -29,6 +29,7 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/test", addDefaultHeaders(TestPostHandler)).Methods("POST", "OPTIONS")
 
 	router.HandleFunc("/plant/{plantId}/schedules", addDefaultHeaders(GetSchedulesByPlantIdHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/schedules/light/create", addDefaultHeaders(CreateLightingScheduleHandler)).Methods("POST", "OPTIONS")
 
 	return router
 }

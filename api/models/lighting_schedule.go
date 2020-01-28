@@ -25,11 +25,6 @@ func (lightingSchedule *LightingSchedule) Validate() error {
 	return err
 }
 
-func (lightingSchedule *LightingSchedule) Create() error {
-	// TODO
-	return nil
-}
-
 func (lightingSchedule *LightingSchedule) Get(filter string) error {
 	query := db.Query("SELECT * FROM lightingSchedules")
 	query += " " + filter
@@ -37,6 +32,33 @@ func (lightingSchedule *LightingSchedule) Get(filter string) error {
 	return nil
 }
 */
+
+func (lightingSchedule *LightingSchedule) Create() (int, error) {
+	db := database.Open()
+	defer database.Close(db)
+
+	insForm, err := db.Prepare("INSERT INTO lightingSchedules (`plantId`, `time`, `length`, `repeatDays`, `repeatEndDate`, `active`) VALUES (?,?,?,?,?,?)")
+	if err != nil {
+		return 0, err
+	}
+
+	res, err := insForm.Exec(
+		lightingSchedule.PlantID,
+		lightingSchedule.Schedule.Time,
+		lightingSchedule.Length,
+		lightingSchedule.Schedule.RepeatDays,
+		lightingSchedule.Schedule.RepeatEndDate,
+		true,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	id, err := res.LastInsertId()
+
+	return int(id), err
+}
 
 func (lightingSchedule *LightingSchedule) getRow(rows *sql.Rows) error {
 	lightingSchedule.Schedule = Schedule{}
@@ -56,7 +78,7 @@ func (lightingSchedule *LightingSchedule) getRow(rows *sql.Rows) error {
 
 func (lightingSchedule *LightingSchedule) GetById(id int) error {
 	db := database.Open()
-	defer db.Close()
+	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM lightingSchedules WHERE id = ?", id)
 	if err != nil {
 		return err
@@ -78,7 +100,7 @@ func GetLightingSchedulesByPlantId(plantId int) ([]LightingSchedule, error) {
 	res := []LightingSchedule{}
 
 	db := database.Open()
-	defer db.Close()
+	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM lightingSchedules WHERE plantId = ?", plantId)
 	if err != nil {
 		return res, err
