@@ -8,6 +8,46 @@ import (
 	"strconv"
 )
 
+func GetLightingScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
+	//plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+
+	lightingSchedule := models.LightingSchedule{}
+	err := lightingSchedule.GetById(scheduleId)
+
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
+		return
+	}
+
+	responseJson, err := json.Marshal(lightingSchedule)
+	if err != nil {
+		writeErrorResponse(w, 500, "125")
+		return
+	}
+	writeJsonResponse(w, 200, responseJson)
+}
+
+func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
+	//plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+
+	wateringSchedule := models.WateringSchedule{}
+	err := wateringSchedule.GetById(scheduleId)
+
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
+		return
+	}
+
+	responseJson, err := json.Marshal(wateringSchedule)
+	if err != nil {
+		writeErrorResponse(w, 500, "125")
+		return
+	}
+	writeJsonResponse(w, 200, responseJson)
+}
+
 func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
 
