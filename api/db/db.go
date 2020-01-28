@@ -8,7 +8,7 @@ import (
 // Open : Opens DB conection
 func Open() *sql.DB {
 	username := "root"
-	password := "PASSWORD_PLACEHOLDER"
+	password := "MssMt87Tcnka4tN"
 	protocol := "tcp"
 	address := "mysql"
 	port := "3306"
