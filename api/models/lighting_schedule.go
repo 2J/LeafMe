@@ -7,8 +7,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var dbfields = "`id`, `plantId`, `time`, `length`, `repeatDays`, `repeatEndDate`, `active`"
-
 // LightingSchedule TODO
 type LightingSchedule struct {
 	ID       int      `json:"id" validate:"required"`
