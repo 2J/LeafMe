@@ -54,7 +54,9 @@ export default class ListViewCard extends Component {
           justifyContent: 'space-between',
           paddingTop: 10, 
           paddingBottom: 10
-        }}>
+        }}
+        key={event.id}
+        >
           <Text style={{fontWeight: 'bold'}}>{event.date}</Text>     
           <Text>{event.time}</Text>
           <Text>{event.amount}</Text>
@@ -77,6 +79,7 @@ export default class ListViewCard extends Component {
                 parent={this.props.iconName}
                 schedules={this.props.fullSchedule}
                 addSchedule={this.props.addSchedule}
+                deleteSchedule={this.props.deleteSchedule}
               />
             </ScrollView>
 

@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import { Button, Card, Divider } from 'react-native-paper';
-import { StyleSheet, Modal, Text, TouchableHighlight, View, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { default as AwesomeIcon } from 'react-native-vector-icons/FontAwesome';
+import { Text, TouchableHighlight, View } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Dropdown } from 'react-native-material-dropdown';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
@@ -58,6 +57,16 @@ export default class AddScheduleForm extends Component {
       repeatValue: text
     })
   }
+
+  saveSchedule = () => {
+    this.props.hide(false);
+    this.props.addSchedule(this.state);
+  }
+
+  deleteSchedule = (id) => {
+    this.props.hide(false);
+    this.props.deleteSchedule(id);
+  }
  
   render() {
     const {
@@ -93,10 +102,19 @@ export default class AddScheduleForm extends Component {
       //TODO: add delete button + function to delete, delete should bubble up and render all the children that depend on this value so the thing that was just deleted doesn't show anymore
         currentSchedules.push( 
           <View style={{padding: 10}}>
-            <Text>Starts On: {moment(start).format("DD MMM")}</Text>
-            <Text>Start Time: {moment(start).format("h:mm a")}</Text>
-            <Text>Ends On: {moment(end).format("DD MMM")}</Text>
-            <Text>{labels.unitLabel}: {magnitude}</Text>
+            <MaterialIcons name='delete' size={25} color={COLORS.grey5} onPress={() => this.deleteSchedule(schedule.id)} style={{
+              alignSelf: 'flex-end',
+              zIndex: 5
+            }}/>
+            <View style={{
+              marginTop: -25
+            }}>
+              <Text>Starts On: {moment(start).format("DD MMM")}</Text>
+              <Text>Start Time: {moment(start).format("h:mm a")}</Text>
+              <Text>Ends On: {moment(end).format("DD MMM")}</Text>
+              <Text>{labels.unitLabel}: {magnitude}</Text>
+            </View>
+
           </View>);
       }
     });
@@ -204,12 +222,12 @@ export default class AddScheduleForm extends Component {
           <Button 
             mode='contained'
             color={COLORS.green5}
-            onPress={() => this.props.addSchedule(this.state)}
+            onPress={this.saveSchedule}
             style={{
               marginBottom: 10, 
               marginTop: 10,
-              marginLeft: 170,
-              width: 160,
+              alignSelf: 'flex-end',
+              width: 180,
             }}
           >
             Save Schedule

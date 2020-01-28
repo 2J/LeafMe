@@ -68,7 +68,17 @@ export default class GrowingSchedule extends Component {
       active: true
     };
 
-    console.log(save)
+    console.log(save);
+    Alert.alert(
+      'Watering Schedule added successfully'
+    );
+  }
+
+  deleteWateringSchedule = (scheduleId) => {
+    Alert.alert(
+      'Watering Schedule deleted successfully'
+    );
+    console.log(scheduleId);
   }
 
   turnLightOn = () => { //show confirmation message
@@ -92,7 +102,17 @@ export default class GrowingSchedule extends Component {
       active: true
     };
 
-    console.log(save)
+    console.log(save);
+    Alert.alert(
+      'Lighting Schedule added successfully'
+    );
+  }
+
+  deleteLightingSchedule = (scheduleId) => {
+    Alert.alert(
+      'Lighting Schedule deleted successfully'
+    );
+    console.log(scheduleId);
   }
 
   toggleView = () => {
@@ -113,10 +133,14 @@ export default class GrowingSchedule extends Component {
       childView = <ListView 
                     wateringSchedule={this.state.wateringSchedule} 
                     lightingSchedule={this.state.lightingSchedule}
+
                     waterNow={this.waterNow}
                     addWaterSchedule={this.addWaterSchedule}
+                    deleteWateringSchedule={this.deleteWateringSchedule}
+
                     turnLightOn={this.turnLightOn}
                     addLightingSchedule={this.addLightingSchedule}
+                    deleteLightingSchedule={this.deleteLightingSchedule}
                   >
                   </ListView>
     }

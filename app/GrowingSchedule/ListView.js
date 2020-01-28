@@ -59,6 +59,7 @@ export default class ListView extends Component {
           mainButtonFunction={this.props.waterNow}
           addSchedule={this.props.addWaterSchedule}
           fullSchedule={this.props.wateringSchedule}
+          deleteSchedule={this.props.deleteWateringSchedule}
         />
         <ListViewCard
           items={lighting}
@@ -68,6 +69,7 @@ export default class ListView extends Component {
           mainButtonFunction={this.props.turnLightOn}
           addSchedule={this.props.addLightingSchedule}
           fullSchedule={this.props.lightingSchedule}
+          deleteSchedule={this.props.deleteLightingSchedule}
         />
       </View>
     );

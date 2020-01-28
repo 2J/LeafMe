@@ -43,7 +43,8 @@ export const COMPONENTS = {
     datepicker: { //the actual datepicker
         color: COLORS.grey9,
         backgroundColor: COLORS.grey9, 
-        marginBottom: 10          
+        marginBottom: 10,
+        borderRadius: 5        
     }
 }
 
