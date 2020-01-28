@@ -68,3 +68,16 @@ func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	responseJson, err = json.Marshal(response)
 	writeJsonResponse(w, 200, responseJson)
 }
+
+func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+
+	err := models.DeleteLightingSchedule(scheduleID)
+
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed delete: "+err.Error())
+		return
+	}
+
+	writeJsonResponse(w, 200, []byte(""))
+}

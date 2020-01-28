@@ -18,20 +18,11 @@ type LightingSchedule struct {
 	Active   bool     `json:"active" validate:"required"`
 }
 
-/*
 func (lightingSchedule *LightingSchedule) Validate() error {
-	err := nil
+	var err error
 	// TODO
 	return err
 }
-
-func (lightingSchedule *LightingSchedule) Get(filter string) error {
-	query := db.Query("SELECT * FROM lightingSchedules")
-	query += " " + filter
-	rows, err := db.Query(query)
-	return nil
-}
-*/
 
 func (lightingSchedule *LightingSchedule) Create() (int, error) {
 	db := database.Open()
@@ -119,12 +110,18 @@ func GetLightingSchedulesByPlantId(plantId int) ([]LightingSchedule, error) {
 	return res, nil
 }
 
-/*
-func (wateringSchedule *WateringSchedule) GetById(id int) error {
+func DeleteLightingSchedule(scheduleId int) error {
+	db := database.Open()
+	defer database.Close(db)
 
+	delForm, err := db.Prepare("DELETE FROM lightingSchedules WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		scheduleId,
+	)
+
+	return err
 }
-
-func GetLightingSchedules(query string) ([]LightingSchedule, error) {
-
-}
-*/
