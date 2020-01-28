@@ -21,6 +21,6 @@ $ make push
 
 ## TODO
 
-- Upload docker file to server
-- Models
-- Connect to database
+## BUGS
+
+- Trying to get a schedule that doesn't exist doesn't give errors
