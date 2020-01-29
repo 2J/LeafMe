@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import _ from 'lodash';
 
 //Model imports
@@ -22,7 +22,9 @@ export default class GrowingSchedule extends Component {
     wateringEvents: ' ', 
     lightingEvents: ' ',
     plantType: 'Basil',
-    calendarView: false
+    calendarView: false,
+    addWaterSnackVisible: false,
+    deleteWaterSnackVisible: false,
   };
 
   getSchedules = async () => {
@@ -31,12 +33,16 @@ export default class GrowingSchedule extends Component {
         wateringSchedule: data.watering_schedules, 
         lightingSchedule: data.lighting_schedules
       });
-    });
+    }).catch((error) => {
+      throw error;
+    });;
 
     let eventData = await Event.getEvent().then(data => {
       this.setState({ 
         wateringEvents: data.watering_events,
         lightingEvents: data.lighting_events });
+    }).catch((error) => {
+      throw error;
     });
   }
 
@@ -72,14 +78,10 @@ export default class GrowingSchedule extends Component {
     };
 
     await Schedule.createWaterSchedule(save).then( data => {
-      Alert.alert(
-        'Watering Schedule added successfully'
-      );
+      this.setState({ addWaterSnackVisible: true });
     })
     .catch((error) => {
-      Alert.alert(
-        'Error adding watering schedule: ' + error
-      );
+      throw error;
     });
     
     await this.getSchedules();
@@ -87,14 +89,10 @@ export default class GrowingSchedule extends Component {
 
   deleteWateringSchedule = async (scheduleId) => {
     await Schedule.deleteWaterSchedule(scheduleId).then( data => {
-      Alert.alert(
-        'Watering Schedule deleted successfully'
-      );
-    })
+      this.setState({ deleteWaterSnackVisible: true });
+    })    
     .catch((error) => {
-      Alert.alert(
-        'Error deleting watering schedule: ' + error
-      );
+      throw error;
     });
 
     await this.getSchedules();
@@ -129,6 +127,7 @@ export default class GrowingSchedule extends Component {
       Alert.alert(
         'Error adding watering schedule: ' + error
       );
+      throw error;
     });
     
     await this.getSchedules();
@@ -144,6 +143,7 @@ export default class GrowingSchedule extends Component {
       Alert.alert(
         'Error deleting watering schedule: ' + error
       );
+      throw error;
     });
 
     await this.getSchedules();
@@ -202,3 +202,21 @@ export default class GrowingSchedule extends Component {
     );
   }
 }
+        //Snackbars for confirmation, currently don't work cause of JSON parsing errors 
+        //   {/*confirmation for adding a watering schedule*/}
+        //   <Snackbar
+        //   visible={this.state.addWaterSnackVisible}
+        //   onDismiss={() => this.setState({ addWaterSnackVisible: false })}
+        //   duration={5000}
+        // >
+        //   Watering schedule added successfully.
+        // </Snackbar>
+
+        // {/* deleteWaterSnackVisible */}
+        // <Snackbar
+        //   visible={this.state.deleteWaterSnackVisible}
+        //   onDismiss={() => this.setState({ deleteWaterSnackVisible: false })}
+        //   duration={5000}
+        // >
+        //   Watering schedule deleted successfully.
+        // </Snackbar>

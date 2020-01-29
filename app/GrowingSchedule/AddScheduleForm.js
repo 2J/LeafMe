@@ -88,7 +88,6 @@ export default class AddScheduleForm extends Component {
     let currentSchedules = [];
     _.forEach(this.props.schedules, schedule => {
       if(schedule.active) {
-        console.log(schedule);
         currentSchedules.push(<Divider />);
         let start = new Date(schedule.schedule.time);
         let end = new Date(schedule.schedule.repeat_end_date);

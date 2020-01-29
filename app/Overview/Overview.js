@@ -4,6 +4,9 @@ import { Card } from 'react-native-paper';
 import { Text, View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+//Model Imports
+import Sensors from '../Models/Sensors';
+
 //Component Imports
 import InfoCard from './InfoCard';
 import CustomBanner from '../Components/CustomBanner';
@@ -12,7 +15,35 @@ import CustomBanner from '../Components/CustomBanner';
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class Overview extends Component {
+  state = {
+    moisture: 'Wet',
+    brightness: 'High',
+    temperature: '73F',
+    humidity: '50%'
+  }
+
+  refreshSensors = async () => {
+    let sensors = await Sensors.getSensors().then( data => {
+      console.log(data);
+      // this.setState({
+      //   wateringSchedule: data.watering_schedules, 
+      //   lightingSchedule: data.lighting_schedules
+      // });
+    });
+  }
+
+  async componentDidMount(){
+    await this.refreshSensors();
+  }
+
   render() {
+    const {
+      moisture,
+      brightness,
+      temperature,
+      humidity
+    } = this.state;
+
     return (
         <ScrollView>
           <CustomBanner 
@@ -29,12 +60,12 @@ export default class Overview extends Component {
               <InfoCard 
                 title='Soil Moisture'
                 iconName='ios-water'
-                status='Wet'
+                status={moisture}
               />
               <InfoCard 
                 title='Brightness'
                 iconName='lightbulb-o'
-                status='High'
+                status={brightness}
               />
             </View> 
 
@@ -44,12 +75,12 @@ export default class Overview extends Component {
               <InfoCard 
                 title='Temperature'
                 iconName='thermometer-3'
-                status='73F'
+                status={temperature}
               />
               <InfoCard 
                 title='Humidity'
                 iconName='md-cloud'
-                status='50%'
+                status={humidity}
               />
             </View>
 
