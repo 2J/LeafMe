@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Card } from 'react-native-paper';
+import { Button, Card } from 'react-native-paper';
 import { Text, View, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -16,19 +16,21 @@ import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class Overview extends Component {
   state = {
-    moisture: 'Wet',
-    brightness: 'High',
-    temperature: '73F',
-    humidity: '50%'
+    moisture: '',
+    brightness: '',
+    temperature: '',
+    humidity: ''
   }
 
   refreshSensors = async () => {
     let sensors = await Sensors.getSensors().then( data => {
-      console.log(data);
-      // this.setState({
-      //   wateringSchedule: data.watering_schedules, 
-      //   lightingSchedule: data.lighting_schedules
-      // });
+      //TODO: change these to ranges to display words
+      this.setState({ 
+        moisture: data.soil_moisture.value,
+        brightness: data.brightness.value,
+        temperature: data.ambient_temperature.value + 'C',
+        humidity: data.ambient_humidity.value + '%'
+      });
     });
   }
 
@@ -53,8 +55,15 @@ export default class Overview extends Component {
             
           <View style={CONTAINERS.main}>
             <Text style={FONTS.h1}>Your plant is great :) </Text>
-
-            <Text style={FONTS.h4}>Plant Conditions</Text>
+            <View style={CONTAINERS.spaceBetween}>
+              <Text style={FONTS.h4}>Plant Conditions</Text>
+              <Button 
+                mode='contained'
+                color={COLORS.green5}
+                onPress={this.refreshSensors}
+              >Refresh Stats</Button>
+            </View>
+            
             
             <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
               <InfoCard 
