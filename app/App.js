@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 //Component Imports
@@ -11,6 +11,7 @@ import Overview from './Overview/Overview';
 import Account from './Account/Account';
 import GrowingSchedule from './GrowingSchedule/GrowingSchedule';
 import Metrics from './Metrics/Metrics';
+import Login from './Auth/Login';
 
 //Style Imports
 import { COLORS } from './styles';
@@ -51,6 +52,12 @@ const AccountStack = createStackNavigator({
   }
 });
 
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login
+  }
+})
+
 const TabNavigator = createBottomTabNavigator(
   {
     Overview: Overview,
@@ -87,4 +94,14 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      App: TabNavigator,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'Auth',
+    }
+  )
+);
