@@ -45,6 +45,14 @@ export const COMPONENTS = {
         backgroundColor: COLORS.grey9, 
         marginBottom: 10,
         borderRadius: 5        
+    }, 
+    loginInput: {
+        height: 40, 
+        backgroundColor: COLORS.white, 
+        width: '100%', 
+        paddingLeft: 10,
+        marginBottom: 10, 
+        borderRadius: 5
     }
 }
 
@@ -112,6 +120,16 @@ export const CONTAINERS = {
           position: 'fixed', 
           top: 0
         },
+    }, 
+    login: {
+        backgroundColor: COLORS.green5,
+        height: '100%',
+        width: '100%',
+        padding: 10,
+        flex: 1, 
+        flexDirection: 'column', 
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     }
 }
 
@@ -121,6 +139,12 @@ export const FONTS = {
         color: COLORS.grey9, 
         fontWeight: 'bold', 
         paddingBottom: 10
+    }, 
+    login: {
+        fontSize: 40, 
+        color: COLORS.grey1, 
+        fontWeight: 'bold', 
+        paddingBottom: 15
     }, 
     h1: {
         fontSize: 32, 

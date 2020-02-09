@@ -16,45 +16,12 @@ import Login from './Auth/Login';
 //Style Imports
 import { COLORS } from './styles';
 
-const OverviewStack = createStackNavigator({
-  Overview: { 
-    screen: Overview, 
-    navigationOptions: ({ navigation }) => ({
-      title: 'Overview'
-    })
-  }
-});
-
-const MetricsStack = createStackNavigator({
-  Metrics: { 
-    screen: Metrics, 
-    navigationOptions: ({ navigation }) => ({
-      title: 'Metrics'
-    })
-  }
-});
-
-const GrowingScheduleStack = createStackNavigator({
-  GrowingSchedule: {
-    screen: GrowingSchedule, 
-    navigationOptions: ({ navigation }) => ({
-      title: 'Growing Schedule'
-    })
-  }
-});
-
-const AccountStack = createStackNavigator({
-  Account: { 
-    screen: Account, 
-    navigationOptions: ({ navigation }) => ({
-      title: 'Account Settings'
-    })
-  }
-});
-
 const AuthStack = createStackNavigator({
   Login: {
-    screen: Login
+    screen: Login, 
+    navigationOptions: {
+      header: null,
+    }
   }
 })
 
