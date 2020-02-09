@@ -6,13 +6,18 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-//Component Imports
+//AppStack Imports
 import Overview from './Overview/Overview';
 import Account from './Account/Account';
 import GrowingSchedule from './GrowingSchedule/GrowingSchedule';
 import Metrics from './Metrics/Metrics';
+
+//AuthStack Imports
 import Login from './Auth/Login';
 
+//SetupStack Imports
+import Welcome from './Setup/Welcome';
+import NetworkSettings from './Setup/NetworkSettings';
 //Style Imports
 import { COLORS } from './styles';
 
@@ -23,7 +28,21 @@ const AuthStack = createStackNavigator({
       header: null,
     }
   }
-})
+});
+
+const SetupStack = createStackNavigator(
+  {
+    Welcome: Welcome,
+    NetworkSettings: NetworkSettings,
+  },
+  {
+    initialRouteName: 'Welcome',
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+  },
+);
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -66,6 +85,7 @@ export default createAppContainer(
     {
       App: TabNavigator,
       Auth: AuthStack,
+      Setup: SetupStack
     },
     {
       initialRouteName: 'Auth',

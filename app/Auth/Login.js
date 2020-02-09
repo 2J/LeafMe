@@ -6,14 +6,15 @@ import _ from 'lodash';
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 import logo from '../assets/icon.png';
 
-export default class Overview extends Component {
+export default class Login extends Component {
   state =  {
     email: '', 
-    password: ''
+    password: '', 
+    first: true //if this is the user's first time using the app 
   }
 
   login = () => { // We don't actually have auth lmao 
-    this.props.navigation.navigate('App');
+    this.props.navigation.navigate(this.state.first ? 'Setup' : 'App');
   }
 
   render() {
