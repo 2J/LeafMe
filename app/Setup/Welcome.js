@@ -11,10 +11,6 @@ export default class Welcome extends Component {
     networkPassword: ''
   }
 
-  goToNetworkSettings = () => { 
-    this.props.navigation.navigate('NetworkSettings');
-  }
-
   render() {
     return (
       <KeyboardAvoidingView style={CONTAINERS.login} behavior="padding" enabled>
@@ -46,7 +42,7 @@ export default class Welcome extends Component {
           <Button 
             mode='outlined'
             color={COLORS.green5}
-            onPress={this.goToNetworkSettings}
+            onPress={() => this.props.navigation.navigate('NetworkSettings')}
             contentStyle={{
               width: 100, 
               backgroundColor: COLORS.white
