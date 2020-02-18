@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	database "github.com/2J/LeafMe/api/db"
-
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -43,6 +42,9 @@ func (wateringSchedule *WateringSchedule) Create() (int, error) {
 	}
 
 	id, err := res.LastInsertId()
+
+	wateringSchedule.ID = int(id)
+	err = wateringSchedule.CreateWateringEvents()
 
 	return int(id), err
 }
@@ -114,6 +116,8 @@ func DeleteWateringSchedule(scheduleId int) error {
 	_, err = delForm.Exec(
 		scheduleId,
 	)
+
+	err = DeleteLightingEvents(scheduleId)
 
 	return err
 }

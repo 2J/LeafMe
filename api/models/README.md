@@ -21,7 +21,7 @@ type Schedule struct {
 ```
 type LightingSchedule struct {
 	ID       int      `json:"id" validate:"required"`
-	PlantID  int      `json:"plant_id" validate:"required"`
+	PlantID  int      `json:"plantId" validate:"required"`
 	Schedule Schedule `json:"schedule" validate:"required"`
 	Length   int      `json:"length" validate:"required"`
 	Active   bool     `json:"active" validate:"required"`
@@ -39,7 +39,7 @@ type LightingSchedule struct {
 ```
 type WateringSchedule struct {
 	ID       int      `json:"id" validate:"required"`
-	PlantID  int      `json:"plant_id" validate:"required"`
+	PlantID  int      `json:"plantId" validate:"required"`
 	Schedule Schedule `json:"schedule" validate:"required"`
 	Amount   int      `json:"amount" validate:"required"`
 	Active   bool     `json:"active" validate:"required"`
@@ -58,9 +58,9 @@ type WateringSchedule struct {
 ```
 type LightingEvent struct {
 	ID                 int       `json:"id" validate:"required"`
-	PlantID            int       `json:"plant_id" validate:"required"`
-	LightingScheduleID int       `json:"lighting_schedule_id" validate:"required"`
-	StartTime          time.Time `json:"start_time"`
+	PlantID            int       `json:"plantId" validate:"required"`
+	LightingScheduleID int       `json:"lightingScheduleId" validate:"required"`
+	StartTime          time.Time `json:"startTime"`
 	Length             int       `json:"length" validate:"required"`
 	Finished           bool      `json:"finished"`
 }
@@ -78,9 +78,9 @@ type LightingEvent struct {
 ```
 type WateringEvent struct {
 	ID                 int       `json:"id" validate:"required"`
-	PlantID            int       `json:"plant_id" validate:"required"`
-	WateringScheduleID int       `json:"watering_schedule_id" validate:"required"`
-	StartTime          time.Time `json:"start_time"`
+	PlantID            int       `json:"plantId" validate:"required"`
+	WateringScheduleID int       `json:"wateringScheduleId" validate:"required"`
+	StartTime          time.Time `json:"startTime"`
 	Amount             int       `json:"amount" validate:"required"`
 	Finished           bool      `json:"finished"`
 }
