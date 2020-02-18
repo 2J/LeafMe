@@ -18,6 +18,10 @@ import Login from './Auth/Login';
 //SetupStack Imports
 import Welcome from './Setup/Welcome';
 import NetworkSettings from './Setup/NetworkSettings';
+import ManualOrPreset from './Setup/ManualOrPreset';
+import ManualSetup from './Setup/ManualSetup';
+import PresetCategory from './Setup/PresetCategory';
+
 //Style Imports
 import { COLORS } from './styles';
 
@@ -34,6 +38,9 @@ const SetupStack = createStackNavigator(
   {
     Welcome: Welcome,
     NetworkSettings: NetworkSettings,
+    ManualOrPreset: ManualOrPreset, 
+    ManualSetup: ManualSetup,
+    PresetCategory: PresetCategory
   },
   {
     initialRouteName: 'Welcome',

@@ -10,10 +10,6 @@ export default class NetworkSettings extends Component {
     serialNumber: ''
   }
   
-  goToNetworkSettings = () => { 
-    this.props.navigation.navigate('App');
-  }
-
   render() {
     return (
       <KeyboardAvoidingView style={CONTAINERS.login} behavior="padding" enabled>
@@ -53,9 +49,9 @@ export default class NetworkSettings extends Component {
           <Button 
             mode='outlined'
             color={COLORS.green5}
-            onPress={this.goToNetworkSettings}
+            onPress={() => this.props.navigation.navigate('ManualOrPreset')}
             contentStyle={{
-              width: 100, 
+              width: 300, 
               backgroundColor: COLORS.white
             }}
           >Test Connection</Button>
