@@ -134,3 +134,31 @@ func GetWateringEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJsonResponse(w, 200, responseJson)
 }
+
+func GetEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
+	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+
+	lightingEvents, err := models.GetLightingEventsByPlantId(plantId)
+	if err != nil {
+		panic(err.Error())
+	}
+	wateringEvents, err := models.GetWateringEventsByPlantId(plantId)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	response := struct {
+		LightingEvents []models.LightingEvent `json:"lighting_events"`
+		WateringEvents []models.WateringEvent `json:"watering_events"`
+	}{
+		lightingEvents,
+		wateringEvents,
+	}
+
+	responseJson, err := json.Marshal(response)
+	if err != nil {
+		writeErrorResponse(w, 500, "125")
+		return
+	}
+	writeJsonResponse(w, 200, responseJson)
+}

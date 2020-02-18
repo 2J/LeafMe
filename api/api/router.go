@@ -44,6 +44,8 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/plant/{plantId}/schedules/water/{scheduleId}/events/{eventId}", addDefaultHeaders(GetWateringEventByIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/events/water", addDefaultHeaders(GetWateringEventsByPlantIdHandler)).Methods("GET", "OPTIONS")
 
+	router.HandleFunc("/plant/{plantId}/events", addDefaultHeaders(GetEventsByPlantIdHandler)).Methods("GET", "OPTIONS")
+
 	// Sensor handlers
 	router.HandleFunc("/plant/{plantId}/sensors", addDefaultHeaders(GetLatestSensorReadings)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/sensors/history/{type}", addDefaultHeaders(GetLatestSensorReadingsForType)).Methods("GET", "OPTIONS")
