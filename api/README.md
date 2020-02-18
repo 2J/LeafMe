@@ -105,6 +105,34 @@ DELETE https://leafme.jj.ai/plant/{plantId}/schedules/water/delete/{scheduleId}
 - scheduleId: int
 ```
 
+### Getting events
+
+GET ALL EVENTS
+
+```
+https://leafme.jj.ai/plant/1/events
+```
+
+GET LIGHT EVENTS
+
+```
+https://leafme.jj.ai/plant/1/events/light
+
+https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
+
+https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events/{{eventId}}
+```
+
+GET WATER EVENTS
+
+```
+https://leafme.jj.ai/plant/1/events/water
+
+https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
+
+https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events/{{eventId}}
+```
+
 ## Monitoring / Sensors
 
 ### Get stats for dashboard
