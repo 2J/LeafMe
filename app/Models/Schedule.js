@@ -27,6 +27,10 @@ export default class Schedule {
     let url = 'https://leafme.jj.ai/plant/1/schedules/water/delete/' + scheduleId;
     return fetch(url, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify(scheduleId)
     }).then(  response => {      
       return response.json();
     });
@@ -47,7 +51,11 @@ export default class Schedule {
   static async deleteLightingSchedule(scheduleId) {
     let url = 'https://leafme.jj.ai/plant/1/schedules/light/delete/' + scheduleId;
     return fetch(url, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify(scheduleId)
     }).then( response => 
       response.json());
   }
