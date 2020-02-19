@@ -32,7 +32,8 @@ export const COMPONENTS = {
     dropdown: {
         backgroundColor: COLORS.grey1,
         borderRadius: 5,
-        marginBottom: 10
+        marginBottom: 10, 
+        width: 250
     }, 
     datepickerButton: { //touchable highlight that opens the datepicker
         backgroundColor: COLORS.grey1,
@@ -42,7 +43,7 @@ export const COMPONENTS = {
     }, 
     datepicker: { //the actual datepicker
         color: COLORS.grey9,
-        backgroundColor: COLORS.grey9, 
+        backgroundColor: COLORS.grey5, 
         marginBottom: 10,
         borderRadius: 5        
     }, 
@@ -53,6 +54,9 @@ export const COMPONENTS = {
         paddingLeft: 10,
         marginBottom: 10, 
         borderRadius: 5
+    }, 
+    labelsSpacing: {
+        paddingBottom: 12
     }
 }
 
@@ -65,6 +69,17 @@ export const CONTAINERS = {
         flex: 1, 
         flexDirection: 'row', 
         justifyContent: 'space-between',
+    },
+    plantType: { 
+        height: 70, 
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.grey9, 
+        marginBottom: 10,
+        shadowOffset: {
+            width: 1, 
+            height: 1
+        }, 
+        borderRadius: 10
     },
     infoCard: {
         width: 160, 
@@ -99,6 +114,18 @@ export const CONTAINERS = {
         marginBottom: 20
     },
     listViewCard: {
+        width: '100%',
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.grey9, 
+        marginBottom: 10,
+        padding: 10,
+        shadowOffset: {
+            width: 1, 
+            height: 1
+        }, 
+        borderRadius: 10
+    },
+    addScheduleCard: {
         width: '100%',
         backgroundColor: COLORS.white,
         shadowColor: COLORS.grey9, 

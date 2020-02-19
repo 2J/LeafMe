@@ -128,9 +128,9 @@ export default class AddScheduleForm extends Component {
     }
 
     return (
-      <Card style={CONTAINERS.listViewCard}>
+      <Card style={CONTAINERS.addScheduleCard}>
         <Card.Content>
-          <Text 
+          {this.props.main && <Text 
             style={{
               width: '95%',
               textAlign: 'right',
@@ -141,7 +141,7 @@ export default class AddScheduleForm extends Component {
             }}
             onPress={() => this.props.hide(false)}>
             Close 
-          </Text>
+          </Text>}
           <Text           
             style={{
               width: '95%',
@@ -160,7 +160,7 @@ export default class AddScheduleForm extends Component {
           <Text style={FONTS.h3}>Add a New Schedule</Text>
           <Divider style={{marginBottom: 15, marginTop: 5}}/>
 
-          <Text style={{paddingBottom: 5}}>{labels.unitsSelect}</Text>
+          <Text style={COMPONENTS.labelsSpacing}>{labels.unitsSelect}</Text>
           <Dropdown
             label={labels.unitsPlaceholder}
             data={labels.unitsData}
@@ -176,7 +176,9 @@ export default class AddScheduleForm extends Component {
             onChangeText={this.setUnits}
           />
 
-          <Text style={{paddingBottom: 5}}>{labels.repeatSelect}</Text>
+          <Text style={COMPONENTS.labelsSpacing}>{labels.repeatSelect}</Text>
+
+          <View style={CONTAINERS.spaceBetween}>
             <Dropdown
               label={labels.repeatPlaceholder}
               data={labels.repeatData}
@@ -191,9 +193,10 @@ export default class AddScheduleForm extends Component {
               fontSize={14}
               onChangeText={this.setRepeat}
             />
-            <Text style={{paddingBottom: 5}}>Days</Text>
+            <Text style={{paddingBottom: 5, paddingTop: 12, paddingRight: 5}}>Days</Text>
+          </View>
 
-          <Text style={{paddingBottom: 5}}>{labels.startSelect}</Text>
+          <Text style={COMPONENTS.labelsSpacing}>{labels.startSelect}</Text>
           <TouchableHighlight
             onPress={this.showStartDate}
             style={COMPONENTS.datepickerButton}
@@ -207,7 +210,7 @@ export default class AddScheduleForm extends Component {
                     style={COMPONENTS.datepicker}/>
           }
 
-          <Text style={{paddingBottom: 5}}>{labels.endSelect}</Text>
+          <Text style={COMPONENTS.labelsSpacing}>{labels.endSelect}</Text>
           <TouchableHighlight
             onPress={this.showEndDate}
             style={COMPONENTS.datepickerButton}

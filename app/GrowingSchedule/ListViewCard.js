@@ -79,10 +79,14 @@ export default class ListViewCard extends Component {
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
-            <ScrollView>
+            <ScrollView
+              style={{
+                padding: 10
+              }}>
               <AddScheduleForm
                 hide={this.setModalVisible}
-                parent={this.props.iconName}
+                parent={this.props.iconName /* ios-water or lightbulb-o */}
+                main={true /* coming from main flow or setup flow */}
                 schedules={this.props.fullSchedule}
                 addSchedule={this.props.addSchedule}
                 deleteSchedule={this.props.deleteSchedule}

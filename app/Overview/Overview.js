@@ -61,6 +61,7 @@ export default class Overview extends Component {
                 mode='contained'
                 color={COLORS.green5}
                 onPress={this.refreshSensors}
+                style={{marginBottom: 10}}
               >Refresh Stats</Button>
             </View>
             
@@ -80,7 +81,7 @@ export default class Overview extends Component {
 
             <Text style={FONTS.h4}>Ambient Conditions</Text>
             
-            <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
+            <View style={_.assignIn(CONTAINERS.spaceBetween, {marginBottom: 20})}>
               <InfoCard 
                 title='Temperature'
                 iconName='thermometer-3'

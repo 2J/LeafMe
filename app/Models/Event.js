@@ -4,7 +4,7 @@ export default class Event {
     };  
   
     static async getEvent() {
-      let url = 'https://leafme.jj.ai/test_events';
+      let url = 'https://leafme.jj.ai/plant/1/events';
       return fetch(url).then( response => response.json());
     }
   }
