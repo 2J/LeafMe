@@ -152,3 +152,21 @@ GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_HUMIDITY
 ```
 
 NOTE: In progress, currently retrieves all data for type. Will be changed to only show requested history using start and end times. 
+
+## Presets
+
+### Get preset by type
+
+```
+GET https://leafme.jj.ai/presets/types/PEPPER
+GET https://leafme.jj.ai/presets/types/FRUIT_VEG
+GET https://leafme.jj.ai/presets/types/ROOT_VEG
+GET https://leafme.jj.ai/presets/types/HERB
+GET https://leafme.jj.ai/presets/types/LEGUME
+```
+
+### Get preset details
+
+```
+GET https://leafme.jj.ai/presets/{{presetId}}
+```

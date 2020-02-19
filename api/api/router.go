@@ -50,6 +50,10 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/plant/{plantId}/sensors", addDefaultHeaders(GetLatestSensorReadings)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/sensors/history/{type}", addDefaultHeaders(GetLatestSensorReadingsForType)).Methods("GET", "OPTIONS")
 
+	// Presets
+	router.HandleFunc("/presets/type/{presetType}", addDefaultHeaders(GetPresetsByType)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetById)).Methods("GET", "OPTIONS")
+
 	return router
 }
 
