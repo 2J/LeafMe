@@ -162,3 +162,47 @@ func GetEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJsonResponse(w, 200, responseJson)
 }
+
+func SetLightingEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
+	eventId, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+
+	response := struct {
+		Success bool `json:"success"`
+	}{
+		false,
+	}
+	responseJson, _ := json.Marshal(response)
+
+	err := models.SetLightingEventFinished(eventId, true)
+
+	if err != nil {
+		writeJsonResponse(w, 500, responseJson)
+		return
+	}
+
+	response.Success = true
+	responseJson, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJson)
+}
+
+func SetWateringEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
+	eventId, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+
+	response := struct {
+		Success bool `json:"success"`
+	}{
+		false,
+	}
+	responseJson, _ := json.Marshal(response)
+
+	err := models.SetWateringEventFinished(eventId, true)
+
+	if err != nil {
+		writeJsonResponse(w, 500, responseJson)
+		return
+	}
+
+	response.Success = true
+	responseJson, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJson)
+}

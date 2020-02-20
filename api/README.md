@@ -107,30 +107,40 @@ DELETE https://leafme.jj.ai/plant/{plantId}/schedules/water/delete/{scheduleId}
 
 ### Getting events
 
-GET ALL EVENTS
+#### GET ALL EVENTS
 
 ```
-https://leafme.jj.ai/plant/1/events
+GET https://leafme.jj.ai/plant/1/events
 ```
 
-GET LIGHT EVENTS
+#### GET LIGHT EVENTS
 
 ```
-https://leafme.jj.ai/plant/1/events/light
+GET https://leafme.jj.ai/plant/1/events/light
 
-https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
+GET https://leafme.jj.ai/plant/1/events/light/{{eventId}}
 
-https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events/{{eventId}}
+GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
 ```
 
-GET WATER EVENTS
+#### GET WATER EVENTS
 
 ```
-https://leafme.jj.ai/plant/1/events/water
+GET https://leafme.jj.ai/plant/1/events/water
 
-https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
+GET https://leafme.jj.ai/plant/1/events/water/{{eventId}}
 
-https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events/{{eventId}}
+GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
+```
+
+#### SET EVENT TO FINISHED
+
+NOTE: No payload needed when sending POST requests
+
+```
+POST https://leafme.jj.ai/plant/1/events/light/{{eventId}}
+
+POST https://leafme.jj.ai/plant/1/events/water/{{eventId}}
 ```
 
 ## Monitoring / Sensors

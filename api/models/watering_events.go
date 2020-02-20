@@ -170,3 +170,20 @@ func DeleteWateringEvents(scheduleId int) error {
 
 	return err
 }
+
+func SetWateringEventFinished(eventId int, finished bool) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE wateringEvents SET finished = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		finished,
+		eventId,
+	)
+
+	return err
+}
