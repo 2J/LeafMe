@@ -79,9 +79,10 @@ export default class Overview extends Component {
               />
             </View> 
 
+            <View style={{paddingTop: 20}}></View> 
             <Text style={FONTS.h4}>Ambient Conditions</Text>
             
-            <View style={_.assignIn(CONTAINERS.spaceBetween, {marginBottom: 20})}>
+            <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingBottom: 20})}>
               <InfoCard 
                 title='Temperature'
                 iconName='thermometer-3'
@@ -94,6 +95,7 @@ export default class Overview extends Component {
               />
             </View>
 
+            <View style={{paddingTop: 20}}></View> 
             <Text style={FONTS.h4}>Water Tank Level</Text>
 
             <Card style={CONTAINERS.wateringCard}>
@@ -105,9 +107,9 @@ export default class Overview extends Component {
                   paddingTop: '5%'
                 }}> 
                   <Icon name='ios-beaker' size={100} color={COLORS.green5}/>
-                  <View style={{flexDirection: 'column', textAlign: 'center', width: 225}}>
+                  <View style={{flexDirection: 'column', textAlign: 'center', width: 225, padding: 5}}>
                     <Text style={_.assignIn(FONTS.h1, {textAlign: 'center'})}>Good</Text>
-                    <Text style={FONTS.h3}>Refill in approximately 10 days</Text>
+                    <Text style={FONTS.h3}>Refill in: 10 days</Text>
                   </View>
                 </View>
               </Card.Content>

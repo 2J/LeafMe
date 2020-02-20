@@ -196,6 +196,7 @@ export default class GrowingSchedule extends Component {
                 {this.state.calendarView ? 'List View' : 'Calendar View'}
               </Button>
             </View>
+            <View style={{paddingTop: 20}}></View> 
             {childView}
           </View>
         </ScrollView>

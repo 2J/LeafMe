@@ -80,7 +80,7 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: COLORS.green5,
       inactiveTintColor: COLORS.grey7,
       style: {
-        height: 50,
+        height: 60,
         backgroundColor: COLORS.white,
       }
     },

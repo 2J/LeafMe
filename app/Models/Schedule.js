@@ -31,8 +31,8 @@ export default class Schedule {
         'Content-Type': 'application/json',
       }, 
       body: JSON.stringify(scheduleId)
-    }).then(  response => {      
-      return response.json();
+    }).then(  response => {    
+      return response;
     });
   }
 
@@ -54,10 +54,11 @@ export default class Schedule {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-      }, 
-      body: JSON.stringify(scheduleId)
-    }).then( response => 
-      response.json());
+      }
+    }).then( response => {
+      return response.json();
+    });
+      
   }
 
 }

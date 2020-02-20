@@ -93,7 +93,6 @@ export default class ManualSetup extends Component {
   }
 
   deleteLightingSchedule = async (scheduleId) => {
-    console.log(scheduleId);
     await Schedule.deleteLightingSchedule(scheduleId).then( data => {
       Alert.alert(
         'Lighting Schedule deleted successfully'
@@ -172,8 +171,7 @@ export default class ManualSetup extends Component {
               color={COLORS.green5}
               onPress={() => this.props.navigation.navigate('Overview')}
               contentStyle={{
-                width: 100, 
-                backgroundColor: COLORS.white
+                width: 100
               }}
             >Next</Button>
           </View>

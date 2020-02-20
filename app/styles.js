@@ -181,7 +181,7 @@ export const FONTS = {
     }, 
     h2: {
         fontSize: 24, 
-        color: COLORS.grey7, 
+        color: COLORS.grey9, 
         fontWeight: 'bold'
     }, 
     h3: {
