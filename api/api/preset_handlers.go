@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func GetPresetsByType(w http.ResponseWriter, r *http.Request) {
+func GetPresetsByTypeHandler(w http.ResponseWriter, r *http.Request) {
 	presetType := urlParamAsString(r, "presetType")
 
 	presets, err := models.GetPresetsByType(presetType)
@@ -20,7 +20,7 @@ func GetPresetsByType(w http.ResponseWriter, r *http.Request) {
 	writeJsonResponse(w, 200, responseJson)
 }
 
-func GetPresetById(w http.ResponseWriter, r *http.Request) {
+func GetPresetByIdHandler(w http.ResponseWriter, r *http.Request) {
 	presetId, _ := strconv.Atoi(urlParamAsString(r, "presetId"))
 
 	preset := models.Preset{}
