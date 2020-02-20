@@ -157,6 +157,13 @@ export const CONTAINERS = {
         flexDirection: 'column', 
         justifyContent: 'space-evenly',
         alignItems: 'center',
+    }, 
+    step: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.green5, 
+        padding: '5%'
     }
 }
 

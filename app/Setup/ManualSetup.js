@@ -169,7 +169,7 @@ export default class ManualSetup extends Component {
             <Button 
               mode='contained'
               color={COLORS.green5}
-              onPress={() => this.props.navigation.navigate('Overview')}
+              onPress={() => this.props.navigation.navigate('Instructions')}
               contentStyle={{
                 width: 100
               }}
