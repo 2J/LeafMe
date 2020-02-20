@@ -26,6 +26,10 @@ func NewRouter() *mux.Router {
 
 	router.HandleFunc("/", addDefaultHeaders(IndexGetHandler)).Methods("GET", "OPTIONS")
 
+	// Plant handlers
+	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(GetPlantByIdHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(UpdatePlantHandler)).Methods("POST", "OPTIONS")
+
 	// Schedule handlers
 	router.HandleFunc("/plant/{plantId}/schedules", addDefaultHeaders(GetSchedulesByPlantIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/light/{scheduleId}", addDefaultHeaders(GetLightingScheduleByIdHandler)).Methods("GET", "OPTIONS")
@@ -54,9 +58,9 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/plant/{plantId}/sensors/history/{type}", addDefaultHeaders(GetLatestSensorReadingsForTypeHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/sensors", addDefaultHeaders(CreateSensorReadingsHandler)).Methods("POST", "OPTIONS")
 
-	// Presets
-	router.HandleFunc("/presets/type/{presetType}", addDefaultHeaders(GetPresetsByType)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetById)).Methods("GET", "OPTIONS")
+	// Preset handlers
+	router.HandleFunc("/presets/type/{presetType}", addDefaultHeaders(GetPresetsByTypeHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetByIdHandler)).Methods("GET", "OPTIONS")
 
 	return router
 }

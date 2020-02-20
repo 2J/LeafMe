@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	database "github.com/2J/LeafMe/api/db"
 	_ "github.com/go-sql-driver/mysql"
 	"time"
@@ -151,12 +152,18 @@ func (lightingEvent *LightingEvent) GetById(id int) error {
 		return err
 	}
 
+	found := false
 	for rows.Next() {
+		found = true
 		err = lightingEvent.getRow(rows)
 
 		if err != nil {
 			return err
 		}
+	}
+
+	if !found {
+		return errors.New("Event not found")
 	}
 
 	return nil

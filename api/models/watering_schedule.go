@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	database "github.com/2J/LeafMe/api/db"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -69,12 +70,18 @@ func (wateringSchedule *WateringSchedule) GetById(id int) error {
 		return err
 	}
 
+	found := false
 	for rows.Next() {
+		found = true
 		err = wateringSchedule.getRow(rows)
 
 		if err != nil {
 			return err
 		}
+	}
+
+	if !found {
+		return errors.New("Schedule not found")
 	}
 
 	return nil
@@ -116,8 +123,6 @@ func DeleteWateringSchedule(scheduleId int) error {
 	_, err = delForm.Exec(
 		scheduleId,
 	)
-
-	err = DeleteLightingEvents(scheduleId)
 
 	return err
 }
