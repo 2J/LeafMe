@@ -29,12 +29,30 @@ $ make push
 
 # API Endpoints
 
+## Plants
+
+### Get Plant
+
+```
+GET https://leafme.jj.ai/plant/{{plantId}}
+```
+
+### Update Plant
+
+```
+POST https://leafme.jj.ai/plant/{{plantId}}
+
+example payload: 
+
+    {"name":"SOME PLANT NAME"}
+```
+
 ## Schedules
 
 ### Get All Schedules
 
 ```
-GET https://leafme.jj.ai/plant/{plantId}/schedules
+GET https://leafme.jj.ai/plant/{{plantId}}/schedules
 ```
 
 - plantId: int
@@ -44,13 +62,13 @@ GET https://leafme.jj.ai/plant/{plantId}/schedules
 ```
 LIGHT
 
-GET https://leafme.jj.ai/plant/{plantId}/schedules/light/{scheduleId}
+GET https://leafme.jj.ai/plant/{{plantId}}/schedules/light/{{scheduleId}}
 - plantId: int
 - scheduleId: int
 
 WATER
 
-GET https://leafme.jj.ai/plant/{plantId}/schedules/water/{scheduleId}
+GET https://leafme.jj.ai/plant/{{plantId}}/schedules/water/{{scheduleId}}
 - plantId: int
 - scheduleId: int
 ```
@@ -59,7 +77,7 @@ GET https://leafme.jj.ai/plant/{plantId}/schedules/water/{scheduleId}
 
 ```
 LIGHT
-POST https://leafme.jj.ai/plant/{plantId}/schedules/light/create
+POST https://leafme.jj.ai/plant/{{plantId}}/schedules/light/create
 - plantId: int
 
 example payload: 
@@ -69,12 +87,12 @@ example payload:
                 "time": "2020-01-13T12:00:00Z",
                 "repeat_days": 6,
                 "repeat_end_date": "2020-05-12T12:00:00Z"
-            },
+            }},
             "length": 180
-        }
+        }}
 
 WATER
-POST https://leafme.jj.ai/plant/{plantId}/schedules/water/create
+POST https://leafme.jj.ai/plant/{{plantId}}/schedules/water/create
 - plantId: int
 
 example payload: 
@@ -84,9 +102,9 @@ example payload:
                 "time": "2020-01-13T12:00:00Z",
                 "repeat_days": 6,
                 "repeat_end_date": "2020-05-12T12:00:00Z"
-            },
+            }},
             "amount": 50
-        }
+        }}
 
 NOTE: repeat_end_date is optional
 ```
@@ -97,12 +115,12 @@ It will return whether it is successful, and the ID of the inserted light schedu
 
 ```
 LIGHT
-DELETE https://leafme.jj.ai/plant/{plantId}/schedules/light/delete/{scheduleId}
+DELETE https://leafme.jj.ai/plant/{{plantId}}/schedules/light/delete/{{scheduleId}}
 - plantId: int
 - scheduleId: int
 
 WATER
-DELETE https://leafme.jj.ai/plant/{plantId}/schedules/water/delete/{scheduleId}
+DELETE https://leafme.jj.ai/plant/{{plantId}}/schedules/water/delete/{{scheduleId}}
 - plantId: int
 - scheduleId: int
 ```
@@ -150,7 +168,7 @@ POST https://leafme.jj.ai/plant/1/events/water/{{eventId}}
 ### Get stats for dashboard
 
 ```
-GET https://leafme.jj.ai/plant/{plantId}/sensors
+GET https://leafme.jj.ai/plant/{{plantId}}/sensors
 - plantId: int
 ```
 
@@ -173,10 +191,10 @@ POST https://leafme.jj.ai/plant/1/sensors
 example payload: 
 
     [
-        {"type": "SOIL_MOISTURE","value": 16.02},
-        {"type": "BRIGHTNESS","value": 17.44},
-        {"type": "AMBIENT_TEMPERATURE","value": 18.2},
-        {"type": "AMBIENT_HUMIDITY","value": 19}
+        {"type": "SOIL_MOISTURE","value": 16.02}},
+        {"type": "BRIGHTNESS","value": 17.44}},
+        {"type": "AMBIENT_TEMPERATURE","value": 18.2}},
+        {"type": "AMBIENT_HUMIDITY","value": 19}}
     ]
 ```
 
