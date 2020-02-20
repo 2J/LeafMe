@@ -171,22 +171,10 @@ POST https://leafme.jj.ai/plant/1/sensors
 example payload: 
 
     [
-        {
-            "type": "SOIL_MOISTURE",
-            "value": 16
-        },
-        {
-            "type": "BRIGHTNESS",
-            "value": 17
-        },
-        {
-            "type": "AMBIENT_TEMPERATURE",
-            "value": 18
-        },
-        {
-            "type": "AMBIENT_HUMIDITY",
-            "value": 19
-        }
+        {"type": "SOIL_MOISTURE","value": 16.02},
+        {"type": "BRIGHTNESS","value": 17.44},
+        {"type": "AMBIENT_TEMPERATURE","value": 18.2},
+        {"type": "AMBIENT_HUMIDITY","value": 19}
     ]
 ```
 
