@@ -124,7 +124,7 @@ func DeleteWateringSchedule(scheduleId int) error {
 		scheduleId,
 	)
 
-	err = DeleteLightingEvents(scheduleId)
+	err = DeleteWateringEvents(scheduleId)
 
 	return err
 }
