@@ -60,7 +60,7 @@ LIGHT
 POST https://leafme.jj.ai/plant/{plantId}/schedules/light/create
 - plantId: int
 
-example load data: 
+example payload: 
 
         {
             "schedule": {
@@ -75,7 +75,7 @@ WATER
 POST https://leafme.jj.ai/plant/{plantId}/schedules/water/create
 - plantId: int
 
-example load data: 
+example payload: 
 
         {
             "schedule": {
@@ -162,6 +162,33 @@ GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_HUMIDITY
 ```
 
 NOTE: In progress, currently retrieves all data for type. Will be changed to only show requested history using start and end times. 
+
+### Create sensor readings
+
+```
+POST https://leafme.jj.ai/plant/1/sensors
+
+example payload: 
+
+    [
+        {
+            "type": "SOIL_MOISTURE",
+            "value": 16
+        },
+        {
+            "type": "BRIGHTNESS",
+            "value": 17
+        },
+        {
+            "type": "AMBIENT_TEMPERATURE",
+            "value": 18
+        },
+        {
+            "type": "AMBIENT_HUMIDITY",
+            "value": 19
+        }
+    ]
+```
 
 ## Presets
 
