@@ -152,18 +152,11 @@ export const CONTAINERS = {
         backgroundColor: COLORS.green5,
         height: '100%',
         width: '100%',
-        padding: 10,
+        padding: '5%',
         flex: 1, 
         flexDirection: 'column', 
         justifyContent: 'space-evenly',
         alignItems: 'center',
-    }, 
-    step: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS.green5, 
-        padding: '5%'
     }
 }
 
@@ -180,6 +173,12 @@ export const FONTS = {
         fontWeight: 'bold', 
         paddingBottom: 15
     }, 
+    smallerWhiteText: {
+        fontSize: 32, 
+        color: COLORS.white, 
+        fontWeight: 'bold', 
+        paddingBottom: 30
+    },
     h1: {
         fontSize: 32, 
         color: COLORS.grey9, 
