@@ -7,8 +7,8 @@ import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../../styles';
 export default class Step extends Component {
   render() {
     return (
-      <View style={CONTAINERS.step}>
-        <Text>{this.props.instruction}</Text>
+      <View style={CONTAINERS.login}>
+        <Text style={FONTS.smallerWhiteText}>{this.props.instruction}</Text>
         <Image 
           style={{width: '100%'}}
           source={this.props.image} />

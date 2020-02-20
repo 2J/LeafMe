@@ -16,11 +16,7 @@ export default class Welcome extends Component {
       <KeyboardAvoidingView style={CONTAINERS.login} behavior="padding" enabled>
         
         <Text 
-          style={{
-            fontSize: 32, 
-            color: COLORS.white, 
-            fontWeight: 'bold', 
-            paddingBottom: 30}}
+          style={FONTS.smallerWhiteText}
           >Welcome to LeafMe!
         </Text>
 

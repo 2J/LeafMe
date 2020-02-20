@@ -34,11 +34,7 @@ export default class ManualOrPreset extends Component {
       <View style={CONTAINERS.login}>
         
         <Text 
-          style={{
-            fontSize: 32, 
-            color: COLORS.white, 
-            fontWeight: 'bold', 
-            paddingBottom: 30}}
+          style={FONTS.smallerWhiteText}
           >How would you like to set up your plant? 
         </Text>
 
