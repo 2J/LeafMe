@@ -12,7 +12,7 @@ CREATE TABLE presets (
 	`humidityMax` int NOT NULL,
 	`pictureUrl` varchar(400) NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO presets 
 (

@@ -128,7 +128,5 @@ func DeleteLightingSchedule(scheduleId int) error {
 		scheduleId,
 	)
 
-	err = DeleteLightingEvents(scheduleId)
-
 	return err
 }
