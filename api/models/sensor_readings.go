@@ -2,19 +2,18 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	"time"
-
 	_ "github.com/go-sql-driver/mysql"
+	"time"
 )
 
-/*
-	Sensor Types:
-	- SOIL_MOISTURE
-	- BRIGHTNESS
-	- AMBIENT_TEMPERATURE
-	- AMBIENT_HUMIDITY
-*/
+var SensorTypes = map[string]string{
+	"SOIL_MOISTURE":       "SOIL_MOISTURE",
+	"BRIGHTNESS":          "BRIGHTNESS",
+	"AMBIENT_TEMPERATURE": "AMBIENT_TEMPERATURE",
+	"AMBIENT_HUMIDITY":    "AMBIENT_HUMIDITY",
+}
 
 // SensorReading TODO
 type SensorReading struct {
@@ -25,13 +24,21 @@ type SensorReading struct {
 	Value      float64   `json:"value" validate:"required"`
 }
 
-func (sensorReading *SensorReading) Validate() (err error) {
-	return err
+func (sensorReading *SensorReading) Validate() error {
+	if SensorTypes[sensorReading.SensorType] == "" {
+		return errors.New("Invalid sensor type: " + sensorReading.SensorType)
+	}
+	return nil
 }
 
 func (sensorReading *SensorReading) Create() (int, error) {
 	db := database.Open()
 	defer database.Close(db)
+
+	err := sensorReading.Validate()
+	if err != nil {
+		return 0, err
+	}
 
 	insForm, err := db.Prepare("INSERT INTO sensorReadings (`plantId`, `time`, `type`, `value`) VALUES (?,?,?,?)")
 	if err != nil {
@@ -52,6 +59,37 @@ func (sensorReading *SensorReading) Create() (int, error) {
 	id, err := res.LastInsertId()
 
 	return int(id), err
+}
+
+func CreateSensorReadings(sensorReadings []SensorReading) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	query := "INSERT INTO sensorReadings (`plantId`, `time`, `type`, `value`) VALUES "
+	vals := []interface{}{}
+
+	for i, v := range sensorReadings {
+		err := v.Validate()
+		if err != nil {
+			return err
+		}
+
+		if i > 0 {
+			query += ","
+		}
+		query += "(?,?,?,?)"
+
+		vals = append(vals, v.PlantID, v.Time, v.SensorType, v.Value)
+	}
+
+	insForm, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	_, err = insForm.Exec(vals...)
+
+	return err
 }
 
 func (sensorReading *SensorReading) getRow(rows *sql.Rows) error {

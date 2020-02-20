@@ -177,3 +177,20 @@ func DeleteLightingEvents(scheduleId int) error {
 
 	return err
 }
+
+func SetLightingEventFinished(eventId int, finished bool) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE lightingEvents SET finished = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		finished,
+		eventId,
+	)
+
+	return err
+}

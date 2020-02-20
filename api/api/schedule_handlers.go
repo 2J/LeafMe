@@ -114,12 +114,20 @@ func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := models.DeleteLightingSchedule(scheduleID)
 
-	if err != nil {
-		writeErrorResponse(w, 500, "Failed delete: "+err.Error())
-		return
+	statusCode := 500
+	response := struct {
+		Success bool `json:"success"`
+	}{
+		false,
 	}
 
-	writeJsonResponse(w, 200, []byte(""))
+	if err == nil {
+		response.Success = true
+		statusCode = 200
+	}
+	responseJson, _ := json.Marshal(response)
+
+	writeJsonResponse(w, statusCode, responseJson)
 }
 
 func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
@@ -160,10 +168,18 @@ func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := models.DeleteWateringSchedule(scheduleID)
 
-	if err != nil {
-		writeErrorResponse(w, 500, "Failed delete: "+err.Error())
-		return
+	statusCode := 500
+	response := struct {
+		Success bool `json:"success"`
+	}{
+		false,
 	}
 
-	writeJsonResponse(w, 200, []byte(""))
+	if err == nil {
+		response.Success = true
+		statusCode = 200
+	}
+	responseJson, _ := json.Marshal(response)
+
+	writeJsonResponse(w, statusCode, responseJson)
 }
