@@ -4,18 +4,11 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"time"
 )
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-// LightingEvent TODO
+// LightingEvent https://github.com/2J/LeafMe/tree/master/api/models#lightingschedule
 type LightingEvent struct {
 	ID                 int       `json:"id" validate:"required"`
 	PlantID            int       `json:"plant_id" validate:"required"`
@@ -25,6 +18,7 @@ type LightingEvent struct {
 	Finished           bool      `json:"finished"`
 }
 
+// CreateLightingEvents creates batch of lighting events
 func CreateLightingEvents(lightingEvents []LightingEvent) (err error) {
 	db := database.Open()
 	defer database.Close(db)
@@ -50,7 +44,8 @@ func CreateLightingEvents(lightingEvents []LightingEvent) (err error) {
 	return err
 }
 
-func (lightingSchedule *LightingSchedule) CreateLightingEvents() (err error) {
+// CreateLightingEvent creates a lighting event
+func (lightingSchedule *LightingSchedule) CreateLightingEvent() (err error) {
 	// Create list of lighting events
 	lightingEvents := []LightingEvent{}
 
@@ -96,13 +91,14 @@ func (lightingEvent *LightingEvent) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func GetLightingEventsByScheduleId(scheduleId int) ([]LightingEvent, error) {
+// GetLightingEventsByScheduleID gets all lighting events for schedule
+func GetLightingEventsByScheduleID(scheduleID int) ([]LightingEvent, error) {
 	lightingEvent := LightingEvent{}
 	res := []LightingEvent{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM lightingEvents WHERE lightingScheduleId = ? ORDER BY startTime ASC", scheduleId)
+	rows, err := db.Query("SELECT * FROM lightingEvents WHERE lightingScheduleId = ? ORDER BY startTime ASC", scheduleID)
 	if err != nil {
 		return res, err
 	}
@@ -120,13 +116,14 @@ func GetLightingEventsByScheduleId(scheduleId int) ([]LightingEvent, error) {
 	return res, nil
 }
 
-func GetLightingEventsByPlantId(plantId int) ([]LightingEvent, error) {
+// GetLightingEventsByPlantID gets all events for plant
+func GetLightingEventsByPlantID(plantID int) ([]LightingEvent, error) {
 	lightingEvent := LightingEvent{}
 	res := []LightingEvent{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM lightingEvents WHERE plantId = ? ORDER BY startTime ASC", plantId)
+	rows, err := db.Query("SELECT * FROM lightingEvents WHERE plantId = ? ORDER BY startTime ASC", plantID)
 	if err != nil {
 		return res, err
 	}
@@ -144,7 +141,8 @@ func GetLightingEventsByPlantId(plantId int) ([]LightingEvent, error) {
 	return res, nil
 }
 
-func (lightingEvent *LightingEvent) GetById(id int) error {
+// GetByID gets lighting event by ID
+func (lightingEvent *LightingEvent) GetByID(id int) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM lightingEvents WHERE id = ?", id)
@@ -169,7 +167,8 @@ func (lightingEvent *LightingEvent) GetById(id int) error {
 	return nil
 }
 
-func DeleteLightingEvents(scheduleId int) error {
+// DeleteLightingEventsByScheduleID deletes lighting events by schedule ID
+func DeleteLightingEventsByScheduleID(scheduleID int) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -179,13 +178,14 @@ func DeleteLightingEvents(scheduleId int) error {
 	}
 
 	_, err = delForm.Exec(
-		scheduleId,
+		scheduleID,
 	)
 
 	return err
 }
 
-func SetLightingEventFinished(eventId int, finished bool) error {
+// SetLightingEventFinished sets lighting event to finished
+func SetLightingEventFinished(eventID int, finished bool) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -196,7 +196,7 @@ func SetLightingEventFinished(eventId int, finished bool) error {
 
 	_, err = delForm.Exec(
 		finished,
-		eventId,
+		eventID,
 	)
 
 	return err

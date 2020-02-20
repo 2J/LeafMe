@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 )
 
 /*
@@ -32,10 +32,12 @@ type Preset struct {
 	PictureURL     string `json:"url" validate:"required"`
 }
 
+// Validate TODO
 func (preset *Preset) Validate() (err error) {
 	return err
 }
 
+// Create TODO
 func (preset *Preset) Create() (int, error) {
 	db := database.Open()
 	defer database.Close(db)
@@ -87,7 +89,8 @@ func (preset *Preset) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func (preset *Preset) GetById(id int) error {
+// GetByID TODO
+func (preset *Preset) GetByID(id int) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM presets WHERE id = ?", id)
@@ -112,6 +115,7 @@ func (preset *Preset) GetById(id int) error {
 	return nil
 }
 
+// GetPresetsByType TODO
 func GetPresetsByType(presetType string) ([]Preset, error) {
 	preset := Preset{}
 	res := []Preset{}
@@ -137,7 +141,8 @@ func GetPresetsByType(presetType string) ([]Preset, error) {
 	return res, nil
 }
 
-func DeletePreset(presetId int) error {
+// DeletePreset TODO
+func DeletePreset(presetID int) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -147,7 +152,7 @@ func DeletePreset(presetId int) error {
 	}
 
 	_, err = delForm.Exec(
-		presetId,
+		presetID,
 	)
 
 	return err

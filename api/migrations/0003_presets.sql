@@ -12,7 +12,7 @@ CREATE TABLE presets (
 	`humidityMax` int NOT NULL,
 	`pictureUrl` varchar(400) NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO presets 
 (
@@ -41,4 +41,4 @@ VALUES
 ('HERB','Mint',180,1,80,2,17,24,30,45,''),
 ('HERB','Thyme',180,1,80,2,17,24,30,45,''),
 ('LEGUME','Green Beans',180,1,80,2,17,24,30,45,''),
-('LEGUME','Kidney Beans',180,1,80,2,17,24,30,45,'')
+('LEGUME','Kidney Beans',180,1,80,2,17,24,30,45,'');

@@ -4,14 +4,14 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"strings"
 )
 
 // Plant TODO
 type Plant struct {
 	ID          int    `json:"id" validate:"required"`
-	DeviceId    int    `json:"device_id" validate:"required"`
+	DeviceID    int    `json:"device_id" validate:"required"`
 	Name        string `json:"name" validate:"required"`
 	Description string `json:"-"`
 }
@@ -19,7 +19,7 @@ type Plant struct {
 func (plant *Plant) getRow(rows *sql.Rows) error {
 	err := rows.Scan(
 		&plant.ID,
-		&plant.DeviceId,
+		&plant.DeviceID,
 		&plant.Name,
 		&plant.Description,
 	)
@@ -27,7 +27,8 @@ func (plant *Plant) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func (plant *Plant) GetById(id int) error {
+// GetByID TODO
+func (plant *Plant) GetByID(id int) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM plants WHERE id = ?", id)
@@ -52,6 +53,7 @@ func (plant *Plant) GetById(id int) error {
 	return nil
 }
 
+// UpdatePlantName TODO
 func UpdatePlantName(plantID int, name string) error {
 	db := database.Open()
 	defer database.Close(db)
@@ -69,6 +71,7 @@ func UpdatePlantName(plantID int, name string) error {
 	return err
 }
 
+// Validate TODO
 func (plant *Plant) Validate() error {
 	if strings.Trim(plant.Name, " ") == "" {
 		return errors.New("Plant name is required")
