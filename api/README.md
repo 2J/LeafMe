@@ -23,7 +23,17 @@ $ make push
 
 ## TODO
 
+- [Add endpoint for creating/deleting a single event](https://trello.com/c/IABBfqke/41-add-endpoint-for-creating-deleting-a-single-event-used-for-manual-lighting-watering)
+
+- [Add endpoint for setting plant light status](https://trello.com/c/9tiAddYd/42-add-endpoint-for-setting-plant-light-status)
+
+- [Push notifications](https://trello.com/c/NaLyca1z/26-push-notifications)
+
 ## BUGS
+
+- Deleting resources returns {success: true} even if resource doesn't exist
+
+- Getting batch of resources by a parent ID (e.g. getting events by plant ID) returns blank array if parent doesn't exist
 
 # API Endpoints
 
