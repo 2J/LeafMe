@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"time"
 )
 
@@ -18,11 +18,12 @@ type WateringEvent struct {
 	Finished           bool      `json:"finished"`
 }
 
+// CreateWateringEvents creates batch of watering events
 func CreateWateringEvents(wateringEvents []WateringEvent) (err error) {
 	db := database.Open()
 	defer database.Close(db)
 
-	query := "INSERT INTO wateringEvents (`plantId`, `wateringScheduleId`, `startTime`, `amount`, `finished`) VALUES "
+	query := "INSERT INTO wateringEvents (`plantID`, `wateringScheduleId`, `startTime`, `amount`, `finished`) VALUES "
 	vals := []interface{}{}
 	for i, v := range wateringEvents {
 		if i > 0 {
@@ -43,7 +44,8 @@ func CreateWateringEvents(wateringEvents []WateringEvent) (err error) {
 	return err
 }
 
-func (wateringSchedule *WateringSchedule) CreateWateringEvents() (err error) {
+// CreateWateringEvent creates a watering event
+func (wateringSchedule *WateringSchedule) CreateWateringEvent() (err error) {
 	// Create list of watering events
 	wateringEvents := []WateringEvent{}
 
@@ -89,13 +91,14 @@ func (wateringEvent *WateringEvent) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func GetWateringEventsByScheduleId(scheduleId int) ([]WateringEvent, error) {
+// GetWateringEventsByScheduleID gets all watering events for schedule
+func GetWateringEventsByScheduleID(scheduleID int) ([]WateringEvent, error) {
 	wateringEvent := WateringEvent{}
 	res := []WateringEvent{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM wateringEvents WHERE wateringScheduleId = ? ORDER BY startTime ASC", scheduleId)
+	rows, err := db.Query("SELECT * FROM wateringEvents WHERE wateringScheduleId = ? ORDER BY startTime ASC", scheduleID)
 	if err != nil {
 		return res, err
 	}
@@ -113,13 +116,14 @@ func GetWateringEventsByScheduleId(scheduleId int) ([]WateringEvent, error) {
 	return res, nil
 }
 
-func GetWateringEventsByPlantId(plantId int) ([]WateringEvent, error) {
+// GetWateringEventsByPlantID gets all events for plant
+func GetWateringEventsByPlantID(plantID int) ([]WateringEvent, error) {
 	wateringEvent := WateringEvent{}
 	res := []WateringEvent{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM wateringEvents WHERE plantId = ? ORDER BY startTime ASC", plantId)
+	rows, err := db.Query("SELECT * FROM wateringEvents WHERE plantId = ? ORDER BY startTime ASC", plantID)
 	if err != nil {
 		return res, err
 	}
@@ -137,7 +141,8 @@ func GetWateringEventsByPlantId(plantId int) ([]WateringEvent, error) {
 	return res, nil
 }
 
-func (wateringEvent *WateringEvent) GetById(id int) error {
+// GetByID gets watering event by ID
+func (wateringEvent *WateringEvent) GetByID(id int) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM wateringEvents WHERE id = ?", id)
@@ -162,7 +167,8 @@ func (wateringEvent *WateringEvent) GetById(id int) error {
 	return nil
 }
 
-func DeleteWateringEvents(scheduleId int) error {
+// DeleteWateringEventsByScheduleID deletes watering events by schedule ID
+func DeleteWateringEventsByScheduleID(scheduleID int) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -172,13 +178,14 @@ func DeleteWateringEvents(scheduleId int) error {
 	}
 
 	_, err = delForm.Exec(
-		scheduleId,
+		scheduleID,
 	)
 
 	return err
 }
 
-func SetWateringEventFinished(eventId int, finished bool) error {
+// SetWateringEventFinished sets watering event to finished
+func SetWateringEventFinished(eventID int, finished bool) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -189,7 +196,7 @@ func SetWateringEventFinished(eventId int, finished bool) error {
 
 	_, err = delForm.Exec(
 		finished,
-		eventId,
+		eventID,
 	)
 
 	return err

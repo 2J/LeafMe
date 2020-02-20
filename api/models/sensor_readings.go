@@ -4,10 +4,11 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"time"
 )
 
+// SensorTypes is the list of sensor types
 var SensorTypes = map[string]string{
 	"SOIL_MOISTURE":       "SOIL_MOISTURE",
 	"BRIGHTNESS":          "BRIGHTNESS",
@@ -24,6 +25,7 @@ type SensorReading struct {
 	Value      float64   `json:"value" validate:"required"`
 }
 
+// Validate TODO
 func (sensorReading *SensorReading) Validate() error {
 	if SensorTypes[sensorReading.SensorType] == "" {
 		return errors.New("Invalid sensor type: " + sensorReading.SensorType)
@@ -31,6 +33,7 @@ func (sensorReading *SensorReading) Validate() error {
 	return nil
 }
 
+// Create TODO
 func (sensorReading *SensorReading) Create() (int, error) {
 	db := database.Open()
 	defer database.Close(db)
@@ -61,6 +64,7 @@ func (sensorReading *SensorReading) Create() (int, error) {
 	return int(id), err
 }
 
+// CreateSensorReadings TODO
 func CreateSensorReadings(sensorReadings []SensorReading) error {
 	db := database.Open()
 	defer database.Close(db)
@@ -104,7 +108,8 @@ func (sensorReading *SensorReading) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func (sensorReading *SensorReading) GetById(id int) error {
+// GetByID TODO
+func (sensorReading *SensorReading) GetByID(id int) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM sensorReadings WHERE id = ?", id)
@@ -129,13 +134,14 @@ func (sensorReading *SensorReading) GetById(id int) error {
 	return nil
 }
 
-func GetLatestSensorReadingsByType(plantId int, sensorType string) ([]SensorReading, error) {
+// GetLatestSensorReadingsByType TODO
+func GetLatestSensorReadingsByType(plantID int, sensorType string) ([]SensorReading, error) {
 	sensorReading := SensorReading{}
 	res := []SensorReading{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC", sensorType, plantId)
+	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC", sensorType, plantID)
 	if err != nil {
 		return res, err
 	}
@@ -153,12 +159,13 @@ func GetLatestSensorReadingsByType(plantId int, sensorType string) ([]SensorRead
 	return res, nil
 }
 
-func GetLatestSensorReadingByType(plantId int, sensorType string) (SensorReading, error) {
+// GetLatestSensorReadingByType TODO
+func GetLatestSensorReadingByType(plantID int, sensorType string) (SensorReading, error) {
 	sensorReading := SensorReading{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC LIMIT 1", sensorType, plantId)
+	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC LIMIT 1", sensorType, plantID)
 	if err != nil {
 		return sensorReading, err
 	}
@@ -169,7 +176,8 @@ func GetLatestSensorReadingByType(plantId int, sensorType string) (SensorReading
 	return sensorReading, nil
 }
 
-func DeleteSensorReading(scheduleId int) error {
+// DeleteSensorReading TODO
+func DeleteSensorReading(scheduleID int) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -179,7 +187,7 @@ func DeleteSensorReading(scheduleId int) error {
 	}
 
 	_, err = delForm.Exec(
-		scheduleId,
+		scheduleID,
 	)
 
 	return err

@@ -10,3 +10,10 @@ type Schedule struct {
 	RepeatDays    int        `json:"repeat_days"`
 	RepeatEndDate *time.Time `json:"repeat_end_date"`
 }
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}

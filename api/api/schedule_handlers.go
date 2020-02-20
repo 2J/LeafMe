@@ -13,7 +13,7 @@ func GetLightingScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
 
 	lightingSchedule := models.LightingSchedule{}
-	err := lightingSchedule.GetById(scheduleId)
+	err := lightingSchedule.GetByID(scheduleId)
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -33,7 +33,7 @@ func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
 
 	wateringSchedule := models.WateringSchedule{}
-	err := wateringSchedule.GetById(scheduleId)
+	err := wateringSchedule.GetByID(scheduleId)
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -51,11 +51,11 @@ func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
 
-	lightingSchedules, err := models.GetLightingSchedulesByPlantId(plantId)
+	lightingSchedules, err := models.GetLightingSchedulesByPlantID(plantId)
 	if err != nil {
 		panic(err.Error())
 	}
-	wateringSchedules, err := models.GetWateringSchedulesByPlantId(plantId)
+	wateringSchedules, err := models.GetWateringSchedulesByPlantID(plantId)
 	if err != nil {
 		panic(err.Error())
 	}

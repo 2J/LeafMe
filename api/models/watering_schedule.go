@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 )
 
 // WateringSchedule TODO
@@ -16,10 +16,12 @@ type WateringSchedule struct {
 	Active   bool     `json:"active" validate:"required"`
 }
 
+// Validate TODO
 func (wateringSchedule *WateringSchedule) Validate() (err error) {
 	return err
 }
 
+// Create TODO
 func (wateringSchedule *WateringSchedule) Create() (int, error) {
 	db := database.Open()
 	defer database.Close(db)
@@ -45,7 +47,7 @@ func (wateringSchedule *WateringSchedule) Create() (int, error) {
 	id, err := res.LastInsertId()
 
 	wateringSchedule.ID = int(id)
-	err = wateringSchedule.CreateWateringEvents()
+	err = wateringSchedule.CreateWateringEvent()
 
 	return int(id), err
 }
@@ -62,7 +64,8 @@ func (wateringSchedule *WateringSchedule) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func (wateringSchedule *WateringSchedule) GetById(id int) error {
+// GetByID TODO
+func (wateringSchedule *WateringSchedule) GetByID(id int) error {
 	db := database.Open()
 	defer db.Close()
 	rows, err := db.Query("SELECT * FROM wateringSchedules WHERE id = ?", id)
@@ -87,13 +90,14 @@ func (wateringSchedule *WateringSchedule) GetById(id int) error {
 	return nil
 }
 
-func GetWateringSchedulesByPlantId(plantId int) ([]WateringSchedule, error) {
+// GetWateringSchedulesByPlantID TODO
+func GetWateringSchedulesByPlantID(plantID int) ([]WateringSchedule, error) {
 	wateringSchedule := WateringSchedule{}
 	res := []WateringSchedule{}
 
 	db := database.Open()
 	defer db.Close()
-	rows, err := db.Query("SELECT * FROM wateringSchedules WHERE plantId = ?", plantId)
+	rows, err := db.Query("SELECT * FROM wateringSchedules WHERE plantId = ?", plantID)
 	if err != nil {
 		return res, err
 	}
@@ -111,7 +115,8 @@ func GetWateringSchedulesByPlantId(plantId int) ([]WateringSchedule, error) {
 	return res, nil
 }
 
-func DeleteWateringSchedule(scheduleId int) error {
+// DeleteWateringSchedule TODO
+func DeleteWateringSchedule(scheduleID int) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -121,7 +126,7 @@ func DeleteWateringSchedule(scheduleId int) error {
 	}
 
 	_, err = delForm.Exec(
-		scheduleId,
+		scheduleID,
 	)
 
 	return err

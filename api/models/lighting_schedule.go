@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver
 )
 
 // LightingSchedule TODO
@@ -16,10 +16,12 @@ type LightingSchedule struct {
 	Active   bool     `json:"active" validate:"required"`
 }
 
+// Validate TODO
 func (lightingSchedule *LightingSchedule) Validate() (err error) {
 	return err
 }
 
+// Create TODO
 func (lightingSchedule *LightingSchedule) Create() (int, error) {
 	db := database.Open()
 	defer database.Close(db)
@@ -45,7 +47,7 @@ func (lightingSchedule *LightingSchedule) Create() (int, error) {
 	id, err := res.LastInsertId()
 
 	lightingSchedule.ID = int(id)
-	err = lightingSchedule.CreateLightingEvents()
+	err = lightingSchedule.CreateLightingEvent()
 
 	return int(id), err
 }
@@ -66,7 +68,8 @@ func (lightingSchedule *LightingSchedule) getRow(rows *sql.Rows) error {
 	return err
 }
 
-func (lightingSchedule *LightingSchedule) GetById(id int) error {
+// GetByID TODO
+func (lightingSchedule *LightingSchedule) GetByID(id int) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM lightingSchedules WHERE id = ?", id)
@@ -91,13 +94,14 @@ func (lightingSchedule *LightingSchedule) GetById(id int) error {
 	return nil
 }
 
-func GetLightingSchedulesByPlantId(plantId int) ([]LightingSchedule, error) {
+// GetLightingSchedulesByPlantID TODO
+func GetLightingSchedulesByPlantID(plantID int) ([]LightingSchedule, error) {
 	lightingSchedule := LightingSchedule{}
 	res := []LightingSchedule{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM lightingSchedules WHERE plantId = ?", plantId)
+	rows, err := db.Query("SELECT * FROM lightingSchedules WHERE plantId = ?", plantID)
 	if err != nil {
 		return res, err
 	}
@@ -115,7 +119,8 @@ func GetLightingSchedulesByPlantId(plantId int) ([]LightingSchedule, error) {
 	return res, nil
 }
 
-func DeleteLightingSchedule(scheduleId int) error {
+// DeleteLightingSchedule TODO
+func DeleteLightingSchedule(scheduleID int) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -125,7 +130,7 @@ func DeleteLightingSchedule(scheduleId int) error {
 	}
 
 	_, err = delForm.Exec(
-		scheduleId,
+		scheduleID,
 	)
 
 	return err
