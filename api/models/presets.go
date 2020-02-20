@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	database "github.com/2J/LeafMe/api/db"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -94,12 +95,18 @@ func (preset *Preset) GetById(id int) error {
 		return err
 	}
 
+	found := false
 	for rows.Next() {
+		found = true
 		err = preset.getRow(rows)
 
 		if err != nil {
 			return err
 		}
+	}
+
+	if !found {
+		return errors.New("Preset not found")
 	}
 
 	return nil

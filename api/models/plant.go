@@ -1,13 +1,3 @@
-/*
-CREATE TABLE plants (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`deviceId` int(11) NOT NULL,
-	`name` varchar(200) DEFAULT NULL,
-	`description` varchar(400) DEFAULT NULL,
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-*/
-
 package models
 
 import (
@@ -56,7 +46,6 @@ func (plant *Plant) GetById(id int) error {
 	}
 
 	if !found {
-		// Plant not found
 		return errors.New("Plant not found")
 	}
 

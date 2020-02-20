@@ -107,17 +107,23 @@ func (sensorReading *SensorReading) getRow(rows *sql.Rows) error {
 func (sensorReading *SensorReading) GetById(id int) error {
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM sensorReadings WHERE id = ? ORDER BY id DESC", id)
+	rows, err := db.Query("SELECT * FROM sensorReadings WHERE id = ?", id)
 	if err != nil {
 		return err
 	}
 
+	found := false
 	for rows.Next() {
+		found = true
 		err = sensorReading.getRow(rows)
 
 		if err != nil {
 			return err
 		}
+	}
+
+	if !found {
+		return errors.New("Sensor reading not found")
 	}
 
 	return nil
