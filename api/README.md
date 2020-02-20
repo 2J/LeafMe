@@ -1,5 +1,7 @@
 # LeafMe API
 
+[**Up to date Postman Collection URL**](https://www.postman.com/collections/c6f4d4b5c1d5295434ad?fbclid=IwAR0_vRAADSIVirLYfEeMXPF9TxGjILXYZVoc5-x1W9779TXLgMhPpSttrks)
+
 ## Build image
 
 ```
