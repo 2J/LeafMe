@@ -1,4 +1,5 @@
-import serial 
+import serial
+import sys
 import time
 import requests
 import json
@@ -42,8 +43,12 @@ def checkWatering():
             print('should start now')
             pumpStatus = True
             startEvent(waterEvent)
+            timer = threading.Timer(waterEvent.amount, finishEvent, [waterEvent])
+            timer.start()
 
-
+def convertWaterAmount(amount, speed):
+    # some kind of formula for controlling water amount by time and speed
+    return amount*speed/60
 
 def checkLighting():
     currentTime = datetime.now(timezone.utc)
@@ -57,7 +62,7 @@ def checkLighting():
             lightStatus = True
             startEvent(lightEvent)
             #timer takes in second
-            timer = threading.Timer(lightEvent.amount * 60, finishEvent, [lightEvent])
+            timer = threading.Timer(lightEvent.amount, finishEvent, [lightEvent])
             #timer = threading.Timer(10, dummy)
             timer.start()
 
@@ -90,7 +95,6 @@ def finishEvent(event, url = 'https://leafme.jj.ai', eventUrl = '/plant/1/events
         else:
             print("error in threading, no water event to pop")
 
-
     elif event.type == eventType.light:
         evenTypeUrl = '/light/'
         print("finish lighting")
@@ -105,7 +109,6 @@ def finishEvent(event, url = 'https://leafme.jj.ai', eventUrl = '/plant/1/events
             lightQueue.pop(0)
         else:
             print("error in threading, no light event to pop")
-
 
 def getRequest(url = 'https://leafme.jj.ai', event = '/plant/1/events'):
     response = requests.get((url + event))
@@ -145,27 +148,42 @@ def postSensorReading(soilMoisture, brightness, ambientTemp, ambientHumidity, ur
 #adruino = serial.Serial('/dev/ttyACM0', 9600)
 url = 'https://leafme.jj.ai'
 eventUrl = '/plant/1/events'
+
+
 #initialize the event queue for lighting and watering
 waterQueue = []
 lightQueue = []
 pumpStatus = False
 lightStatus = False
-getRequest()
 
+try:
+    ser = serial.Serial('/dev/ttyUSB0', 9600)
+    print(ser.name)
+    while True:
+        ser.write(b'hello')
+        time.sleep(30)
+except:
+    print("cannot open serial port")
+    sys.exit()
+
+
+
+
+getRequest()
 '''
 print("this is water queue")
 print(len(waterQueue))
 for item in waterQueue:
     printEvent(item, eventType.water)
-
 print("this is light queue")
 print(len(lightQueue))
 for item in lightQueue:
     printEvent(item, eventType.light)
 '''
 while True:
-    checkLighting()
-    time.sleep(1)
+    #checkLighting()
+    #checkWatering()
+    time.sleep(30)
 
 
 
