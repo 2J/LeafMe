@@ -157,6 +157,13 @@ export const CONTAINERS = {
         flexDirection: 'column', 
         justifyContent: 'space-evenly',
         alignItems: 'center',
+    }, 
+    step: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.green5, 
+        padding: '5%'
     }
 }
 
@@ -181,7 +188,7 @@ export const FONTS = {
     }, 
     h2: {
         fontSize: 24, 
-        color: COLORS.grey7, 
+        color: COLORS.grey9, 
         fontWeight: 'bold'
     }, 
     h3: {

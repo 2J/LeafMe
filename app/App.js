@@ -21,6 +21,7 @@ import NetworkSettings from './Setup/NetworkSettings';
 import ManualOrPreset from './Setup/ManualOrPreset';
 import ManualSetup from './Setup/ManualSetup';
 import PresetCategory from './Setup/PresetCategory';
+import Instructions from './Setup/Instructions/Instructions';
 
 //Style Imports
 import { COLORS } from './styles';
@@ -40,7 +41,8 @@ const SetupStack = createStackNavigator(
     NetworkSettings: NetworkSettings,
     ManualOrPreset: ManualOrPreset, 
     ManualSetup: ManualSetup,
-    PresetCategory: PresetCategory
+    PresetCategory: PresetCategory, 
+    Instructions: Instructions
   },
   {
     initialRouteName: 'Welcome',
@@ -80,7 +82,7 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: COLORS.green5,
       inactiveTintColor: COLORS.grey7,
       style: {
-        height: 50,
+        height: 60,
         backgroundColor: COLORS.white,
       }
     },

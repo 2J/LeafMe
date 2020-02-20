@@ -46,7 +46,7 @@ export default class ListViewCard extends Component {
 
     let eventList = [];
     _.forEach(this.props.items, event => {
-      eventList.push(<Divider />); //push separately because elements need parents
+      eventList.push(<Divider key={event.id}/>); //push separately because elements need parents
       eventList.push(      
         <View style={{ //not sure why it won't let me add bottom padding without stlying like this
           flex: 1, 
@@ -121,7 +121,8 @@ export default class ListViewCard extends Component {
               View More
             </Button>
             </View> }
-
+          
+          <View style={{paddingTop: 20}}></View> 
           <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingTop: '25%'})}> 
             <Button 
               mode='contained'
