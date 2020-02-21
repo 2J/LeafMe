@@ -45,9 +45,9 @@ func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetLatestSensorReadingsForTypeHandler(w http.ResponseWriter, r *http.Request) {
@@ -56,12 +56,12 @@ func GetLatestSensorReadingsForTypeHandler(w http.ResponseWriter, r *http.Reques
 
 	sensorReadings, err := models.GetLatestSensorReadingsByType(plantId, sensorType)
 
-	responseJson, err := json.Marshal(sensorReadings)
+	responseJSON, err := json.Marshal(sensorReadings)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func CreateSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
@@ -104,17 +104,17 @@ func CreateSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	}{
 		false,
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
 	var err error
 	err = models.CreateSensorReadings(sensorReadings)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJson)
+		writeJsonResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
-	responseJson, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJson)
+	responseJSON, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJSON)
 }

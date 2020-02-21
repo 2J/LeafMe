@@ -12,12 +12,12 @@ func GetPresetsByTypeHandler(w http.ResponseWriter, r *http.Request) {
 
 	presets, err := models.GetPresetsByType(presetType)
 
-	responseJson, err := json.Marshal(presets)
+	responseJSON, err := json.Marshal(presets)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetPresetByIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -32,10 +32,10 @@ func GetPresetByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, err := json.Marshal(preset)
+	responseJSON, err := json.Marshal(preset)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }

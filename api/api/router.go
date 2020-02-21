@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// NewServer TODO
 func NewServer(listenAddress string, httpLogger io.Writer) (server *http.Server, err error) {
 	router := NewRouter()
 
@@ -21,6 +22,7 @@ func NewServer(listenAddress string, httpLogger io.Writer) (server *http.Server,
 	return server, nil
 }
 
+// NewRouter TODO
 func NewRouter() *mux.Router {
 	router := mux.NewRouter()
 
@@ -61,6 +63,10 @@ func NewRouter() *mux.Router {
 	// Preset handlers
 	router.HandleFunc("/presets/type/{presetType}", addDefaultHeaders(GetPresetsByTypeHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetByIdHandler)).Methods("GET", "OPTIONS")
+
+	// Notification handlers
+	router.HandleFunc("/notification/pushtoken", addDefaultHeaders(UpdatePushTokenHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/notification/plant/{plantId}", addDefaultHeaders(SendPushNotificationHandler)).Methods("POST", "OPTIONS")
 
 	return router
 }

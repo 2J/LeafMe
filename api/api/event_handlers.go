@@ -19,12 +19,12 @@ func GetLightingEventByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, err := json.Marshal(lightingEvent)
+	responseJSON, err := json.Marshal(lightingEvent)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetLightingEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -41,12 +41,12 @@ func GetLightingEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request
 		lightingEvents,
 	}
 
-	responseJson, err := json.Marshal(response)
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetLightingEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -63,12 +63,12 @@ func GetLightingEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		lightingEvents,
 	}
 
-	responseJson, err := json.Marshal(response)
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetWateringEventByIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -83,12 +83,12 @@ func GetWateringEventByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, err := json.Marshal(wateringEvent)
+	responseJSON, err := json.Marshal(wateringEvent)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetWateringEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -105,12 +105,12 @@ func GetWateringEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request
 		wateringEvents,
 	}
 
-	responseJson, err := json.Marshal(response)
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetWateringEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -127,12 +127,12 @@ func GetWateringEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		wateringEvents,
 	}
 
-	responseJson, err := json.Marshal(response)
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -155,12 +155,12 @@ func GetEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		wateringEvents,
 	}
 
-	responseJson, err := json.Marshal(response)
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func SetLightingEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
@@ -171,18 +171,18 @@ func SetLightingEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
 	}{
 		false,
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
 	err := models.SetLightingEventFinished(eventId, true)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJson)
+		writeJsonResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
-	responseJson, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJson)
+	responseJSON, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func SetWateringEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
@@ -193,16 +193,16 @@ func SetWateringEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
 	}{
 		false,
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
 	err := models.SetWateringEventFinished(eventId, true)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJson)
+		writeJsonResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
-	responseJson, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJson)
+	responseJSON, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJSON)
 }

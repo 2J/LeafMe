@@ -20,12 +20,12 @@ func GetLightingScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, err := json.Marshal(lightingSchedule)
+	responseJSON, err := json.Marshal(lightingSchedule)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,12 +40,12 @@ func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, err := json.Marshal(wateringSchedule)
+	responseJSON, err := json.Marshal(wateringSchedule)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -68,12 +68,12 @@ func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		wateringSchedules,
 	}
 
-	responseJson, err := json.Marshal(response)
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
@@ -94,19 +94,19 @@ func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		false,
 		0,
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
 	var err error
 	response.Id, err = lightingSchedule.Create()
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJson)
+		writeJsonResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
-	responseJson, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJson)
+	responseJSON, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
@@ -125,9 +125,9 @@ func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		response.Success = true
 		statusCode = 200
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, statusCode, responseJson)
+	writeJsonResponse(w, statusCode, responseJSON)
 }
 
 func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
@@ -148,19 +148,19 @@ func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		false,
 		0,
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
 	var err error
 	response.Id, err = wateringSchedule.Create()
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJson)
+		writeJsonResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
-	responseJson, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJson)
+	responseJSON, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
@@ -179,7 +179,7 @@ func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		response.Success = true
 		statusCode = 200
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, statusCode, responseJson)
+	writeJsonResponse(w, statusCode, responseJSON)
 }

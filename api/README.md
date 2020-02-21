@@ -27,7 +27,7 @@ $ make push
 
 - [Add endpoint for setting plant light status](https://trello.com/c/9tiAddYd/42-add-endpoint-for-setting-plant-light-status)
 
-- [Push notifications](https://trello.com/c/NaLyca1z/26-push-notifications)
+- [Sending push notifications when needed](https://trello.com/c/zvirVeCR/45-send-push-notifications-from-api-when-needed)
 
 ## BUGS
 
@@ -222,4 +222,40 @@ GET https://leafme.jj.ai/presets/types/LEGUME
 
 ```
 GET https://leafme.jj.ai/presets/{{presetId}}
+```
+
+## Push Notifications
+
+Uses [Expo](https://docs.expo.io/versions/latest/guides/push-notifications/) library for push tokens
+
+### Set push token
+
+```
+POST https://leafme.jj.ai/notifications/pushtoken
+
+example payload:
+
+    {
+        "plant_id": 1,
+        "push_token": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
+    }
+```
+
+### Send Notification (for testing purposes)
+
+Sends push notification to plant
+
+```
+POST https://leafme.jj.ai/notifications/plant/{{plantId}}
+
+example payload:
+
+    {
+        "title": "Notification Title",
+        "body": "Notification Body",
+        "data": {
+            "data1": "value1",
+            "data2": "value2"
+        }
+    }
 ```

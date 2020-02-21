@@ -1,0 +1,1 @@
+ALTER TABLE plants ADD `pushToken` VARCHAR(400) NOT NULL DEFAULT '' AFTER `description`;

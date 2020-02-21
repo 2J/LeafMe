@@ -20,12 +20,12 @@ func GetPlantByIdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseJson, err := json.Marshal(plant)
+	responseJSON, err := json.Marshal(plant)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJson)
+	writeJsonResponse(w, 200, responseJSON)
 }
 
 func UpdatePlantHandler(w http.ResponseWriter, r *http.Request) {
@@ -60,16 +60,16 @@ func UpdatePlantHandler(w http.ResponseWriter, r *http.Request) {
 	}{
 		false,
 	}
-	responseJson, _ := json.Marshal(response)
+	responseJSON, _ := json.Marshal(response)
 
 	err = models.UpdatePlantName(plantID, plant.Name)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJson)
+		writeJsonResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
-	responseJson, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJson)
+	responseJSON, err = json.Marshal(response)
+	writeJsonResponse(w, 200, responseJSON)
 }

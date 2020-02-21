@@ -14,6 +14,7 @@ type Plant struct {
 	DeviceID    int    `json:"device_id" validate:"required"`
 	Name        string `json:"name" validate:"required"`
 	Description string `json:"-"`
+	PushToken   string `json:"-"`
 }
 
 func (plant *Plant) getRow(rows *sql.Rows) error {
@@ -22,6 +23,7 @@ func (plant *Plant) getRow(rows *sql.Rows) error {
 		&plant.DeviceID,
 		&plant.Name,
 		&plant.Description,
+		&plant.PushToken,
 	)
 
 	return err
@@ -65,6 +67,24 @@ func UpdatePlantName(plantID int, name string) error {
 
 	_, err = delForm.Exec(
 		name,
+		plantID,
+	)
+
+	return err
+}
+
+// UpdatePlantPushToken TODO
+func UpdatePlantPushToken(plantID int, pushToken string) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE plants SET pushToken = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		pushToken,
 		plantID,
 	)
 
