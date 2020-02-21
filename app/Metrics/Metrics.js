@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
-import { COLORS, CONTAINERS, FONTS } from '../styles';
 import CustomBanner from '../Components/CustomBanner';
 import moment from 'moment';
 import _ from 'lodash';
@@ -13,6 +12,8 @@ import Plant from '../Models/Plant';
 //Component Imports
 import ChartCard from './ChartCard';
 import EmptyChartCard from './EmptyChartCard';
+
+import { COLORS, CONTAINERS, FONTS } from '../styles';
 
 export default class Metrics extends Component {
 
@@ -45,10 +46,10 @@ export default class Metrics extends Component {
       })
       this.setState({
         soilData: {
-          labels: labels,
+          labels: _.slice(labels, labels.length-6, labels.length),
           datasets: [
             {
-              data: values,
+              data: _.slice(values, values.length-6, values.length),
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -67,10 +68,10 @@ export default class Metrics extends Component {
       })
       this.setState({
         brightnessData: {
-          labels: labels,
+          labels: _.slice(labels, labels.length-6, labels.length),
           datasets: [
             {
-              data: values,
+              data: _.slice(values, values.length-6, values.length),
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -89,10 +90,10 @@ export default class Metrics extends Component {
       })
       this.setState({
         temperatureData: {
-          labels: labels,
+          labels: _.slice(labels, labels.length-6, labels.length),
           datasets: [
             {
-              data: values,
+              data: _.slice(values, values.length-6, values.length),
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -111,10 +112,10 @@ export default class Metrics extends Component {
       })
       this.setState({
         humidityData: {
-          labels: labels,
+          labels: _.slice(labels, labels.length-6, labels.length),
           datasets: [
             {
-              data: values,
+              data: _.slice(values, values.length-6, values.length),
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -153,18 +154,20 @@ export default class Metrics extends Component {
           parent='Metrics'
           emoji='chart_with_upwards_trend'
         />
-        <Button 
-          mode='contained'
-          color={COLORS.green5}
-          onPress={this.refreshSensors}
-        >
-          Refresh Charts
-        </Button>
-        
+       
         <View style={CONTAINERS.main}>
           <Text style={FONTS.h1}>Currently Growing: {this.state.plantName}</Text>
 
-          <Text style={FONTS.h4}>Soil Moisture</Text>
+          <View style={CONTAINERS.spaceBetween}>
+            <Text style={FONTS.h4}>Plant Conditions</Text>
+            <Button 
+              mode='contained'
+              color={COLORS.green5}
+              onPress={this.refreshSensors}
+              style={{marginBottom: 10}}
+            >Refresh Charts</Button>
+          </View>
+            
           {soilData ?
             <ChartCard 
               data={soilData}
