@@ -173,11 +173,11 @@ while True:
     if ser.in_waiting > 0:
         data = ser.readline().decode('utf-8')
         pieces = data.split()
-        soilMoisture = pieces[0]
-        brightness = pieces[1]
-        ambientTemp = pieces[2]
-        ambientHumidity = pieces[3]
-        print("post sensor reading")
+        soilMoisture = float(pieces[0])
+        brightness = float(pieces[1])
+        ambientTemp = float(pieces[2])
+        ambientHumidity = float(pieces[3])
+        print("post sensor reading from arduino")
         print('post sensor reading... soilMoisture: ', soilMoisture, ' brightness: ', brightness, ' ambientTemp: ', ambientTemp,' ambientHumidity: ',ambientHumidity)
         postSensorReading(soilMoisture, brightness, ambientTemp, ambientHumidity)
     time.sleep(30)
