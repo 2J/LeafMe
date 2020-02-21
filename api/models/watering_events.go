@@ -18,12 +18,40 @@ type WateringEvent struct {
 	Finished           bool      `json:"finished"`
 }
 
+// Create TODO
+func (wateringEvent *WateringEvent) Create() (int, error) {
+	db := database.Open()
+	defer database.Close(db)
+
+	insForm, err := db.Prepare("INSERT INTO wateringEvents (`plantId`, `startTime`, `amount`, `finished`) VALUES (?,?,?,?,?)")
+	if err != nil {
+		return 0, err
+	}
+
+	res, err := insForm.Exec(
+		wateringEvent.PlantID,
+		wateringEvent.StartTime,
+		wateringEvent.Amount,
+		wateringEvent.Finished,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	id, err := res.LastInsertId()
+
+	wateringEvent.ID = int(id)
+
+	return int(id), err
+}
+
 // CreateWateringEvents creates batch of watering events
 func CreateWateringEvents(wateringEvents []WateringEvent) (err error) {
 	db := database.Open()
 	defer database.Close(db)
 
-	query := "INSERT INTO wateringEvents (`plantID`, `wateringScheduleId`, `startTime`, `amount`, `finished`) VALUES "
+	query := "INSERT INTO wateringEvents (`plantId`, `wateringScheduleId`, `startTime`, `amount`, `finished`) VALUES "
 	vals := []interface{}{}
 	for i, v := range wateringEvents {
 		if i > 0 {
@@ -179,6 +207,23 @@ func DeleteWateringEventsByScheduleID(scheduleID int) error {
 
 	_, err = delForm.Exec(
 		scheduleID,
+	)
+
+	return err
+}
+
+// DeleteWateringEventsByID deletes watering events by ID
+func DeleteWateringEventsByID(eventID int) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("DELETE FROM wateringEvents WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		eventID,
 	)
 
 	return err

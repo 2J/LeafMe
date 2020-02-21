@@ -18,6 +18,34 @@ type LightingEvent struct {
 	Finished           bool      `json:"finished"`
 }
 
+// Create TODO
+func (lightingEvent *LightingEvent) Create() (int, error) {
+	db := database.Open()
+	defer database.Close(db)
+
+	insForm, err := db.Prepare("INSERT INTO lightingEvents (`plantId`, `startTime`, `length`, `finished`) VALUES (?,?,?,?,?)")
+	if err != nil {
+		return 0, err
+	}
+
+	res, err := insForm.Exec(
+		lightingEvent.PlantID,
+		lightingEvent.StartTime,
+		lightingEvent.Length,
+		lightingEvent.Finished,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	id, err := res.LastInsertId()
+
+	lightingEvent.ID = int(id)
+
+	return int(id), err
+}
+
 // CreateLightingEvents creates batch of lighting events
 func CreateLightingEvents(lightingEvents []LightingEvent) (err error) {
 	db := database.Open()
@@ -179,6 +207,23 @@ func DeleteLightingEventsByScheduleID(scheduleID int) error {
 
 	_, err = delForm.Exec(
 		scheduleID,
+	)
+
+	return err
+}
+
+// DeleteLightingEventsByID deletes lighting events by ID
+func DeleteLightingEventsByID(eventID int) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("DELETE FROM lightingEvents WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		eventID,
 	)
 
 	return err
