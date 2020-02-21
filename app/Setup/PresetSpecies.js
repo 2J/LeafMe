@@ -76,7 +76,7 @@ export default class PresetSpecies extends Component {
         <View style={{paddingTop: 20}}></View>
         <BackAndNext 
           goBack={() => this.props.navigation.goBack()}
-          next={() => this.props.navigation.navigate('PresetSpecies', { selected: this.state.selected })}
+          next={() => this.props.navigation.navigate('PresetSetup', { selected: this.state.selected })}
         />
       </View>
     )

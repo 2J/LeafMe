@@ -79,7 +79,8 @@ export const CONTAINERS = {
             width: 1, 
             height: 1
         }, 
-        borderRadius: 10
+        borderRadius: 10,
+        marginBottom: 20
     },
     infoCard: {
         width: 160, 
@@ -100,7 +101,19 @@ export const CONTAINERS = {
             width: 1, 
             height: 1
         }, 
-        borderRadius: 10
+        borderRadius: 10,
+        marginBottom: 20
+    },
+    presetsCard: {
+        height: 215, 
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.grey9, 
+        shadowOffset: {
+            width: 1, 
+            height: 1
+        }, 
+        borderRadius: 10,
+        marginBottom: 20
     },
     chartCard: {
         height: 290, 

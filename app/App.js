@@ -22,6 +22,7 @@ import ManualOrPreset from './Setup/ManualOrPreset';
 import ManualSetup from './Setup/ManualSetup';
 import PresetCategory from './Setup/PresetCategory';
 import PresetSpecies from './Setup/PresetSpecies';
+import PresetSetup from './Setup/PresetSetup';
 import Instructions from './Setup/Instructions/Instructions';
 
 //Style Imports
@@ -44,6 +45,7 @@ const SetupStack = createStackNavigator(
     ManualSetup: ManualSetup,
     PresetCategory: PresetCategory, 
     PresetSpecies: PresetSpecies,
+    PresetSetup: PresetSetup,
     Instructions: Instructions
   },
   {

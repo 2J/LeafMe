@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import _ from 'lodash';
-import { default as AwesomeIcon } from 'react-native-vector-icons/FontAwesome5';
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
 import { COLORS } from '../../styles';
 

@@ -10,4 +10,11 @@ export default class Presets {
     });
   }
 
+  static async getPresets(id) {
+    let url = 'https://leafme.jj.ai/presets/' + id;
+    return fetch(url).then( response => {
+      return response.json();
+    });
+  }
+
 }
