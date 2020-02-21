@@ -115,7 +115,7 @@ def getRequest(url = 'https://leafme.jj.ai', event = '/plant/1/events'):
     if response.status_code == 200:
         print('success')
         data = response.json()
-        print(data)
+        #print(data)
 
         for nextEvent in data["watering_events"]:
             if nextEvent["finished"] == False:
@@ -133,15 +133,18 @@ def getRequest(url = 'https://leafme.jj.ai', event = '/plant/1/events'):
 
 def postSensorReading(soilMoisture, brightness, ambientTemp, ambientHumidity, url = 'https://leafme.jj.ai', sensorUrl = '/plant/1/sensors'):
 
-    payload = [{"type": "SOIL_MOISTURE", "value": soilMoisture},
-               {"type": "BRIGHTNESS", "value": brightness},
-               {"type": "AMBIENT_TEMPERATURE", "value": ambientTemp},
-               {"type": "AMBIENT_HUMIDITY", "value": ambientHumidity}
-               ]
+    payload = [
+                {"type": "SOIL_MOISTURE","value": soilMoisture},
+                {"type": "BRIGHTNESS", "value": brightness},
+                {"type": "AMBIENT_TEMPERATURE", "value": ambientTemp},
+                {"type": "AMBIENT_HUMIDITY", "value": ambientHumidity}
+            ]
 
-    req = requests.post((url + sensorUrl), data=payload)
-    print('server response')
+    req = requests.post((url + sensorUrl), data= json.dumps(payload))
+    print('sensor reading post server response')
     print(req)
+    if req.status_code == 200:
+        print('post sensor data success')
 
 
 # the port that connects adruino with
@@ -156,20 +159,31 @@ lightQueue = []
 pumpStatus = False
 lightStatus = False
 
+getRequest()
+
 try:
-    ser = serial.Serial('/dev/ttyUSB0', 9600)
+    ser = serial.Serial('/dev/ttyACM0', 9600)
     print(ser.name)
-    while True:
-        ser.write(b'hello')
-        time.sleep(30)
+    ser.flush()
 except:
     print("cannot open serial port")
     sys.exit()
 
+while True:
+    if ser.in_waiting > 0:
+        data = ser.readline().decode('utf-8')
+        pieces = data.split()
+        soilMoisture = pieces[0]
+        brightness = pieces[1]
+        ambientTemp = pieces[2]
+        ambientHumidity = pieces[3]
+        print("post sensor reading")
+        print('post sensor reading... soilMoisture: ', soilMoisture, ' brightness: ', brightness, ' ambientTemp: ', ambientTemp,' ambientHumidity: ',ambientHumidity)
+        postSensorReading(soilMoisture, brightness, ambientTemp, ambientHumidity)
+    time.sleep(30)
 
 
 
-getRequest()
 '''
 print("this is water queue")
 print(len(waterQueue))
@@ -180,26 +194,12 @@ print(len(lightQueue))
 for item in lightQueue:
     printEvent(item, eventType.light)
 '''
+'''
 while True:
     #checkLighting()
     #checkWatering()
     time.sleep(30)
-
-
-
-
-#postSensorReading(23.1, 1002.1, 25.0, 50.0)
 '''
-while (true):
-    data = adruino.readline()
-    time.sleep(1)
-    data = arduino.readline()
-    pieces = data.split("\t")
-    temp = pieces[0]
-    humidity = pieces[1]
-    print temp
-    print humidity
-    adruino.write("this is a test".encode())
 
-'''
+
 
