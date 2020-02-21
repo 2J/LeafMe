@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 //Model Imports
 import Sensors from '../Models/Sensors';
+import Plant from '../Models/Plant';
 
 //Component Imports
 import InfoCard from './InfoCard';
@@ -19,7 +20,8 @@ export default class Overview extends Component {
     moisture: '',
     brightness: '',
     temperature: '',
-    humidity: ''
+    humidity: '', 
+    plantName: ''
   }
 
   refreshSensors = async () => {
@@ -35,6 +37,17 @@ export default class Overview extends Component {
   }
 
   async componentDidMount(){
+    await Plant.getPlant().then(data => {
+      this.setState({
+        plantName: data.name
+      })
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error getting Plant Name: ' + error
+      );
+      throw error;
+    });
     await this.refreshSensors();
   }
 
@@ -43,7 +56,8 @@ export default class Overview extends Component {
       moisture,
       brightness,
       temperature,
-      humidity
+      humidity, 
+      plantName
     } = this.state;
 
     return (
@@ -54,7 +68,7 @@ export default class Overview extends Component {
           />
             
           <View style={CONTAINERS.main}>
-            <Text style={FONTS.h1}>Your plant is great :) </Text>
+            <Text style={FONTS.h1}>Currently Growing: {plantName}</Text>
             <View style={CONTAINERS.spaceBetween}>
               <Text style={FONTS.h4}>Plant Conditions</Text>
               <Button 

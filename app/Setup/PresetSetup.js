@@ -7,6 +7,7 @@ import _ from 'lodash';
 //Model imports
 import Presets from '../Models/Presets';
 import Schedule from '../Models/Schedule';
+import Plant from '../Models/Plant';
 
 //Component Imports
 import BackAndNext from './Components/BackAndNext';
@@ -126,6 +127,21 @@ export default class Preset extends Component {
     await this.getSchedules();
   }
 
+  saveAndGo = async () => {
+    let name = {
+      name: this.state.newPlantName
+    }
+    await Plant.updatePlant(name).then(data => {
+      this.props.navigation.navigate('Instructions');
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error updating Plant Name: ' + error
+      );
+      throw error;
+    });
+  }
+
   render() {
     const icons = {
       PEPPER: 'pepper-hot',
@@ -164,6 +180,7 @@ export default class Preset extends Component {
           <Text style={FONTS.h4}>Recommended Growing Conditions</Text>
           <Card style={CONTAINERS.presetsCard}>
             <Card.Content>
+
               <View style={{ 
                 flexDirection: 'row',
                 justifyContent: "space-evenly",
@@ -172,20 +189,26 @@ export default class Preset extends Component {
               }}> 
                 <AwesomeIcon name={icons[plant.type]} size={85} color={COLORS.green5}/>
                 <View style={{flexDirection: 'column', textAlign: 'center', width: 225, paddingLeft:50}}>
-                  <Text>Lighting:</Text>
-                  <Text style={{fontWeight: 'bold', marginBottom: 20}}>{plant.light_length/60} hours every {plant.light_repeat} days</Text>
-                  <Text>Watering</Text>
-                  <Text style={{fontWeight: 'bold', marginBottom: 20}}>{plant.water_amount} ml every {plant.water_repeat} days</Text>
+                  <Text style={FONTS.preset}>Lighting:</Text>
+                  <Text style={FONTS.presetBold}>{plant.light_length/60} hours every {plant.light_repeat} days</Text>
+                  <View style={{paddingTop: 10}}></View>
+                  <Text style={FONTS.preset}>Watering</Text>
+                  <Text style={FONTS.presetBold}>{plant.water_amount} ml every {plant.water_repeat} days</Text>
                 </View>
               </View>
+
+              <View style={{paddingTop: 15}}></View>
               <View style={{flexDirection: 'row', justifyContent: "right"}}>
-                <Text>Ambient Temperature: </Text>
-                <Text style={{fontWeight: 'bold', marginBottom: 5}}>{plant.temp_min}C - {plant.temp_max}C</Text>
+                <Text style={FONTS.preset}>Ambient Temperature: </Text>
+                <Text style={FONTS.presetBold}>{plant.temp_min}C - {plant.temp_max}C</Text>
               </View>
+
+              <View style={{paddingTop: 5}}></View>
               <View style={{flexDirection: 'row', justifyContent: "right"}}>
-                <Text>Ambient Humidity: </Text>
-                <Text style={{fontWeight: 'bold'}}>{plant.humidity_min}% - {plant.humidity_max}%</Text>
+                <Text style={FONTS.preset}>Ambient Humidity: </Text>
+                <Text style={FONTS.presetBold}>{plant.humidity_min}% - {plant.humidity_max}%</Text>
               </View>
+
             </Card.Content>
           </Card>
 
@@ -210,7 +233,7 @@ export default class Preset extends Component {
 
           <BackAndNext 
             goBack={() => this.props.navigation.goBack()}
-            next={() => this.props.navigation.navigate('Instructions')}
+            next={this.saveAndGo}
           />  
         </View>
       </ScrollView>

@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 //Model imports
 import Schedule from '../Models/Schedule';
+import Plant from '../Models/Plant';
 import Event from '../Models/Event';
 
 //Component Imports
@@ -21,7 +22,7 @@ export default class GrowingSchedule extends Component {
     lightingSchedule: ' ', 
     wateringEvents: ' ', 
     lightingEvents: ' ',
-    plantType: 'Basil',
+    plantName: '',
     calendarView: false,
     addWaterSnackVisible: false,
     deleteWaterSnackVisible: false,
@@ -47,6 +48,17 @@ export default class GrowingSchedule extends Component {
   }
 
   async componentDidMount(){
+    await Plant.getPlant().then(data => {
+      this.setState({
+        plantName: data.name
+      })
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error getting Plant Name: ' + error
+      );
+      throw error;
+    });
     await this.getSchedules();
   }
 
@@ -186,7 +198,7 @@ export default class GrowingSchedule extends Component {
             emoji='seedling'
           />
           <View  style={CONTAINERS.main}>
-            <Text style={FONTS.h1}>Currently Growing: {this.state.plantType}</Text>
+            <Text style={FONTS.h1}>Currently Growing: {this.state.plantName}</Text>
             <View style={CONTAINERS.spaceBetween}>
               <Text style={_.assignIn(FONTS.h2, {paddingBottom: 10, width: '50%'})}>Schedule</Text>
               <Button 

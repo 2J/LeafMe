@@ -8,7 +8,9 @@ import _ from 'lodash';
 
 //Model Imports
 import Sensors from '../Models/Sensors';
+import Plant from '../Models/Plant';
 
+//Component Imports
 import ChartCard from './ChartCard';
 import EmptyChartCard from './EmptyChartCard';
 
@@ -123,6 +125,17 @@ export default class Metrics extends Component {
   }
 
   async componentDidMount(){
+    await Plant.getPlant().then(data => {
+      this.setState({
+        plantName: data.name
+      })
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error getting Plant Name: ' + error
+      );
+      throw error;
+    });
     await this.refreshSensors();
   }
 
@@ -149,6 +162,8 @@ export default class Metrics extends Component {
         </Button>
         
         <View style={CONTAINERS.main}>
+          <Text style={FONTS.h1}>Currently Growing: {this.state.plantName}</Text>
+
           <Text style={FONTS.h4}>Soil Moisture</Text>
           {soilData ?
             <ChartCard 

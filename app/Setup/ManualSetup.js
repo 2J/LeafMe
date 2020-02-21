@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
 import { Button, Card, TextInput } from 'react-native-paper';
 
-import BackAndNext from './Components/BackAndNext';
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 //Model imports
 import Schedule from '../Models/Schedule';
+import Plant from '../Models/Plant';
+
+//Component imports
+import BackAndNext from './Components/BackAndNext';
 import AddScheduleForm from '../GrowingSchedule/AddScheduleForm';
 
 export default class ManualSetup extends Component {
   state = {
     wateringSchedule: [],
     lightingSchedule: [], 
-    plantType: 'Basil',
+    newPlantName: 'Basil',
   }
 
   getSchedules = async () => {
@@ -109,6 +112,21 @@ export default class ManualSetup extends Component {
     await this.getSchedules();
   }
 
+  saveAndGo = async () => {
+    let name = {
+      name: this.state.newPlantName
+    }
+    await Plant.updatePlant(name).then(data => {
+      this.props.navigation.navigate('Instructions');
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error updating Plant Name: ' + error
+      );
+      throw error;
+    });
+  }
+
   render() {
     return (
       <ScrollView>
@@ -129,8 +147,8 @@ export default class ManualSetup extends Component {
             <Card.Content>
               <TextInput
                 placeholder='Plant Type'
-                value={this.state.plantType}
-                onChangeText={text => this.setState({ plantType: text })}
+                value={this.state.newPlantName}
+                onChangeText={text => this.setState({ newPlantName: text })}
                 underlineColor={COLORS.grey5}
                 dense={true}
                 style={{
@@ -163,7 +181,7 @@ export default class ManualSetup extends Component {
 
           <BackAndNext 
             goBack={() => this.props.navigation.goBack()}
-            next={() => this.props.navigation.navigate('Instructions')}
+            next={this.saveAndGo}
           />  
         </View>
       </ScrollView>

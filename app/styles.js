@@ -192,6 +192,13 @@ export const FONTS = {
         fontWeight: 'bold', 
         paddingBottom: 30
     },
+    preset:{
+        fontSize: 16
+    }, 
+    presetBold: {
+        fontSize: 16, 
+        fontWeight: 'bold'
+    },
     h1: {
         fontSize: 32, 
         color: COLORS.grey9, 
