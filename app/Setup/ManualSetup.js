@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
 import { Button, Card, TextInput } from 'react-native-paper';
 
+import BackAndNext from './Components/BackAndNext';
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 //Model imports
@@ -159,23 +160,11 @@ export default class ManualSetup extends Component {
             addSchedule={this.addLightingSchedule}
             deleteSchedule={this.deleteLightingSchedule}
           />
-          
-          <View style={CONTAINERS.spaceBetween}>
-            <Button 
-              mode='text'
-              color={COLORS.grey9}
-              onPress={() => this.props.navigation.goBack()}
-            >Back</Button>
-            <Button 
-              mode='contained'
-              color={COLORS.green5}
-              onPress={() => this.props.navigation.navigate('Instructions')}
-              contentStyle={{
-                width: 100
-              }}
-            >Next</Button>
-          </View>
 
+          <BackAndNext 
+            goBack={() => this.props.navigation.goBack()}
+            next={() => this.props.navigation.navigate('Instructions')}
+          />  
         </View>
       </ScrollView>
     )
