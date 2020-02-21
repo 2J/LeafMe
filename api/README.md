@@ -95,9 +95,9 @@ example payload:
                 "time": "2020-01-13T12:00:00Z",
                 "repeat_days": 6,
                 "repeat_end_date": "2020-05-12T12:00:00Z"
-            }},
+            },
             "length": 180
-        }}
+        }
 
 WATER
 POST https://leafme.jj.ai/plant/{{plantId}}/schedules/water/create
@@ -110,9 +110,9 @@ example payload:
                 "time": "2020-01-13T12:00:00Z",
                 "repeat_days": 6,
                 "repeat_end_date": "2020-05-12T12:00:00Z"
-            }},
+            },
             "amount": 50
-        }}
+        }
 
 NOTE: repeat_end_date is optional
 ```
@@ -199,10 +199,10 @@ POST https://leafme.jj.ai/plant/1/sensors
 example payload: 
 
     [
-        {"type": "SOIL_MOISTURE","value": 16.02}},
-        {"type": "BRIGHTNESS","value": 17.44}},
-        {"type": "AMBIENT_TEMPERATURE","value": 18.2}},
-        {"type": "AMBIENT_HUMIDITY","value": 19}}
+        {"type": "SOIL_MOISTURE","value": 16.02},
+        {"type": "BRIGHTNESS","value": 17.44},
+        {"type": "AMBIENT_TEMPERATURE","value": 18.2},
+        {"type": "AMBIENT_HUMIDITY","value": 19}
     ]
 ```
 
