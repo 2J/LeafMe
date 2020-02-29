@@ -44,13 +44,13 @@ $ make push
 Gets the plant name, mode, manual light/water status
 
 ```
-GET https://leafme.jj.ai/plant/{{plantId}}
+GET https://leafme.jj.ai/plant/{{plantID}}
 ```
 
 ### Update Plant Name
 
 ```
-POST https://leafme.jj.ai/plant/{{plantId}}
+POST https://leafme.jj.ai/plant/{{plantID}}
 
 example payload: 
 
@@ -60,7 +60,7 @@ example payload:
 ### Update Plant Manual Mode
 
 ```
-POST https://leafme.jj.ai/plant/{{plantId}}/manual/mode
+POST https://leafme.jj.ai/plant/{{plantID}}/manual/mode
 
 example payload: 
 
@@ -70,7 +70,7 @@ example payload:
 #### Toggle Plant Manual Light Status
 
 ```
-POST https://leafme.jj.ai/plant/{{plantId}}/manual/light
+POST https://leafme.jj.ai/plant/{{plantID}}/manual/light
 
 (no payload needed)
 ```
@@ -78,7 +78,7 @@ POST https://leafme.jj.ai/plant/{{plantId}}/manual/light
 #### Update Plant Manual Water Amount
 
 ```
-POST https://leafme.jj.ai/plant/{{plantId}}/manual/water
+POST https://leafme.jj.ai/plant/{{plantID}}/manual/water
 
 example payload: 
 
@@ -90,33 +90,33 @@ example payload:
 ### Get All Schedules
 
 ```
-GET https://leafme.jj.ai/plant/{{plantId}}/schedules
+GET https://leafme.jj.ai/plant/{{plantID}}/schedules
 ```
 
-- plantId: int
+- plantID: int
 
 ### Get Individual Light / Water Schedule
 
 ```
 LIGHT
 
-GET https://leafme.jj.ai/plant/{{plantId}}/schedules/light/{{scheduleId}}
-- plantId: int
-- scheduleId: int
+GET https://leafme.jj.ai/plant/{{plantID}}/schedules/light/{{scheduleID}}
+- plantID: int
+- scheduleID: int
 
 WATER
 
-GET https://leafme.jj.ai/plant/{{plantId}}/schedules/water/{{scheduleId}}
-- plantId: int
-- scheduleId: int
+GET https://leafme.jj.ai/plant/{{plantID}}/schedules/water/{{scheduleID}}
+- plantID: int
+- scheduleID: int
 ```
 
 ### Create Light / Water Schedule
 
 ```
 LIGHT
-POST https://leafme.jj.ai/plant/{{plantId}}/schedules/light/create
-- plantId: int
+POST https://leafme.jj.ai/plant/{{plantID}}/schedules/light/create
+- plantID: int
 
 example payload: 
 
@@ -130,8 +130,8 @@ example payload:
         }
 
 WATER
-POST https://leafme.jj.ai/plant/{{plantId}}/schedules/water/create
-- plantId: int
+POST https://leafme.jj.ai/plant/{{plantID}}/schedules/water/create
+- plantID: int
 
 example payload: 
 
@@ -153,14 +153,14 @@ It will return whether it is successful, and the ID of the inserted light schedu
 
 ```
 LIGHT
-DELETE https://leafme.jj.ai/plant/{{plantId}}/schedules/light/delete/{{scheduleId}}
-- plantId: int
-- scheduleId: int
+DELETE https://leafme.jj.ai/plant/{{plantID}}/schedules/light/delete/{{scheduleID}}
+- plantID: int
+- scheduleID: int
 
 WATER
-DELETE https://leafme.jj.ai/plant/{{plantId}}/schedules/water/delete/{{scheduleId}}
-- plantId: int
-- scheduleId: int
+DELETE https://leafme.jj.ai/plant/{{plantID}}/schedules/water/delete/{{scheduleID}}
+- plantID: int
+- scheduleID: int
 ```
 
 ### Getting events
@@ -176,9 +176,9 @@ GET https://leafme.jj.ai/plant/1/events
 ```
 GET https://leafme.jj.ai/plant/1/events/light
 
-GET https://leafme.jj.ai/plant/1/events/light/{{eventId}}
+GET https://leafme.jj.ai/plant/1/events/light/{{eventID}}
 
-GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
+GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleID}}/events
 ```
 
 #### GET WATER EVENTS
@@ -186,9 +186,9 @@ GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
 ```
 GET https://leafme.jj.ai/plant/1/events/water
 
-GET https://leafme.jj.ai/plant/1/events/water/{{eventId}}
+GET https://leafme.jj.ai/plant/1/events/water/{{eventID}}
 
-GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
+GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleID}}/events
 ```
 
 #### SET EVENT TO FINISHED
@@ -196,9 +196,9 @@ GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
 NOTE: No payload needed when sending POST requests
 
 ```
-POST https://leafme.jj.ai/plant/1/events/light/{{eventId}}
+POST https://leafme.jj.ai/plant/1/events/light/{{eventID}}
 
-POST https://leafme.jj.ai/plant/1/events/water/{{eventId}}
+POST https://leafme.jj.ai/plant/1/events/water/{{eventID}}
 ```
 
 ## Monitoring / Sensors
@@ -206,8 +206,8 @@ POST https://leafme.jj.ai/plant/1/events/water/{{eventId}}
 ### Get stats for dashboard
 
 ```
-GET https://leafme.jj.ai/plant/{{plantId}}/sensors
-- plantId: int
+GET https://leafme.jj.ai/plant/{{plantID}}/sensors
+- plantID: int
 ```
 
 ### Get history for a type of sensor
@@ -251,7 +251,7 @@ GET https://leafme.jj.ai/presets/types/LEGUME
 ### Get preset details
 
 ```
-GET https://leafme.jj.ai/presets/{{presetId}}
+GET https://leafme.jj.ai/presets/{{presetID}}
 ```
 
 ## Push Notifications
@@ -276,7 +276,7 @@ example payload:
 Sends push notification to plant
 
 ```
-POST https://leafme.jj.ai/notification/plant/{{plantId}}
+POST https://leafme.jj.ai/notification/plant/{{plantID}}
 
 example payload:
 
