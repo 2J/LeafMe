@@ -217,6 +217,9 @@ GET https://leafme.jj.ai/plant/1/sensors/history/SOIL_MOISTURE
 GET https://leafme.jj.ai/plant/1/sensors/history/BRIGHTNESS
 GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_TEMPERATURE
 GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_HUMIDITY
+GET https://leafme.jj.ai/plant/1/sensors/history/PUMP_STATUS
+GET https://leafme.jj.ai/plant/1/sensors/history/LIGHT_STATUS
+GET https://leafme.jj.ai/plant/1/sensors/history/TANK_LEVEL
 ```
 
 NOTE: In progress, currently retrieves all data for type. Will be changed to only show requested history using start and end times. 
@@ -233,6 +236,9 @@ example payload:
         {"type": "BRIGHTNESS","value": 17.44},
         {"type": "AMBIENT_TEMPERATURE","value": 18.2},
         {"type": "AMBIENT_HUMIDITY","value": 19}
+        {"type": "PUMP_STATUS","value": 1}
+        {"type": "LIGHT_STATUS","value": 1}
+        {"type": "TANK_LEVEL","value": 1}
     ]
 ```
 

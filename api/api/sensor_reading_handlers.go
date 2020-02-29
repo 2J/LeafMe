@@ -18,6 +18,9 @@ func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		Brightness         models.SensorReading `json:"brightness"`
 		AmbientTemperature models.SensorReading `json:"ambient_temperature"`
 		AmbientHumidity    models.SensorReading `json:"ambient_humidity"`
+		PumpStatus         models.SensorReading `json:"pump_status"`
+		LightStatus        models.SensorReading `json:"light_status"`
+		TankLevel          models.SensorReading `json:"tank_level"`
 	}{}
 
 	var err error
@@ -41,6 +44,24 @@ func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response.AmbientHumidity, err = models.GetLatestSensorReadingByType(int64(plantID), "AMBIENT_HUMIDITY")
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed getting humidity: "+err.Error())
+		return
+	}
+
+	response.PumpStatus, err = models.GetLatestSensorReadingByType(int64(plantID), "PUMP_STATUS")
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed getting humidity: "+err.Error())
+		return
+	}
+
+	response.LightStatus, err = models.GetLatestSensorReadingByType(int64(plantID), "LIGHT_STATUS")
+	if err != nil {
+		writeErrorResponse(w, 500, "Failed getting humidity: "+err.Error())
+		return
+	}
+
+	response.TankLevel, err = models.GetLatestSensorReadingByType(int64(plantID), "TANK_LEVEL")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting humidity: "+err.Error())
 		return
