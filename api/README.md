@@ -231,7 +231,7 @@ Uses [Expo](https://docs.expo.io/versions/latest/guides/push-notifications/) lib
 ### Set push token
 
 ```
-POST https://leafme.jj.ai/notifications/pushtoken
+POST https://leafme.jj.ai/notification/pushtoken
 
 example payload:
 
@@ -246,7 +246,7 @@ example payload:
 Sends push notification to plant
 
 ```
-POST https://leafme.jj.ai/notifications/plant/{{plantId}}
+POST https://leafme.jj.ai/notification/plant/{{plantId}}
 
 example payload:
 
