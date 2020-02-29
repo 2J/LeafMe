@@ -14,7 +14,7 @@ func UpdatePushTokenHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 
 	type PushTokenUpdateForm struct {
-		PlantID   int    `json:"plant_id"`
+		PlantID   int64  `json:"plant_id"`
 		PushToken string `json:"push_token"`
 	}
 	pushTokenUpdateForm := PushTokenUpdateForm{}
@@ -62,7 +62,7 @@ func SendPushNotificationHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Make sure plant exists
 	var plant models.Plant
-	err := plant.GetByID(plantID)
+	err := plant.GetByID(int64(plantID))
 	if err != nil {
 		writeErrorResponse(w, 404, err.Error())
 		return
@@ -81,7 +81,7 @@ func SendPushNotificationHandler(w http.ResponseWriter, r *http.Request) {
 		Body:  pushNotificationForm.Body,
 		Data:  pushNotificationForm.Data,
 	}
-	err = pusher.PushNotification(plantID, notification)
+	err = pusher.PushNotification(int64(plantID), notification)
 
 	if err != nil {
 		response.ErrorMessage = err.Error()

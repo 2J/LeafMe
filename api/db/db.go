@@ -2,13 +2,13 @@ package db
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql" // MySQL driver
+	_ "github.com/go-sql-driver/mysql" // MySQL driver // MySQL driver
 )
 
 // Open : Opens DB conection
 func Open() *sql.DB {
 	username := "root"
-	password := "MssMt87Tcnka4tN"
+	password := "***REMOVED***"
 	protocol := "tcp"
 	address := "mysql"
 	port := "3306"

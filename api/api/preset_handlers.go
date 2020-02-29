@@ -25,7 +25,7 @@ func GetPresetByIdHandler(w http.ResponseWriter, r *http.Request) {
 
 	preset := models.Preset{}
 
-	err := preset.GetByID(presetId)
+	err := preset.GetByID(int64(presetId))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Preset not found")

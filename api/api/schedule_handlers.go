@@ -13,7 +13,7 @@ func GetLightingScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
 
 	lightingSchedule := models.LightingSchedule{}
-	err := lightingSchedule.GetByID(scheduleId)
+	err := lightingSchedule.GetByID(int64(scheduleId))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -33,7 +33,7 @@ func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
 
 	wateringSchedule := models.WateringSchedule{}
-	err := wateringSchedule.GetByID(scheduleId)
+	err := wateringSchedule.GetByID(int64(scheduleId))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -51,11 +51,11 @@ func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
 
-	lightingSchedules, err := models.GetLightingSchedulesByPlantID(plantId)
+	lightingSchedules, err := models.GetLightingSchedulesByPlantID(int64(plantId))
 	if err != nil {
 		panic(err.Error())
 	}
-	wateringSchedules, err := models.GetWateringSchedulesByPlantID(plantId)
+	wateringSchedules, err := models.GetWateringSchedulesByPlantID(int64(plantId))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -83,13 +83,13 @@ func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	lightingSchedule := models.LightingSchedule{}
 	json.Unmarshal(body, &lightingSchedule)
 
-	lightingSchedule.PlantID = plantID
+	lightingSchedule.PlantID = int64(plantID)
 
 	// TODO: Validate
 
 	response := struct {
-		Success bool `json:"success"`
-		Id      int  `json:"id"`
+		Success bool  `json:"success"`
+		Id      int64 `json:"id"`
 	}{
 		false,
 		0,
@@ -112,7 +112,7 @@ func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
 
-	err := models.DeleteLightingSchedule(scheduleID)
+	err := models.DeleteLightingSchedule(int64(scheduleID))
 
 	statusCode := 500
 	response := struct {
@@ -137,13 +137,13 @@ func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	wateringSchedule := models.WateringSchedule{}
 	json.Unmarshal(body, &wateringSchedule)
 
-	wateringSchedule.PlantID = plantID
+	wateringSchedule.PlantID = int64(plantID)
 
 	// TODO: Validate
 
 	response := struct {
-		Success bool `json:"success"`
-		Id      int  `json:"id"`
+		Success bool  `json:"success"`
+		Id      int64 `json:"id"`
 	}{
 		false,
 		0,
@@ -166,7 +166,7 @@ func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
 
-	err := models.DeleteWateringSchedule(scheduleID)
+	err := models.DeleteWateringSchedule(int64(scheduleID))
 
 	statusCode := 500
 	response := struct {

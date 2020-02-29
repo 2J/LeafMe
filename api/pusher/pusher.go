@@ -52,7 +52,7 @@ func push(notification Notification) error {
 }
 
 // PushNotification pushes a notification based on plant ID
-func PushNotification(plantID int, notification Notification) error {
+func PushNotification(plantID int64, notification Notification) error {
 	// Get plant
 	var plant models.Plant
 	err := plant.GetByID(plantID)

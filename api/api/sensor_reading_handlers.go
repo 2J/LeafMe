@@ -21,25 +21,25 @@ func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	response.SoilMoisture, err = models.GetLatestSensorReadingByType(plantId, "SOIL_MOISTURE")
+	response.SoilMoisture, err = models.GetLatestSensorReadingByType(int64(plantId), "SOIL_MOISTURE")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting soil moisture: "+err.Error())
 		return
 	}
 
-	response.Brightness, err = models.GetLatestSensorReadingByType(plantId, "BRIGHTNESS")
+	response.Brightness, err = models.GetLatestSensorReadingByType(int64(plantId), "BRIGHTNESS")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting brightness: "+err.Error())
 		return
 	}
 
-	response.AmbientTemperature, err = models.GetLatestSensorReadingByType(plantId, "AMBIENT_TEMPERATURE")
+	response.AmbientTemperature, err = models.GetLatestSensorReadingByType(int64(plantId), "AMBIENT_TEMPERATURE")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting temperature: "+err.Error())
 		return
 	}
 
-	response.AmbientHumidity, err = models.GetLatestSensorReadingByType(plantId, "AMBIENT_HUMIDITY")
+	response.AmbientHumidity, err = models.GetLatestSensorReadingByType(int64(plantId), "AMBIENT_HUMIDITY")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting humidity: "+err.Error())
 		return
@@ -54,7 +54,7 @@ func GetLatestSensorReadingsForTypeHandler(w http.ResponseWriter, r *http.Reques
 	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
 	sensorType := urlParamAsString(r, "type")
 
-	sensorReadings, err := models.GetLatestSensorReadingsByType(plantId, sensorType)
+	sensorReadings, err := models.GetLatestSensorReadingsByType(int64(plantId), sensorType)
 
 	responseJSON, err := json.Marshal(sensorReadings)
 	if err != nil {
@@ -85,7 +85,7 @@ func CreateSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	for _, v := range sensorValues {
 		sensorReading := models.SensorReading{}
 
-		sensorReading.PlantID = plantID
+		sensorReading.PlantID = int64(plantID)
 		sensorReading.Time = time.Now()
 		sensorReading.SensorType = v.SensorType
 		sensorReading.Value = v.Value

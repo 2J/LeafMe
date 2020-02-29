@@ -5,25 +5,26 @@ import (
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
+	"gopkg.in/guregu/null.v3"
 	"time"
 )
 
 // LightingEvent https://github.com/2J/LeafMe/tree/master/api/models#lightingschedule
 type LightingEvent struct {
-	ID                 int       `json:"id" validate:"required"`
-	PlantID            int       `json:"plant_id" validate:"required"`
-	LightingScheduleID int       `json:"lighting_schedule_id" validate:"required"`
+	ID                 int64     `json:"id" validate:"required"`
+	PlantID            int64     `json:"plant_id" validate:"required"`
+	LightingScheduleID null.Int  `json:"lighting_schedule_id" validate:"required"`
 	StartTime          time.Time `json:"start_time"`
 	Length             int       `json:"length" validate:"required"`
 	Finished           bool      `json:"finished"`
 }
 
 // Create TODO
-func (lightingEvent *LightingEvent) Create() (int, error) {
+func (lightingEvent *LightingEvent) Create() (int64, error) {
 	db := database.Open()
 	defer database.Close(db)
 
-	insForm, err := db.Prepare("INSERT INTO lightingEvents (`plantId`, `startTime`, `length`, `finished`) VALUES (?,?,?,?,?)")
+	insForm, err := db.Prepare("INSERT INTO lightingEvents (`plantId`, `startTime`, `length`, `finished`) VALUES (?,?,?,?)")
 	if err != nil {
 		return 0, err
 	}
@@ -41,9 +42,9 @@ func (lightingEvent *LightingEvent) Create() (int, error) {
 
 	id, err := res.LastInsertId()
 
-	lightingEvent.ID = int(id)
+	lightingEvent.ID = id
 
-	return int(id), err
+	return id, err
 }
 
 // CreateLightingEvents creates batch of lighting events
@@ -82,7 +83,7 @@ func (lightingSchedule *LightingSchedule) CreateLightingEvent() (err error) {
 	for t.Before(*lightingSchedule.Schedule.RepeatEndDate) {
 		lightingEvent := LightingEvent{}
 		lightingEvent.PlantID = lightingSchedule.PlantID
-		lightingEvent.LightingScheduleID = lightingSchedule.ID
+		lightingEvent.LightingScheduleID = null.IntFrom(lightingSchedule.ID)
 		lightingEvent.StartTime = t
 		lightingEvent.Length = lightingSchedule.Length
 		lightingEvent.Finished = false
@@ -120,7 +121,7 @@ func (lightingEvent *LightingEvent) getRow(rows *sql.Rows) error {
 }
 
 // GetLightingEventsByScheduleID gets all lighting events for schedule
-func GetLightingEventsByScheduleID(scheduleID int) ([]LightingEvent, error) {
+func GetLightingEventsByScheduleID(scheduleID int64) ([]LightingEvent, error) {
 	lightingEvent := LightingEvent{}
 	res := []LightingEvent{}
 
@@ -145,7 +146,7 @@ func GetLightingEventsByScheduleID(scheduleID int) ([]LightingEvent, error) {
 }
 
 // GetLightingEventsByPlantID gets all events for plant
-func GetLightingEventsByPlantID(plantID int) ([]LightingEvent, error) {
+func GetLightingEventsByPlantID(plantID int64) ([]LightingEvent, error) {
 	lightingEvent := LightingEvent{}
 	res := []LightingEvent{}
 
@@ -170,7 +171,7 @@ func GetLightingEventsByPlantID(plantID int) ([]LightingEvent, error) {
 }
 
 // GetByID gets lighting event by ID
-func (lightingEvent *LightingEvent) GetByID(id int) error {
+func (lightingEvent *LightingEvent) GetByID(id int64) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM lightingEvents WHERE id = ?", id)
@@ -196,7 +197,7 @@ func (lightingEvent *LightingEvent) GetByID(id int) error {
 }
 
 // DeleteLightingEventsByScheduleID deletes lighting events by schedule ID
-func DeleteLightingEventsByScheduleID(scheduleID int) error {
+func DeleteLightingEventsByScheduleID(scheduleID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -212,8 +213,8 @@ func DeleteLightingEventsByScheduleID(scheduleID int) error {
 	return err
 }
 
-// DeleteLightingEventsByID deletes lighting events by ID
-func DeleteLightingEventsByID(eventID int) error {
+// DeleteLightingEventByID deletes lighting events by ID
+func DeleteLightingEventByID(eventID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -230,7 +231,7 @@ func DeleteLightingEventsByID(eventID int) error {
 }
 
 // SetLightingEventFinished sets lighting event to finished
-func SetLightingEventFinished(eventID int, finished bool) error {
+func SetLightingEventFinished(eventID int64, finished bool) error {
 	db := database.Open()
 	defer database.Close(db)
 

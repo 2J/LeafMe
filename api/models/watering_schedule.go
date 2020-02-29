@@ -9,8 +9,8 @@ import (
 
 // WateringSchedule TODO
 type WateringSchedule struct {
-	ID       int      `json:"id" validate:"required"`
-	PlantID  int      `json:"plant_id" validate:"required"`
+	ID       int64    `json:"id" validate:"required"`
+	PlantID  int64    `json:"plant_id" validate:"required"`
 	Schedule Schedule `json:"schedule" validate:"required"`
 	Amount   int      `json:"amount" validate:"required"`
 	Active   bool     `json:"active" validate:"required"`
@@ -22,7 +22,7 @@ func (wateringSchedule *WateringSchedule) Validate() (err error) {
 }
 
 // Create TODO
-func (wateringSchedule *WateringSchedule) Create() (int, error) {
+func (wateringSchedule *WateringSchedule) Create() (int64, error) {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -46,10 +46,10 @@ func (wateringSchedule *WateringSchedule) Create() (int, error) {
 
 	id, err := res.LastInsertId()
 
-	wateringSchedule.ID = int(id)
+	wateringSchedule.ID = id
 	err = wateringSchedule.CreateWateringEvent()
 
-	return int(id), err
+	return id, err
 }
 
 func (wateringSchedule *WateringSchedule) getRow(rows *sql.Rows) error {
@@ -65,7 +65,7 @@ func (wateringSchedule *WateringSchedule) getRow(rows *sql.Rows) error {
 }
 
 // GetByID TODO
-func (wateringSchedule *WateringSchedule) GetByID(id int) error {
+func (wateringSchedule *WateringSchedule) GetByID(id int64) error {
 	db := database.Open()
 	defer db.Close()
 	rows, err := db.Query("SELECT * FROM wateringSchedules WHERE id = ?", id)
@@ -91,7 +91,7 @@ func (wateringSchedule *WateringSchedule) GetByID(id int) error {
 }
 
 // GetWateringSchedulesByPlantID TODO
-func GetWateringSchedulesByPlantID(plantID int) ([]WateringSchedule, error) {
+func GetWateringSchedulesByPlantID(plantID int64) ([]WateringSchedule, error) {
 	wateringSchedule := WateringSchedule{}
 	res := []WateringSchedule{}
 
@@ -116,7 +116,7 @@ func GetWateringSchedulesByPlantID(plantID int) ([]WateringSchedule, error) {
 }
 
 // DeleteWateringSchedule TODO
-func DeleteWateringSchedule(scheduleID int) error {
+func DeleteWateringSchedule(scheduleID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 

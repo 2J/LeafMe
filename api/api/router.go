@@ -42,10 +42,14 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/plant/{plantId}/schedules/water/delete/{scheduleId}", addDefaultHeaders(DeleteWateringScheduleHandler)).Methods("DELETE", "OPTIONS")
 
 	// Event handlers
+	router.HandleFunc("/plant/{plantId}/events/light", addDefaultHeaders(CreateLightingEventHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/events/light/{eventId}", addDefaultHeaders(DeleteLightingEventHandler)).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/light/{scheduleId}/events", addDefaultHeaders(GetLightingEventsByScheduleIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/events/light/{eventId}", addDefaultHeaders(GetLightingEventByIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/events/light", addDefaultHeaders(GetLightingEventsByPlantIdHandler)).Methods("GET", "OPTIONS")
 
+	router.HandleFunc("/plant/{plantId}/events/water", addDefaultHeaders(CreateWateringEventHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/events/water/{eventId}", addDefaultHeaders(DeleteWateringEventHandler)).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/schedules/water/{scheduleId}/events", addDefaultHeaders(GetWateringEventsByScheduleIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/events/water/{eventId}", addDefaultHeaders(GetWateringEventByIdHandler)).Methods("GET", "OPTIONS")
 	router.HandleFunc("/plant/{plantId}/events/water", addDefaultHeaders(GetWateringEventsByPlantIdHandler)).Methods("GET", "OPTIONS")

@@ -5,25 +5,26 @@ import (
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
+	"gopkg.in/guregu/null.v3"
 	"time"
 )
 
 // WateringEvent TODO
 type WateringEvent struct {
-	ID                 int       `json:"id" validate:"required"`
-	PlantID            int       `json:"plant_id" validate:"required"`
-	WateringScheduleID int       `json:"watering_schedule_id" validate:"required"`
+	ID                 int64     `json:"id" validate:"required"`
+	PlantID            int64     `json:"plant_id" validate:"required"`
+	WateringScheduleID null.Int  `json:"watering_schedule_id" validate:"required"`
 	StartTime          time.Time `json:"start_time"`
 	Amount             int       `json:"amount" validate:"required"`
 	Finished           bool      `json:"finished"`
 }
 
 // Create TODO
-func (wateringEvent *WateringEvent) Create() (int, error) {
+func (wateringEvent *WateringEvent) Create() (int64, error) {
 	db := database.Open()
 	defer database.Close(db)
 
-	insForm, err := db.Prepare("INSERT INTO wateringEvents (`plantId`, `startTime`, `amount`, `finished`) VALUES (?,?,?,?,?)")
+	insForm, err := db.Prepare("INSERT INTO wateringEvents (`plantId`, `startTime`, `amount`, `finished`) VALUES (?,?,?,?)")
 	if err != nil {
 		return 0, err
 	}
@@ -41,9 +42,9 @@ func (wateringEvent *WateringEvent) Create() (int, error) {
 
 	id, err := res.LastInsertId()
 
-	wateringEvent.ID = int(id)
+	wateringEvent.ID = id
 
-	return int(id), err
+	return id, err
 }
 
 // CreateWateringEvents creates batch of watering events
@@ -82,7 +83,7 @@ func (wateringSchedule *WateringSchedule) CreateWateringEvent() (err error) {
 	for t.Before(*wateringSchedule.Schedule.RepeatEndDate) {
 		wateringEvent := WateringEvent{}
 		wateringEvent.PlantID = wateringSchedule.PlantID
-		wateringEvent.WateringScheduleID = wateringSchedule.ID
+		wateringEvent.WateringScheduleID = null.IntFrom(wateringSchedule.ID)
 		wateringEvent.StartTime = t
 		wateringEvent.Amount = wateringSchedule.Amount
 		wateringEvent.Finished = false
@@ -120,7 +121,7 @@ func (wateringEvent *WateringEvent) getRow(rows *sql.Rows) error {
 }
 
 // GetWateringEventsByScheduleID gets all watering events for schedule
-func GetWateringEventsByScheduleID(scheduleID int) ([]WateringEvent, error) {
+func GetWateringEventsByScheduleID(scheduleID int64) ([]WateringEvent, error) {
 	wateringEvent := WateringEvent{}
 	res := []WateringEvent{}
 
@@ -145,7 +146,7 @@ func GetWateringEventsByScheduleID(scheduleID int) ([]WateringEvent, error) {
 }
 
 // GetWateringEventsByPlantID gets all events for plant
-func GetWateringEventsByPlantID(plantID int) ([]WateringEvent, error) {
+func GetWateringEventsByPlantID(plantID int64) ([]WateringEvent, error) {
 	wateringEvent := WateringEvent{}
 	res := []WateringEvent{}
 
@@ -170,7 +171,7 @@ func GetWateringEventsByPlantID(plantID int) ([]WateringEvent, error) {
 }
 
 // GetByID gets watering event by ID
-func (wateringEvent *WateringEvent) GetByID(id int) error {
+func (wateringEvent *WateringEvent) GetByID(id int64) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM wateringEvents WHERE id = ?", id)
@@ -196,7 +197,7 @@ func (wateringEvent *WateringEvent) GetByID(id int) error {
 }
 
 // DeleteWateringEventsByScheduleID deletes watering events by schedule ID
-func DeleteWateringEventsByScheduleID(scheduleID int) error {
+func DeleteWateringEventsByScheduleID(scheduleID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -212,8 +213,8 @@ func DeleteWateringEventsByScheduleID(scheduleID int) error {
 	return err
 }
 
-// DeleteWateringEventsByID deletes watering events by ID
-func DeleteWateringEventsByID(eventID int) error {
+// DeleteWateringEventByID deletes watering events by ID
+func DeleteWateringEventByID(eventID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -230,7 +231,7 @@ func DeleteWateringEventsByID(eventID int) error {
 }
 
 // SetWateringEventFinished sets watering event to finished
-func SetWateringEventFinished(eventID int, finished bool) error {
+func SetWateringEventFinished(eventID int64, finished bool) error {
 	db := database.Open()
 	defer database.Close(db)
 

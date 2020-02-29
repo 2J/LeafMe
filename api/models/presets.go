@@ -18,7 +18,7 @@ import (
 
 // Preset TODO
 type Preset struct {
-	ID             int    `json:"id" validate:"required"`
+	ID             int64  `json:"id" validate:"required"`
 	PresetType     string `json:"type" validate:"required"`
 	Name           string `json:"name" validate:"required"`
 	LightingLength int    `json:"light_length" validate:"required"`
@@ -38,7 +38,7 @@ func (preset *Preset) Validate() (err error) {
 }
 
 // Create TODO
-func (preset *Preset) Create() (int, error) {
+func (preset *Preset) Create() (int64, error) {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -67,7 +67,7 @@ func (preset *Preset) Create() (int, error) {
 
 	id, err := res.LastInsertId()
 
-	return int(id), err
+	return id, err
 }
 
 func (preset *Preset) getRow(rows *sql.Rows) error {
@@ -90,7 +90,7 @@ func (preset *Preset) getRow(rows *sql.Rows) error {
 }
 
 // GetByID TODO
-func (preset *Preset) GetByID(id int) error {
+func (preset *Preset) GetByID(id int64) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM presets WHERE id = ?", id)
@@ -142,7 +142,7 @@ func GetPresetsByType(presetType string) ([]Preset, error) {
 }
 
 // DeletePreset TODO
-func DeletePreset(presetID int) error {
+func DeletePreset(presetID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 

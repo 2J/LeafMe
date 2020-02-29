@@ -18,8 +18,8 @@ var SensorTypes = map[string]string{
 
 // SensorReading TODO
 type SensorReading struct {
-	ID         int       `json:"-" validate:"required"`
-	PlantID    int       `json:"-" validate:"required"`
+	ID         int64     `json:"-" validate:"required"`
+	PlantID    int64     `json:"-" validate:"required"`
 	Time       time.Time `json:"time" validate:"required"`
 	SensorType string    `json:"-" validate:"required"`
 	Value      float64   `json:"value" validate:"required"`
@@ -109,7 +109,7 @@ func (sensorReading *SensorReading) getRow(rows *sql.Rows) error {
 }
 
 // GetByID TODO
-func (sensorReading *SensorReading) GetByID(id int) error {
+func (sensorReading *SensorReading) GetByID(id int64) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM sensorReadings WHERE id = ?", id)
@@ -135,7 +135,7 @@ func (sensorReading *SensorReading) GetByID(id int) error {
 }
 
 // GetLatestSensorReadingsByType TODO
-func GetLatestSensorReadingsByType(plantID int, sensorType string) ([]SensorReading, error) {
+func GetLatestSensorReadingsByType(plantID int64, sensorType string) ([]SensorReading, error) {
 	sensorReading := SensorReading{}
 	res := []SensorReading{}
 
@@ -160,7 +160,7 @@ func GetLatestSensorReadingsByType(plantID int, sensorType string) ([]SensorRead
 }
 
 // GetLatestSensorReadingByType TODO
-func GetLatestSensorReadingByType(plantID int, sensorType string) (SensorReading, error) {
+func GetLatestSensorReadingByType(plantID int64, sensorType string) (SensorReading, error) {
 	sensorReading := SensorReading{}
 
 	db := database.Open()
@@ -177,7 +177,7 @@ func GetLatestSensorReadingByType(plantID int, sensorType string) (SensorReading
 }
 
 // DeleteSensorReading TODO
-func DeleteSensorReading(scheduleID int) error {
+func DeleteSensorReading(scheduleID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 

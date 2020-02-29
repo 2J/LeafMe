@@ -9,8 +9,8 @@ import (
 
 // LightingSchedule TODO
 type LightingSchedule struct {
-	ID       int      `json:"id" validate:"required"`
-	PlantID  int      `json:"plant_id" validate:"required"`
+	ID       int64    `json:"id" validate:"required"`
+	PlantID  int64    `json:"plant_id" validate:"required"`
 	Schedule Schedule `json:"schedule" validate:"required"`
 	Length   int      `json:"length" validate:"required"`
 	Active   bool     `json:"active" validate:"required"`
@@ -22,7 +22,7 @@ func (lightingSchedule *LightingSchedule) Validate() (err error) {
 }
 
 // Create TODO
-func (lightingSchedule *LightingSchedule) Create() (int, error) {
+func (lightingSchedule *LightingSchedule) Create() (int64, error) {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -46,10 +46,10 @@ func (lightingSchedule *LightingSchedule) Create() (int, error) {
 
 	id, err := res.LastInsertId()
 
-	lightingSchedule.ID = int(id)
+	lightingSchedule.ID = id
 	err = lightingSchedule.CreateLightingEvent()
 
-	return int(id), err
+	return id, err
 }
 
 func (lightingSchedule *LightingSchedule) getRow(rows *sql.Rows) error {
@@ -69,7 +69,7 @@ func (lightingSchedule *LightingSchedule) getRow(rows *sql.Rows) error {
 }
 
 // GetByID TODO
-func (lightingSchedule *LightingSchedule) GetByID(id int) error {
+func (lightingSchedule *LightingSchedule) GetByID(id int64) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM lightingSchedules WHERE id = ?", id)
@@ -95,7 +95,7 @@ func (lightingSchedule *LightingSchedule) GetByID(id int) error {
 }
 
 // GetLightingSchedulesByPlantID TODO
-func GetLightingSchedulesByPlantID(plantID int) ([]LightingSchedule, error) {
+func GetLightingSchedulesByPlantID(plantID int64) ([]LightingSchedule, error) {
 	lightingSchedule := LightingSchedule{}
 	res := []LightingSchedule{}
 
@@ -120,7 +120,7 @@ func GetLightingSchedulesByPlantID(plantID int) ([]LightingSchedule, error) {
 }
 
 // DeleteLightingSchedule TODO
-func DeleteLightingSchedule(scheduleID int) error {
+func DeleteLightingSchedule(scheduleID int64) error {
 	db := database.Open()
 	defer database.Close(db)
 

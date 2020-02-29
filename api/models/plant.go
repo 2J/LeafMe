@@ -10,8 +10,8 @@ import (
 
 // Plant TODO
 type Plant struct {
-	ID          int    `json:"id" validate:"required"`
-	DeviceID    int    `json:"device_id" validate:"required"`
+	ID          int64  `json:"id" validate:"required"`
+	DeviceID    int64  `json:"device_id" validate:"required"`
 	Name        string `json:"name" validate:"required"`
 	Description string `json:"-"`
 	PushToken   string `json:"-"`
@@ -30,7 +30,7 @@ func (plant *Plant) getRow(rows *sql.Rows) error {
 }
 
 // GetByID TODO
-func (plant *Plant) GetByID(id int) error {
+func (plant *Plant) GetByID(id int64) error {
 	db := database.Open()
 	defer database.Close(db)
 	rows, err := db.Query("SELECT * FROM plants WHERE id = ?", id)
@@ -56,7 +56,7 @@ func (plant *Plant) GetByID(id int) error {
 }
 
 // UpdatePlantName TODO
-func UpdatePlantName(plantID int, name string) error {
+func UpdatePlantName(plantID int64, name string) error {
 	db := database.Open()
 	defer database.Close(db)
 
@@ -74,7 +74,7 @@ func UpdatePlantName(plantID int, name string) error {
 }
 
 // UpdatePlantPushToken TODO
-func UpdatePlantPushToken(plantID int, pushToken string) error {
+func UpdatePlantPushToken(plantID int64, pushToken string) error {
 	db := database.Open()
 	defer database.Close(db)
 

@@ -13,7 +13,7 @@ func GetPlantByIdHandler(w http.ResponseWriter, r *http.Request) {
 
 	plant := models.Plant{}
 
-	err := plant.GetByID(plantId)
+	err := plant.GetByID(int64(plantId))
 
 	if err != nil {
 		writeErrorResponse(w, 404, "Plant not found")
@@ -40,7 +40,7 @@ func UpdatePlantHandler(w http.ResponseWriter, r *http.Request) {
 
 	var plant models.Plant
 
-	err := plant.GetByID(plantID)
+	err := plant.GetByID(int64(plantID))
 	if err != nil {
 		writeErrorResponse(w, 404, err.Error())
 		return
@@ -62,7 +62,7 @@ func UpdatePlantHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	err = models.UpdatePlantName(plantID, plant.Name)
+	err = models.UpdatePlantName(int64(plantID), plant.Name)
 
 	if err != nil {
 		writeJsonResponse(w, 500, responseJSON)
