@@ -38,19 +38,19 @@ func UpdatePushTokenHandler(w http.ResponseWriter, r *http.Request) {
 	err = models.UpdatePlantPushToken(pushTokenUpdateForm.PlantID, pushTokenUpdateForm.PushToken)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
 // SendPushNotificationHandler TODO
 func SendPushNotificationHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	type PushNotificationForm struct {
 		Title string            `json:"title"`
@@ -86,11 +86,11 @@ func SendPushNotificationHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		response.ErrorMessage = err.Error()
 		responseJSON, _ := json.Marshal(response)
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err := json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }

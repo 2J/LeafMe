@@ -29,51 +29,51 @@ func NewRouter() *mux.Router {
 	router.HandleFunc("/", addDefaultHeaders(IndexGetHandler)).Methods("GET", "OPTIONS")
 
 	// Plant handlers
-	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(GetPlantByIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/manual/mode", addDefaultHeaders(UpdatePlantModeHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/manual/light", addDefaultHeaders(TogglePlantManualLightHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/manual/water", addDefaultHeaders(UpdatePlantManualWaterHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(UpdatePlantNameHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}", addDefaultHeaders(GetPlantByIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/manual/mode", addDefaultHeaders(UpdatePlantModeHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/manual/light", addDefaultHeaders(TogglePlantManualLightHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/manual/water", addDefaultHeaders(UpdatePlantManualWaterHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}", addDefaultHeaders(UpdatePlantNameHandler)).Methods("POST", "OPTIONS")
 
 	// Schedule handlers
-	router.HandleFunc("/plant/{plantId}/schedules", addDefaultHeaders(GetSchedulesByPlantIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/light/{scheduleId}", addDefaultHeaders(GetLightingScheduleByIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/water/{scheduleId}", addDefaultHeaders(GetWateringScheduleByIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/light/create", addDefaultHeaders(CreateLightingScheduleHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/water/create", addDefaultHeaders(CreateWateringScheduleHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/light/delete/{scheduleId}", addDefaultHeaders(DeleteLightingScheduleHandler)).Methods("DELETE", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/water/delete/{scheduleId}", addDefaultHeaders(DeleteWateringScheduleHandler)).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules", addDefaultHeaders(GetSchedulesByPlantIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/light/{scheduleID}", addDefaultHeaders(GetLightingScheduleByIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/water/{scheduleID}", addDefaultHeaders(GetWateringScheduleByIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/light/create", addDefaultHeaders(CreateLightingScheduleHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/water/create", addDefaultHeaders(CreateWateringScheduleHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/light/delete/{scheduleID}", addDefaultHeaders(DeleteLightingScheduleHandler)).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/water/delete/{scheduleID}", addDefaultHeaders(DeleteWateringScheduleHandler)).Methods("DELETE", "OPTIONS")
 
 	// Event handlers
-	router.HandleFunc("/plant/{plantId}/events/light", addDefaultHeaders(CreateLightingEventHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/light/{eventId}", addDefaultHeaders(DeleteLightingEventHandler)).Methods("DELETE", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/light/{scheduleId}/events", addDefaultHeaders(GetLightingEventsByScheduleIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/light/{eventId}", addDefaultHeaders(GetLightingEventByIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/light", addDefaultHeaders(GetLightingEventsByPlantIdHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/light", addDefaultHeaders(CreateLightingEventHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/light/{eventID}", addDefaultHeaders(DeleteLightingEventHandler)).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/light/{scheduleID}/events", addDefaultHeaders(GetLightingEventsByScheduleIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/light/{eventID}", addDefaultHeaders(GetLightingEventByIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/light", addDefaultHeaders(GetLightingEventsByPlantIDHandler)).Methods("GET", "OPTIONS")
 
-	router.HandleFunc("/plant/{plantId}/events/water", addDefaultHeaders(CreateWateringEventHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/water/{eventId}", addDefaultHeaders(DeleteWateringEventHandler)).Methods("DELETE", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/schedules/water/{scheduleId}/events", addDefaultHeaders(GetWateringEventsByScheduleIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/water/{eventId}", addDefaultHeaders(GetWateringEventByIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/water", addDefaultHeaders(GetWateringEventsByPlantIdHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/water", addDefaultHeaders(CreateWateringEventHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/water/{eventID}", addDefaultHeaders(DeleteWateringEventHandler)).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/schedules/water/{scheduleID}/events", addDefaultHeaders(GetWateringEventsByScheduleIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/water/{eventID}", addDefaultHeaders(GetWateringEventByIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/water", addDefaultHeaders(GetWateringEventsByPlantIDHandler)).Methods("GET", "OPTIONS")
 
-	router.HandleFunc("/plant/{plantId}/events", addDefaultHeaders(GetEventsByPlantIdHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events", addDefaultHeaders(GetEventsByPlantIDHandler)).Methods("GET", "OPTIONS")
 
-	router.HandleFunc("/plant/{plantId}/events/light/{eventId}", addDefaultHeaders(SetLightingEventFinishedHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/events/water/{eventId}", addDefaultHeaders(SetWateringEventFinishedHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/light/{eventID}", addDefaultHeaders(SetLightingEventFinishedHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/events/water/{eventID}", addDefaultHeaders(SetWateringEventFinishedHandler)).Methods("POST", "OPTIONS")
 
 	// Sensor handlers
-	router.HandleFunc("/plant/{plantId}/sensors", addDefaultHeaders(GetLatestSensorReadingsHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/sensors/history/{type}", addDefaultHeaders(GetLatestSensorReadingsForTypeHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}/sensors", addDefaultHeaders(CreateSensorReadingsHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/sensors", addDefaultHeaders(GetLatestSensorReadingsHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/sensors/history/{type}", addDefaultHeaders(GetLatestSensorReadingsForTypeHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/plant/{plantID}/sensors", addDefaultHeaders(CreateSensorReadingsHandler)).Methods("POST", "OPTIONS")
 
 	// Preset handlers
 	router.HandleFunc("/presets/type/{presetType}", addDefaultHeaders(GetPresetsByTypeHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetByIdHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetByIDHandler)).Methods("GET", "OPTIONS")
 
 	// Notification handlers
 	router.HandleFunc("/notification/pushtoken", addDefaultHeaders(UpdatePushTokenHandler)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/notification/plant/{plantId}", addDefaultHeaders(SendPushNotificationHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/notification/plant/{plantID}", addDefaultHeaders(SendPushNotificationHandler)).Methods("POST", "OPTIONS")
 
 	return router
 }

@@ -8,12 +8,13 @@ import (
 	"strconv"
 )
 
-func GetLightingScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
-	//plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
-	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+// GetLightingScheduleByIDHandler TODO
+func GetLightingScheduleByIDHandler(w http.ResponseWriter, r *http.Request) {
+	//plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleID"))
 
 	lightingSchedule := models.LightingSchedule{}
-	err := lightingSchedule.GetByID(int64(scheduleId))
+	err := lightingSchedule.GetByID(int64(scheduleID))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -25,15 +26,16 @@ func GetLightingScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
-	//plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
-	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+// GetWateringScheduleByIDHandler TODO
+func GetWateringScheduleByIDHandler(w http.ResponseWriter, r *http.Request) {
+	//plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleID"))
 
 	wateringSchedule := models.WateringSchedule{}
-	err := wateringSchedule.GetByID(int64(scheduleId))
+	err := wateringSchedule.GetByID(int64(scheduleID))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -45,17 +47,18 @@ func GetWateringScheduleByIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+// GetSchedulesByPlantIDHandler TODO
+func GetSchedulesByPlantIDHandler(w http.ResponseWriter, r *http.Request) {
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
-	lightingSchedules, err := models.GetLightingSchedulesByPlantID(int64(plantId))
+	lightingSchedules, err := models.GetLightingSchedulesByPlantID(int64(plantID))
 	if err != nil {
 		panic(err.Error())
 	}
-	wateringSchedules, err := models.GetWateringSchedulesByPlantID(int64(plantId))
+	wateringSchedules, err := models.GetWateringSchedulesByPlantID(int64(plantID))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -73,12 +76,13 @@ func GetSchedulesByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// CreateLightingScheduleHandler TODO
 func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	lightingSchedule := models.LightingSchedule{}
 	json.Unmarshal(body, &lightingSchedule)
@@ -89,7 +93,7 @@ func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 
 	response := struct {
 		Success bool  `json:"success"`
-		Id      int64 `json:"id"`
+		ID      int64 `json:"id"`
 	}{
 		false,
 		0,
@@ -97,20 +101,21 @@ func CreateLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	responseJSON, _ := json.Marshal(response)
 
 	var err error
-	response.Id, err = lightingSchedule.Create()
+	response.ID, err = lightingSchedule.Create()
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// DeleteLightingScheduleHandler TODO
 func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
-	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleID"))
 
 	err := models.DeleteLightingSchedule(int64(scheduleID))
 
@@ -127,12 +132,13 @@ func DeleteLightingScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, statusCode, responseJSON)
+	writeJSONResponse(w, statusCode, responseJSON)
 }
 
+// CreateWateringScheduleHandler TODO
 func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	wateringSchedule := models.WateringSchedule{}
 	json.Unmarshal(body, &wateringSchedule)
@@ -143,7 +149,7 @@ func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 
 	response := struct {
 		Success bool  `json:"success"`
-		Id      int64 `json:"id"`
+		ID      int64 `json:"id"`
 	}{
 		false,
 		0,
@@ -151,20 +157,21 @@ func CreateWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	responseJSON, _ := json.Marshal(response)
 
 	var err error
-	response.Id, err = wateringSchedule.Create()
+	response.ID, err = wateringSchedule.Create()
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// DeleteWateringScheduleHandler TODO
 func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
-	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleID"))
 
 	err := models.DeleteWateringSchedule(int64(scheduleID))
 
@@ -181,5 +188,5 @@ func DeleteWateringScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, statusCode, responseJSON)
+	writeJSONResponse(w, statusCode, responseJSON)
 }

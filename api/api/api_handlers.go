@@ -14,5 +14,5 @@ func IndexGetHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }

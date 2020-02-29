@@ -9,8 +9,9 @@ import (
 	"time"
 )
 
+// GetLatestSensorReadingsHandler TODO
 func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	response := struct {
 		SoilMoisture       models.SensorReading `json:"soil_moisture"`
@@ -21,25 +22,25 @@ func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	response.SoilMoisture, err = models.GetLatestSensorReadingByType(int64(plantId), "SOIL_MOISTURE")
+	response.SoilMoisture, err = models.GetLatestSensorReadingByType(int64(plantID), "SOIL_MOISTURE")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting soil moisture: "+err.Error())
 		return
 	}
 
-	response.Brightness, err = models.GetLatestSensorReadingByType(int64(plantId), "BRIGHTNESS")
+	response.Brightness, err = models.GetLatestSensorReadingByType(int64(plantID), "BRIGHTNESS")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting brightness: "+err.Error())
 		return
 	}
 
-	response.AmbientTemperature, err = models.GetLatestSensorReadingByType(int64(plantId), "AMBIENT_TEMPERATURE")
+	response.AmbientTemperature, err = models.GetLatestSensorReadingByType(int64(plantID), "AMBIENT_TEMPERATURE")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting temperature: "+err.Error())
 		return
 	}
 
-	response.AmbientHumidity, err = models.GetLatestSensorReadingByType(int64(plantId), "AMBIENT_HUMIDITY")
+	response.AmbientHumidity, err = models.GetLatestSensorReadingByType(int64(plantID), "AMBIENT_HUMIDITY")
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed getting humidity: "+err.Error())
 		return
@@ -47,26 +48,28 @@ func GetLatestSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// GetLatestSensorReadingsForTypeHandler TODO
 func GetLatestSensorReadingsForTypeHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 	sensorType := urlParamAsString(r, "type")
 
-	sensorReadings, err := models.GetLatestSensorReadingsByType(int64(plantId), sensorType)
+	sensorReadings, err := models.GetLatestSensorReadingsByType(int64(plantID), sensorType)
 
 	responseJSON, err := json.Marshal(sensorReadings)
 	if err != nil {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// CreateSensorReadingsHandler TODO
 func CreateSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	type SensorReadingForm struct {
 		SensorType string  `json:"type"`
@@ -110,11 +113,11 @@ func CreateSensorReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	err = models.CreateSensorReadings(sensorReadings)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }

@@ -7,6 +7,7 @@ import (
 	"strconv"
 )
 
+// GetPresetsByTypeHandler TODO
 func GetPresetsByTypeHandler(w http.ResponseWriter, r *http.Request) {
 	presetType := urlParamAsString(r, "presetType")
 
@@ -17,15 +18,16 @@ func GetPresetsByTypeHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetPresetByIdHandler(w http.ResponseWriter, r *http.Request) {
-	presetId, _ := strconv.Atoi(urlParamAsString(r, "presetId"))
+// GetPresetByIDHandler TODO
+func GetPresetByIDHandler(w http.ResponseWriter, r *http.Request) {
+	presetID, _ := strconv.Atoi(urlParamAsString(r, "presetID"))
 
 	preset := models.Preset{}
 
-	err := preset.GetByID(int64(presetId))
+	err := preset.GetByID(int64(presetID))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Preset not found")
@@ -37,5 +39,5 @@ func GetPresetByIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }

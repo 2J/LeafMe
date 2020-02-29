@@ -8,12 +8,13 @@ import (
 	"strconv"
 )
 
-func GetPlantByIdHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+// GetPlantByIDHandler TODO
+func GetPlantByIDHandler(w http.ResponseWriter, r *http.Request) {
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	plant := models.Plant{}
 
-	err := plant.GetByID(int64(plantId))
+	err := plant.GetByID(int64(plantID))
 
 	if err != nil {
 		writeErrorResponse(w, 404, "Plant not found")
@@ -25,12 +26,13 @@ func GetPlantByIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// UpdatePlantNameHandler TODO
 func UpdatePlantNameHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	type PlantUpdateForm struct {
 		Name string `json:"name"`
@@ -65,18 +67,19 @@ func UpdatePlantNameHandler(w http.ResponseWriter, r *http.Request) {
 	err = models.UpdatePlantName(int64(plantID), plant.Name)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// UpdatePlantModeHandler TODO
 func UpdatePlantModeHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	type PlantUpdateForm struct {
 		Manual bool `json:"manual"`
@@ -94,17 +97,18 @@ func UpdatePlantModeHandler(w http.ResponseWriter, r *http.Request) {
 	err := models.UpdatePlantMode(int64(plantID), plantUpdateForm.Manual)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// TogglePlantManualLightHandler TODO
 func TogglePlantManualLightHandler(w http.ResponseWriter, r *http.Request) {
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	plant := models.Plant{}
 	err := plant.GetByID(int64(plantID))
@@ -124,18 +128,19 @@ func TogglePlantManualLightHandler(w http.ResponseWriter, r *http.Request) {
 	err = models.UpdatePlantManualLight(int64(plantID), !plant.ManualLight)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// UpdatePlantManualWaterHandler TODO
 func UpdatePlantManualWaterHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	type PlantUpdateForm struct {
 		Amount int `json:"amount"`
@@ -160,11 +165,11 @@ func UpdatePlantManualWaterHandler(w http.ResponseWriter, r *http.Request) {
 	err = models.UpdatePlantManualWater(int64(plantID), plant.ManualWater+plantUpdateForm.Amount)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }

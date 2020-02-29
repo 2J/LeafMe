@@ -8,12 +8,13 @@ import (
 	"strconv"
 )
 
-func GetLightingEventByIdHandler(w http.ResponseWriter, r *http.Request) {
-	//plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
-	eventId, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+// GetLightingEventByIDHandler TODO
+func GetLightingEventByIDHandler(w http.ResponseWriter, r *http.Request) {
+	//plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
+	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventID"))
 
 	lightingEvent := models.LightingEvent{}
-	err := lightingEvent.GetByID(int64(eventId))
+	err := lightingEvent.GetByID(int64(eventID))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -25,13 +26,14 @@ func GetLightingEventByIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetLightingEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request) {
-	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+// GetLightingEventsByScheduleIDHandler TODO
+func GetLightingEventsByScheduleIDHandler(w http.ResponseWriter, r *http.Request) {
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleID"))
 
-	lightingEvents, err := models.GetLightingEventsByScheduleID(int64(scheduleId))
+	lightingEvents, err := models.GetLightingEventsByScheduleID(int64(scheduleID))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -47,13 +49,14 @@ func GetLightingEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetLightingEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+// GetLightingEventsByPlantIDHandler TODO
+func GetLightingEventsByPlantIDHandler(w http.ResponseWriter, r *http.Request) {
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
-	lightingEvents, err := models.GetLightingEventsByPlantID(int64(plantId))
+	lightingEvents, err := models.GetLightingEventsByPlantID(int64(plantID))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -69,15 +72,16 @@ func GetLightingEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetWateringEventByIdHandler(w http.ResponseWriter, r *http.Request) {
-	//plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
-	eventId, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+// GetWateringEventByIDHandler TODO
+func GetWateringEventByIDHandler(w http.ResponseWriter, r *http.Request) {
+	//plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
+	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventID"))
 
 	wateringEvent := models.WateringEvent{}
-	err := wateringEvent.GetByID(int64(eventId))
+	err := wateringEvent.GetByID(int64(eventID))
 
 	if err != nil {
 		writeErrorResponse(w, 500, "Failed to get: "+err.Error())
@@ -89,13 +93,14 @@ func GetWateringEventByIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetWateringEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request) {
-	scheduleId, _ := strconv.Atoi(urlParamAsString(r, "scheduleId"))
+// GetWateringEventsByScheduleIDHandler TODO
+func GetWateringEventsByScheduleIDHandler(w http.ResponseWriter, r *http.Request) {
+	scheduleID, _ := strconv.Atoi(urlParamAsString(r, "scheduleID"))
 
-	wateringEvents, err := models.GetWateringEventsByScheduleID(int64(scheduleId))
+	wateringEvents, err := models.GetWateringEventsByScheduleID(int64(scheduleID))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -111,13 +116,14 @@ func GetWateringEventsByScheduleIdHandler(w http.ResponseWriter, r *http.Request
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetWateringEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+// GetWateringEventsByPlantIDHandler TODO
+func GetWateringEventsByPlantIDHandler(w http.ResponseWriter, r *http.Request) {
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
-	wateringEvents, err := models.GetWateringEventsByPlantID(int64(plantId))
+	wateringEvents, err := models.GetWateringEventsByPlantID(int64(plantID))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -133,17 +139,18 @@ func GetWateringEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
-func GetEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
-	plantId, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+// GetEventsByPlantIDHandler TODO
+func GetEventsByPlantIDHandler(w http.ResponseWriter, r *http.Request) {
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
-	lightingEvents, err := models.GetLightingEventsByPlantID(int64(plantId))
+	lightingEvents, err := models.GetLightingEventsByPlantID(int64(plantID))
 	if err != nil {
 		panic(err.Error())
 	}
-	wateringEvents, err := models.GetWateringEventsByPlantID(int64(plantId))
+	wateringEvents, err := models.GetWateringEventsByPlantID(int64(plantID))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -161,11 +168,12 @@ func GetEventsByPlantIdHandler(w http.ResponseWriter, r *http.Request) {
 		writeErrorResponse(w, 500, "125")
 		return
 	}
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// SetLightingEventFinishedHandler TODO
 func SetLightingEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
-	eventId, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventID"))
 
 	response := struct {
 		Success bool `json:"success"`
@@ -174,20 +182,21 @@ func SetLightingEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	err := models.SetLightingEventFinished(int64(eventId), true)
+	err := models.SetLightingEventFinished(int64(eventID), true)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
+// SetWateringEventFinishedHandler TODO
 func SetWateringEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
-	eventId, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventID"))
 
 	response := struct {
 		Success bool `json:"success"`
@@ -196,22 +205,22 @@ func SetWateringEventFinishedHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	err := models.SetWateringEventFinished(int64(eventId), true)
+	err := models.SetWateringEventFinished(int64(eventID), true)
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
 // CreateLightingEventHandler creates lighting event
 func CreateLightingEventHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	lightingEvent := models.LightingEvent{}
 	json.Unmarshal(body, &lightingEvent)
@@ -234,18 +243,18 @@ func CreateLightingEventHandler(w http.ResponseWriter, r *http.Request) {
 	response.ID, err = lightingEvent.Create()
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
 // DeleteLightingEventHandler deletes lighting devent
 func DeleteLightingEventHandler(w http.ResponseWriter, r *http.Request) {
-	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventID"))
 
 	err := models.DeleteLightingEventByID(int64(eventID))
 
@@ -262,13 +271,13 @@ func DeleteLightingEventHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, statusCode, responseJSON)
+	writeJSONResponse(w, statusCode, responseJSON)
 }
 
 // CreateWateringEventHandler creates watering event
 func CreateWateringEventHandler(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantId"))
+	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
 	wateringEvent := models.WateringEvent{}
 	json.Unmarshal(body, &wateringEvent)
@@ -291,18 +300,18 @@ func CreateWateringEventHandler(w http.ResponseWriter, r *http.Request) {
 	response.ID, err = wateringEvent.Create()
 
 	if err != nil {
-		writeJsonResponse(w, 500, responseJSON)
+		writeJSONResponse(w, 500, responseJSON)
 		return
 	}
 
 	response.Success = true
 	responseJSON, err = json.Marshal(response)
-	writeJsonResponse(w, 200, responseJSON)
+	writeJSONResponse(w, 200, responseJSON)
 }
 
 // DeleteWateringEventHandler deletes watering devent
 func DeleteWateringEventHandler(w http.ResponseWriter, r *http.Request) {
-	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventId"))
+	eventID, _ := strconv.Atoi(urlParamAsString(r, "eventID"))
 
 	err := models.DeleteWateringEventByID(int64(eventID))
 
@@ -319,5 +328,5 @@ func DeleteWateringEventHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	writeJsonResponse(w, statusCode, responseJSON)
+	writeJSONResponse(w, statusCode, responseJSON)
 }

@@ -11,7 +11,7 @@ func init() {
 }
 
 // Helper for sending a non-error response
-func writeJsonResponse(w http.ResponseWriter, statusCode int, jsonBody []byte) {
+func writeJSONResponse(w http.ResponseWriter, statusCode int, jsonBody []byte) {
 	w.Header().Set("Content-Type", "application/json")
 
 	w.WriteHeader(statusCode)
@@ -74,6 +74,7 @@ func httpErrorHandler(statusCode int, message string) func(w http.ResponseWriter
 	}
 }
 
+// RandomString TODO
 func RandomString(n int) string {
 	letterRunes := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
