@@ -41,11 +41,13 @@ $ make push
 
 ### Get Plant
 
+Gets the plant name, mode, manual light/water status
+
 ```
 GET https://leafme.jj.ai/plant/{{plantId}}
 ```
 
-### Update Plant
+### Update Plant Name
 
 ```
 POST https://leafme.jj.ai/plant/{{plantId}}
@@ -53,6 +55,34 @@ POST https://leafme.jj.ai/plant/{{plantId}}
 example payload: 
 
     {"name":"SOME PLANT NAME"}
+```
+
+### Update Plant Manual Mode
+
+```
+POST https://leafme.jj.ai/plant/{{plantId}}/manual/mode
+
+example payload: 
+
+    {"manual":true}
+```
+
+#### Toggle Plant Manual Light Status
+
+```
+POST https://leafme.jj.ai/plant/{{plantId}}/manual/light
+
+(no payload needed)
+```
+
+#### Update Plant Manual Water Amount
+
+```
+POST https://leafme.jj.ai/plant/{{plantId}}/manual/water
+
+example payload: 
+
+    {"amount":100}
 ```
 
 ## Schedules

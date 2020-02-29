@@ -30,7 +30,10 @@ func NewRouter() *mux.Router {
 
 	// Plant handlers
 	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(GetPlantByIdHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(UpdatePlantHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/manual/mode", addDefaultHeaders(UpdatePlantModeHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/manual/light", addDefaultHeaders(TogglePlantManualLightHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}/manual/water", addDefaultHeaders(UpdatePlantManualWaterHandler)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/plant/{plantId}", addDefaultHeaders(UpdatePlantNameHandler)).Methods("POST", "OPTIONS")
 
 	// Schedule handlers
 	router.HandleFunc("/plant/{plantId}/schedules", addDefaultHeaders(GetSchedulesByPlantIdHandler)).Methods("GET", "OPTIONS")

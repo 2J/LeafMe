@@ -2,7 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/2J/LeafMe/api/models"
 	"io/ioutil"
 	"net/http"
@@ -216,7 +215,6 @@ func CreateLightingEventHandler(w http.ResponseWriter, r *http.Request) {
 
 	lightingEvent := models.LightingEvent{}
 	json.Unmarshal(body, &lightingEvent)
-	fmt.Println(lightingEvent)
 
 	lightingEvent.PlantID = int64(plantID)
 	lightingEvent.Finished = false
@@ -232,13 +230,10 @@ func CreateLightingEventHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	responseJSON, _ := json.Marshal(response)
 
-	fmt.Println("@@@1")
 	var err error
 	response.ID, err = lightingEvent.Create()
-	fmt.Println("@@@2")
 
 	if err != nil {
-		fmt.Println(err.Error())
 		writeJsonResponse(w, 500, responseJSON)
 		return
 	}

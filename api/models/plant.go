@@ -15,6 +15,9 @@ type Plant struct {
 	Name        string `json:"name" validate:"required"`
 	Description string `json:"-"`
 	PushToken   string `json:"-"`
+	ManualMode  bool   `json:"manual_mode"`
+	ManualLight bool   `json:"manual_light"`
+	ManualWater int    `json:"manual_water"`
 }
 
 func (plant *Plant) getRow(rows *sql.Rows) error {
@@ -24,6 +27,9 @@ func (plant *Plant) getRow(rows *sql.Rows) error {
 		&plant.Name,
 		&plant.Description,
 		&plant.PushToken,
+		&plant.ManualMode,
+		&plant.ManualLight,
+		&plant.ManualWater,
 	)
 
 	return err
@@ -85,6 +91,60 @@ func UpdatePlantPushToken(plantID int64, pushToken string) error {
 
 	_, err = delForm.Exec(
 		pushToken,
+		plantID,
+	)
+
+	return err
+}
+
+// UpdatePlantMode TODO
+func UpdatePlantMode(plantID int64, manual bool) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE plants SET manualMode = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		manual,
+		plantID,
+	)
+
+	return err
+}
+
+// UpdatePlantManualLight TODO
+func UpdatePlantManualLight(plantID int64, light bool) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE plants SET manualLight = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		light,
+		plantID,
+	)
+
+	return err
+}
+
+// UpdatePlantManualWater TODO
+func UpdatePlantManualWater(plantID int64, water int) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE plants SET manualWater = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		water,
 		plantID,
 	)
 
