@@ -48,7 +48,7 @@ export default class ListViewCard extends Component {
     _.forEach(this.props.items, event => {
       eventList.push(<Divider key={event.id}/>); //push separately because elements need parents
       eventList.push(      
-        <View style={{ //not sure why it won't let me add bottom padding without stlying like this
+        <View style={{ 
           flex: 1, 
           flexDirection: 'row', 
           justifyContent: 'space-between',

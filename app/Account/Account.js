@@ -1,12 +1,52 @@
 import React, {Component} from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Switch } from 'react-native';
 import { Card, List } from 'react-native-paper';
 import CustomBanner from '../Components/CustomBanner';
 
-import { COLORS, CONTAINERS, FONTS } from '../styles';
+import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
+
+import AccountModel from '../Models/Account';
+import Plant from '../Models/Plant';
 
 export default class Account extends Component {
+  state = {
+    connectionToggle: true, 
+    modeToggle: true //true = manual, false = automatic
+  }
+
+  toggleConnection = () => {
+    this.setState({
+      connectionToggle: !this.state.connectionToggle
+    })
+  }
+
+  toggleMode = async () => {
+    await AccountModel.toggleMode(!this.state.modeToggle).then(data => {
+      this.setState({
+        modeToggle: !this.state.modeToggle
+      });
+    }).catch(error => {
+      throw error;
+    });
+  }
+
+  async componentDidMount(){
+    await Plant.getPlant().then(data => {
+      console.log(data);
+      this.setState({
+        modeToggle: data.manual_mode
+      });
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Error getting Plant Name: ' + error
+      );
+      throw error;
+    });
+  }
+
   render() {
+    const { connectionToggle, modeToggle } = this.state;
     return (
       <ScrollView>
         <CustomBanner 
@@ -28,22 +68,12 @@ export default class Account extends Component {
               <List.Item
                 title='Email'
                 description='fakeemail@email.com'
-                style={{         
-                  width: '106%',
-                  marginLeft: -10,   
-                  borderBottomWidth: 2,
-                  borderBottomColor: COLORS.grey3
-                }}
+                style={COMPONENTS.accountListItem}
               />
               <List.Item
                 title='Password'
                 description='*******'
-                style={{            
-                  width: '106%',
-                  marginLeft: -10,   
-                  borderBottomWidth: 2,
-                  borderBottomColor: COLORS.grey3
-                }}
+                style={COMPONENTS.accountListItem}
               />
               <List.Item
                 title='Name'
@@ -71,31 +101,38 @@ export default class Account extends Component {
               <List.Item
                 title='Device ID'
                 description='XXXXXXXXXXXXXXXXXXXXXX'
-                style={{         
-                  width: '106%',
-                  marginLeft: -10,   
-                  borderBottomWidth: 2,
-                  borderBottomColor: COLORS.grey3
-                }}
+                style={COMPONENTS.accountListItem}
               />
               <List.Item
                 title='Wi-Fi Network Name'
                 description='XXXXXXXXXXXXXXXXXXXXX'
-                style={{            
-                  width: '106%',
-                  marginLeft: -10,   
-                  borderBottomWidth: 2,
-                  borderBottomColor: COLORS.grey3
-                }}
+                style={COMPONENTS.accountListItem}
               />
               <List.Item
                 title='Connection'
-                description='On'
+                description={connectionToggle ? 'On' : 'Off'}
+                style={COMPONENTS.accountListItem}
+                right={ props => <Switch
+                  style={COMPONENTS.switch}
+                  onChange = {this.toggleConnection}
+                  value = {connectionToggle}
+                />}
+              /> 
+              <List.Item
+                title='Mode'
+                description={modeToggle ? 'Manual' : 'Automatic'}
                 style={{         
                   width: '106%',
-                  marginLeft: -10,      
+                  marginLeft: -10,  
                 }}
+                right={ props => <Switch
+                  style={COMPONENTS.switch}
+                  onChange = {this.toggleMode}
+                  value = {modeToggle}
+                />}
               />
+                
+              
             </Card.Content>
           </Card>
 
