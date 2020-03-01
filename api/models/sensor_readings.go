@@ -14,6 +14,9 @@ var SensorTypes = map[string]string{
 	"BRIGHTNESS":          "BRIGHTNESS",
 	"AMBIENT_TEMPERATURE": "AMBIENT_TEMPERATURE",
 	"AMBIENT_HUMIDITY":    "AMBIENT_HUMIDITY",
+	"PUMP_STATUS":         "PUMP_STATUS",
+	"LIGHT_STATUS":        "LIGHT_STATUS",
+	"TANK_LEVEL":          "TANK_LEVEL",
 }
 
 // SensorReading TODO

@@ -44,21 +44,13 @@ $ make push
 Gets the plant name, mode, manual light/water status
 
 ```
-<<<<<<< HEAD
 GET https://leafme.jj.ai/plant/{{plantID}}
-=======
-GET https://leafme.jj.ai/plant/{{plantId}}
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 ### Update Plant Name
 
 ```
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/{{plantID}}
-=======
-POST https://leafme.jj.ai/plant/{{plantId}}
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 example payload: 
 
@@ -68,11 +60,7 @@ example payload:
 ### Update Plant Manual Mode
 
 ```
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/{{plantID}}/manual/mode
-=======
-POST https://leafme.jj.ai/plant/{{plantId}}/manual/mode
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 example payload: 
 
@@ -82,11 +70,7 @@ example payload:
 #### Toggle Plant Manual Light Status
 
 ```
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/{{plantID}}/manual/light
-=======
-POST https://leafme.jj.ai/plant/{{plantId}}/manual/light
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 (no payload needed)
 ```
@@ -94,11 +78,7 @@ POST https://leafme.jj.ai/plant/{{plantId}}/manual/light
 #### Update Plant Manual Water Amount
 
 ```
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/{{plantID}}/manual/water
-=======
-POST https://leafme.jj.ai/plant/{{plantId}}/manual/water
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 example payload: 
 
@@ -110,24 +90,16 @@ example payload:
 ### Get All Schedules
 
 ```
-<<<<<<< HEAD
 GET https://leafme.jj.ai/plant/{{plantID}}/schedules
 ```
 
 - plantID: int
-=======
-GET https://leafme.jj.ai/plant/{{plantId}}/schedules
-```
-
-- plantId: int
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 ### Get Individual Light / Water Schedule
 
 ```
 LIGHT
 
-<<<<<<< HEAD
 GET https://leafme.jj.ai/plant/{{plantID}}/schedules/light/{{scheduleID}}
 - plantID: int
 - scheduleID: int
@@ -137,30 +109,14 @@ WATER
 GET https://leafme.jj.ai/plant/{{plantID}}/schedules/water/{{scheduleID}}
 - plantID: int
 - scheduleID: int
-=======
-GET https://leafme.jj.ai/plant/{{plantId}}/schedules/light/{{scheduleId}}
-- plantId: int
-- scheduleId: int
-
-WATER
-
-GET https://leafme.jj.ai/plant/{{plantId}}/schedules/water/{{scheduleId}}
-- plantId: int
-- scheduleId: int
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 ### Create Light / Water Schedule
 
 ```
 LIGHT
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/{{plantID}}/schedules/light/create
 - plantID: int
-=======
-POST https://leafme.jj.ai/plant/{{plantId}}/schedules/light/create
-- plantId: int
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 example payload: 
 
@@ -174,13 +130,8 @@ example payload:
         }
 
 WATER
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/{{plantID}}/schedules/water/create
 - plantID: int
-=======
-POST https://leafme.jj.ai/plant/{{plantId}}/schedules/water/create
-- plantId: int
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 example payload: 
 
@@ -202,7 +153,6 @@ It will return whether it is successful, and the ID of the inserted light schedu
 
 ```
 LIGHT
-<<<<<<< HEAD
 DELETE https://leafme.jj.ai/plant/{{plantID}}/schedules/light/delete/{{scheduleID}}
 - plantID: int
 - scheduleID: int
@@ -211,16 +161,6 @@ WATER
 DELETE https://leafme.jj.ai/plant/{{plantID}}/schedules/water/delete/{{scheduleID}}
 - plantID: int
 - scheduleID: int
-=======
-DELETE https://leafme.jj.ai/plant/{{plantId}}/schedules/light/delete/{{scheduleId}}
-- plantId: int
-- scheduleId: int
-
-WATER
-DELETE https://leafme.jj.ai/plant/{{plantId}}/schedules/water/delete/{{scheduleId}}
-- plantId: int
-- scheduleId: int
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 ### Getting events
@@ -236,15 +176,9 @@ GET https://leafme.jj.ai/plant/1/events
 ```
 GET https://leafme.jj.ai/plant/1/events/light
 
-<<<<<<< HEAD
 GET https://leafme.jj.ai/plant/1/events/light/{{eventID}}
 
 GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleID}}/events
-=======
-GET https://leafme.jj.ai/plant/1/events/light/{{eventId}}
-
-GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 #### GET WATER EVENTS
@@ -252,15 +186,9 @@ GET https://leafme.jj.ai/plant/1/schedules/light/{{scheduleId}}/events
 ```
 GET https://leafme.jj.ai/plant/1/events/water
 
-<<<<<<< HEAD
 GET https://leafme.jj.ai/plant/1/events/water/{{eventID}}
 
 GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleID}}/events
-=======
-GET https://leafme.jj.ai/plant/1/events/water/{{eventId}}
-
-GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 #### SET EVENT TO FINISHED
@@ -268,15 +196,9 @@ GET https://leafme.jj.ai/plant/1/schedules/water/{{scheduleId}}/events
 NOTE: No payload needed when sending POST requests
 
 ```
-<<<<<<< HEAD
 POST https://leafme.jj.ai/plant/1/events/light/{{eventID}}
 
 POST https://leafme.jj.ai/plant/1/events/water/{{eventID}}
-=======
-POST https://leafme.jj.ai/plant/1/events/light/{{eventId}}
-
-POST https://leafme.jj.ai/plant/1/events/water/{{eventId}}
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 ## Monitoring / Sensors
@@ -284,13 +206,8 @@ POST https://leafme.jj.ai/plant/1/events/water/{{eventId}}
 ### Get stats for dashboard
 
 ```
-<<<<<<< HEAD
 GET https://leafme.jj.ai/plant/{{plantID}}/sensors
 - plantID: int
-=======
-GET https://leafme.jj.ai/plant/{{plantId}}/sensors
-- plantId: int
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 ### Get history for a type of sensor
@@ -300,6 +217,9 @@ GET https://leafme.jj.ai/plant/1/sensors/history/SOIL_MOISTURE
 GET https://leafme.jj.ai/plant/1/sensors/history/BRIGHTNESS
 GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_TEMPERATURE
 GET https://leafme.jj.ai/plant/1/sensors/history/AMBIENT_HUMIDITY
+GET https://leafme.jj.ai/plant/1/sensors/history/PUMP_STATUS
+GET https://leafme.jj.ai/plant/1/sensors/history/LIGHT_STATUS
+GET https://leafme.jj.ai/plant/1/sensors/history/TANK_LEVEL
 ```
 
 NOTE: In progress, currently retrieves all data for type. Will be changed to only show requested history using start and end times. 
@@ -316,6 +236,9 @@ example payload:
         {"type": "BRIGHTNESS","value": 17.44},
         {"type": "AMBIENT_TEMPERATURE","value": 18.2},
         {"type": "AMBIENT_HUMIDITY","value": 19}
+        {"type": "PUMP_STATUS","value": 1}
+        {"type": "LIGHT_STATUS","value": 1}
+        {"type": "TANK_LEVEL","value": 1}
     ]
 ```
 
@@ -334,11 +257,7 @@ GET https://leafme.jj.ai/presets/types/LEGUME
 ### Get preset details
 
 ```
-<<<<<<< HEAD
 GET https://leafme.jj.ai/presets/{{presetID}}
-=======
-GET https://leafme.jj.ai/presets/{{presetId}}
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 ```
 
 ## Push Notifications
@@ -363,11 +282,7 @@ example payload:
 Sends push notification to plant
 
 ```
-<<<<<<< HEAD
 POST https://leafme.jj.ai/notification/plant/{{plantID}}
-=======
-POST https://leafme.jj.ai/notification/plant/{{plantId}}
->>>>>>> c15b79351baf947021895c44236c273f6891297a
 
 example payload:
 
