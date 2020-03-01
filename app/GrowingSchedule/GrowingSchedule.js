@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
-import { Button, Dialog, Portal } from 'react-native-paper';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Button } from 'react-native-paper';
 import _ from 'lodash';
 
 //Model imports
@@ -13,7 +12,7 @@ import Event from '../Models/Event';
 import CalendarView from './CalendarView';
 import ListView from './ListView';
 import CustomBanner from '../Components/CustomBanner';
-import { WATERINGLABELS } from './AddScheduleSelects';
+import { ManualWater, GenericConfirmation } from '../Dialogs';
 
 //Styles
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
@@ -235,33 +234,16 @@ export default class GrowingSchedule extends Component {
             {childView}
           </View>
 
-          <Portal>
-            <Dialog
-              visible={waterNowDialog}
-              onDismiss={() => {this.setState({waterNowDialog: false})}}>
-              <Dialog.Title>How much do you want to water? </Dialog.Title>
-              <Dialog.Content>
-                <Dropdown
-                  label={WATERINGLABELS.unitsPlaceholder}
-                  data={WATERINGLABELS.unitsData}
-                  value={waterNowAmount}
-                  containerStyle={COMPONENTS.dropdown}
-                  dropdownOffset = {{
-                    top: 10, 
-                    left: 0
-                  }}
-                  rippleOpacity={0}
-                  baseColor={COLORS.grey7}
-                  fontSize={14}
-                  onChangeText={(text) => this.setState({waterNowAmount: text})}
-                />
-              </Dialog.Content>
-              <Dialog.Actions>
-                <Button color={COLORS.green5} onPress={() => {this.setState({waterNowDialog: false})}}>Cancel</Button>
-                <Button color={COLORS.green5} onPress={this.waterGo}>Go</Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
+          {/* Confirmation dialogs below */}
+          <ManualWater          
+            visible={waterNowDialog}
+            onDismiss={() => {this.setState({waterNowDialog: false})}}
+            waterNowAmount={waterNowAmount}
+            onChangeText={(text) => this.setState({waterNowAmount: text})}
+            onPress={this.waterGo}
+          />
+          <GenericConfirmation 
+          />
 
         </ScrollView>
     );
