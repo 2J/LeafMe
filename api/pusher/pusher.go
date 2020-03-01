@@ -2,9 +2,9 @@ package pusher
 
 import (
 	"errors"
-	"fmt"
 	"github.com/2J/LeafMe/api/models"
 	"github.com/oliveroneill/exponent-server-sdk-golang/sdk"
+	log "github.com/sirupsen/logrus"
 )
 
 // Notification is for push notifications
@@ -21,6 +21,12 @@ func push(notification Notification) error {
 	if err != nil {
 		return err
 	}
+
+	log.Info("Sending notification...")
+	log.Info("To: " + notification.To)
+	log.Info("Title: " + notification.Title)
+	log.Info("Body: " + notification.Body)
+	log.Info(notification.Data)
 
 	// Create a new Expo SDK client
 	client := expo.NewPushClient(nil)
@@ -44,7 +50,7 @@ func push(notification Notification) error {
 
 	// Validate responses
 	if response.ValidateResponse() != nil {
-		fmt.Println(response.PushMessage.To, "failed")
+		log.Error(response.PushMessage.To, "failed")
 		return errors.New("Push notification failed")
 	}
 

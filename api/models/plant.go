@@ -5,19 +5,22 @@ import (
 	"errors"
 	database "github.com/2J/LeafMe/api/db"
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
+	"gopkg.in/guregu/null.v3"
 	"strings"
+	"time"
 )
 
 // Plant TODO
 type Plant struct {
-	ID          int64  `json:"id" validate:"required"`
-	DeviceID    int64  `json:"device_id" validate:"required"`
-	Name        string `json:"name" validate:"required"`
-	Description string `json:"-"`
-	PushToken   string `json:"-"`
-	ManualMode  bool   `json:"manual_mode"`
-	ManualLight bool   `json:"manual_light"`
-	ManualWater int    `json:"manual_water"`
+	ID                   int64     `json:"id" validate:"required"`
+	DeviceID             int64     `json:"device_id" validate:"required"`
+	Name                 string    `json:"name" validate:"required"`
+	Description          string    `json:"-"`
+	PushToken            string    `json:"-"`
+	ManualMode           bool      `json:"manual_mode"`
+	ManualLight          bool      `json:"manual_light"`
+	ManualWater          int       `json:"manual_water"`
+	LastTankNotification null.Time `json:"-"`
 }
 
 func (plant *Plant) getRow(rows *sql.Rows) error {
@@ -30,6 +33,7 @@ func (plant *Plant) getRow(rows *sql.Rows) error {
 		&plant.ManualMode,
 		&plant.ManualLight,
 		&plant.ManualWater,
+		&plant.LastTankNotification,
 	)
 
 	return err
@@ -59,6 +63,31 @@ func (plant *Plant) GetByID(id int64) error {
 	}
 
 	return nil
+}
+
+// GetAllPlants TODO
+func GetAllPlants() ([]Plant, error) {
+	plant := Plant{}
+	res := []Plant{}
+
+	db := database.Open()
+	defer database.Close(db)
+	rows, err := db.Query("SELECT * FROM plants")
+	if err != nil {
+		return res, err
+	}
+
+	for rows.Next() {
+		plant.getRow(rows)
+
+		if err != nil {
+			return res, err
+		}
+
+		res = append(res, plant)
+	}
+
+	return res, nil
 }
 
 // UpdatePlantName TODO
@@ -145,6 +174,24 @@ func UpdatePlantManualWater(plantID int64, water int) error {
 
 	_, err = delForm.Exec(
 		water,
+		plantID,
+	)
+
+	return err
+}
+
+// UpdatePlantLastTankNotification TODO
+func UpdatePlantLastTankNotification(plantID int64) error {
+	db := database.Open()
+	defer database.Close(db)
+
+	delForm, err := db.Prepare("UPDATE plants SET lastTankNotification = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	_, err = delForm.Exec(
+		time.Now(),
 		plantID,
 	)
 
