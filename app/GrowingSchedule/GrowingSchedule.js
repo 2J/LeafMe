@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
-import { Button, Snackbar } from 'react-native-paper';
+import { Button, Dialog, Portal } from 'react-native-paper';
+import { Dropdown } from 'react-native-material-dropdown';
 import _ from 'lodash';
 
 //Model imports
@@ -12,6 +13,7 @@ import Event from '../Models/Event';
 import CalendarView from './CalendarView';
 import ListView from './ListView';
 import CustomBanner from '../Components/CustomBanner';
+import { WATERINGLABELS } from './AddScheduleSelects';
 
 //Styles
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
@@ -24,8 +26,10 @@ export default class GrowingSchedule extends Component {
     lightingEvents: ' ',
     plantName: '',
     calendarView: false,
-    addWaterSnackVisible: false,
-    deleteWaterSnackVisible: false,
+    waterNowDialog: false,
+    waterNowAmount: '', 
+    lightOn: true,
+    manual: true,
   };
 
   getSchedules = async () => {
@@ -50,8 +54,9 @@ export default class GrowingSchedule extends Component {
   async componentDidMount(){
     await Plant.getPlant().then(data => {
       this.setState({
-        plantName: data.name
-      })
+        plantName: data.name,
+        lightOn: data.manual_light
+      });
     })
     .catch((error) => {
       Alert.alert(
@@ -63,20 +68,19 @@ export default class GrowingSchedule extends Component {
   }
 
   waterNow = () => { //confirmation message or something probably
-    Alert.alert(
-      'water now',
-      'My Alert Msg',
-      [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-      {cancelable: false},
-    );
+    this.setState({
+      waterNowDialog: true
+    });
+  }
+
+  waterGo = async () => {
+    await Schedule.waterNow(this.state.waterNowAmount).then(data => {
+      Alert.alert(
+        'Watering go!'
+      );
+    }).catch((error) => {
+      throw error;
+    }); 
   }
 
   addWaterSchedule  = async (schedule) => { //rerender list view so that it shows the schedule that was just added
@@ -110,15 +114,19 @@ export default class GrowingSchedule extends Component {
     await this.getSchedules();
   }
 
-  turnLightOn = () => { //show confirmation message
-    Alert.alert(
-      'Turn light on',
-      'My Alert Msg',
-      [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
-      ]
-    );
+  toggleLight = async () => { //show confirmation message
+    await Schedule.toggleLight().then(data => {
+      this.setState({
+        lightOn: !this.state.lightOn
+      })
+      Alert.alert(
+        'Lighting Go'
+      );
+    }).catch((error) => {
+      throw error;
+    }); 
   }
+  
 
   addLightingSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
     let save = {
@@ -169,24 +177,39 @@ export default class GrowingSchedule extends Component {
 
   render() {
     let childView;
+    const { 
+      wateringEvents, 
+      lightingEvents,
+      wateringSchedule,
+      lightingSchedule, 
+      waterNowAmount,
+      lightOn,
+      plantName,
+      waterNowDialog,
+      calendarView,
+      manual
+    } = this.state;
+    
     if(this.state.calendarView) {
       childView = <CalendarView 
-                    wateringEvents={this.state.wateringEvents}
-                    lightingEvents={this.state.lightingEvents}
+                    wateringEvents={wateringEvents}
+                    lightingEvents={lightingEvents}
                   >
                   </CalendarView>
     } else {
       childView = <ListView 
-                    wateringSchedule={this.state.wateringSchedule} 
-                    lightingSchedule={this.state.lightingSchedule}
+                    wateringSchedule={wateringSchedule} 
+                    lightingSchedule={lightingSchedule}
 
                     waterNow={this.waterNow}
                     addWaterSchedule={this.addWaterSchedule}
                     deleteWateringSchedule={this.deleteWateringSchedule}
 
-                    turnLightOn={this.turnLightOn}
+                    toggleLight={this.toggleLight}
+                    lightOn={lightOn}
                     addLightingSchedule={this.addLightingSchedule}
                     deleteLightingSchedule={this.deleteLightingSchedule}
+                    manual={manual}
                   >
                   </ListView>
     }
@@ -198,38 +221,49 @@ export default class GrowingSchedule extends Component {
             emoji='seedling'
           />
           <View  style={CONTAINERS.main}>
-            <Text style={FONTS.h1}>Currently Growing: {this.state.plantName}</Text>
+            <Text style={FONTS.h1}>Currently Growing: {plantName}</Text>
             <View style={CONTAINERS.spaceBetween}>
               <Text style={_.assignIn(FONTS.h2, {paddingBottom: 10, width: '50%'})}>Schedule</Text>
               <Button 
                 mode='contained'
                 style={COMPONENTS.calendarToggleButton}
                 onPress={this.toggleView}>
-                {this.state.calendarView ? 'List View' : 'Calendar View'}
+                {calendarView ? 'List View' : 'Calendar View'}
               </Button>
             </View>
             <View style={{paddingTop: 20}}></View> 
             {childView}
           </View>
+
+          <Portal>
+            <Dialog
+              visible={waterNowDialog}
+              onDismiss={() => {this.setState({waterNowDialog: false})}}>
+              <Dialog.Title>How much do you want to water? </Dialog.Title>
+              <Dialog.Content>
+                <Dropdown
+                  label={WATERINGLABELS.unitsPlaceholder}
+                  data={WATERINGLABELS.unitsData}
+                  value={waterNowAmount}
+                  containerStyle={COMPONENTS.dropdown}
+                  dropdownOffset = {{
+                    top: 10, 
+                    left: 0
+                  }}
+                  rippleOpacity={0}
+                  baseColor={COLORS.grey7}
+                  fontSize={14}
+                  onChangeText={(text) => this.setState({waterNowAmount: text})}
+                />
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button color={COLORS.green5} onPress={() => {this.setState({waterNowDialog: false})}}>Cancel</Button>
+                <Button color={COLORS.green5} onPress={this.waterGo}>Go</Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+
         </ScrollView>
     );
   }
 }
-        //Snackbars for confirmation, currently don't work cause of JSON parsing errors 
-        //   {/*confirmation for adding a watering schedule*/}
-        //   <Snackbar
-        //   visible={this.state.addWaterSnackVisible}
-        //   onDismiss={() => this.setState({ addWaterSnackVisible: false })}
-        //   duration={5000}
-        // >
-        //   Watering schedule added successfully.
-        // </Snackbar>
-
-        // {/* deleteWaterSnackVisible */}
-        // <Snackbar
-        //   visible={this.state.deleteWaterSnackVisible}
-        //   onDismiss={() => this.setState({ deleteWaterSnackVisible: false })}
-        //   duration={5000}
-        // >
-        //   Watering schedule deleted successfully.
-        // </Snackbar>

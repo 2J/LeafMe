@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 //AppStack Imports
 import Overview from './Overview/Overview';
@@ -93,7 +96,7 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(
+const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       App: TabNavigator,
@@ -105,3 +108,67 @@ export default createAppContainer(
     }
   )
 );
+
+const pushTokenEndpoint = 'https://leafme.jj.ai/notification/pushtoken';
+
+export async function registerForPushNotificationsAsync() {
+  const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  // only asks if permissions have not already been determined, because
+  // iOS won't necessarily prompt the user a second time.
+  // On Android, permissions are granted on app installation, so
+  // `askAsync` will never prompt the user
+
+  // Stop here if the user did not grant permissions
+  if (status !== 'granted') {
+    alert('No notification permissions!');
+    return;
+  }
+
+  // Get the token that identifies this device
+  let token = await Notifications.getExpoPushTokenAsync();
+  console.log(token);
+
+  // POST the token to your backend server from where you can retrieve it to send push notifications.
+  return fetch(pushTokenEndpoint, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      plant_id: 1,
+      push_token: token
+    }),
+  });
+}
+
+export default class App extends React.Component {
+  state = {
+    notification: {},
+  };
+
+  componentDidMount() {
+    registerForPushNotificationsAsync();
+
+    // Handle notifications that are received or selected while the app
+    // is open. If the app was closed and then opened by tapping the
+    // notification (rather than just tapping the app icon to open it),
+    // this function will fire on the next tick after the app starts
+    // with the notification data.
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  }
+
+  _handleNotification = notification => {
+    // do whatever you want to do with the notification
+    console.log(notification);
+    this.setState({ notification: notification });
+  };
+
+  render() {
+    return (
+      <PaperProvider>
+        <AppContainer />
+      </ PaperProvider>
+    )
+  }
+}

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import { Button, Card, Divider } from 'react-native-paper';
 import { StyleSheet, Modal, Text, TouchableHighlight, View, ScrollView } from 'react-native';
@@ -36,7 +36,25 @@ export default class ListViewCard extends Component {
 
   render() {
     let iconComponent;
-    let iconName=this.props.iconName;
+
+    const {
+      items,
+      message,
+      iconName,
+      mainButtonName,
+      mainButtonFunction,
+      addSchedule,
+      fullSchedule,
+      deleteSchedule,
+      manual
+    } = this.props;
+
+    const {
+      eventListEnd, //initially the list has 3 elements, the array is from 0 to 2, then add the dividers
+      viewable, //remove View More button if end of eventList is reached
+      modalVisible,
+      count
+    } = this.state;
 
     if(iconName === 'ios-water') {
       iconComponent = <Icon name={iconName} size={100} color={COLORS.green5}/>;
@@ -48,7 +66,7 @@ export default class ListViewCard extends Component {
     _.forEach(this.props.items, event => {
       eventList.push(<Divider key={event.id}/>); //push separately because elements need parents
       eventList.push(      
-        <View style={{ //not sure why it won't let me add bottom padding without stlying like this
+        <View style={{ 
           flex: 1, 
           flexDirection: 'row', 
           justifyContent: 'space-between',
@@ -75,7 +93,7 @@ export default class ListViewCard extends Component {
         <Modal
           animationType="slide"
           transparent={false}
-          visible={this.state.modalVisible}
+          visible={modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
@@ -85,11 +103,11 @@ export default class ListViewCard extends Component {
               }}>
               <AddScheduleForm
                 hide={this.setModalVisible}
-                parent={this.props.iconName /* ios-water or lightbulb-o */}
+                parent={iconName /* ios-water or lightbulb-o */}
                 main={true /* coming from main flow or setup flow */}
-                schedules={this.props.fullSchedule}
-                addSchedule={this.props.addSchedule}
-                deleteSchedule={this.props.deleteSchedule}
+                schedules={fullSchedule}
+                addSchedule={addSchedule}
+                deleteSchedule={deleteSchedule}
               />
             </ScrollView>
 
@@ -100,15 +118,15 @@ export default class ListViewCard extends Component {
 
             <View style={{width: '70%', paddingTop: '15%'}}>
               <Text style={_.assignIn(FONTS.h3, {textAlign: 'center'})}>
-                {this.props.message}
+                {message}
               </Text>
             </View>
           </View>
 
           <Text style={{paddingBottom: 10}}>Upcoming Events</Text>
-          { _.slice(eventList, 0, this.state.eventListEnd)}
+          { _.slice(eventList, 0, eventListEnd)}
 
-          {this.state.viewable && 
+          {viewable && 
           <View 
             style={{        
               alignItems: "center", 
@@ -124,12 +142,12 @@ export default class ListViewCard extends Component {
           
           <View style={{paddingTop: 20}}></View> 
           <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingTop: '25%'})}> 
-            <Button 
+            {manual && <Button 
               mode='contained'
               color={COLORS.green5}
-              onPress={this.props.mainButtonFunction}>
-              {this.props.mainButtonName /*water now or turn light on*/}
-            </Button>
+              onPress={mainButtonFunction}>
+              {mainButtonName /* water now or turn light on/off */}
+            </Button>}
             <Text               
               onPress={() => {
                 this.setModalVisible(true);

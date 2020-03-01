@@ -57,6 +57,16 @@ export const COMPONENTS = {
     }, 
     labelsSpacing: {
         paddingBottom: 12
+    }, 
+    accountListItem: {         
+        width: '106%',
+        marginLeft: -10,   
+        borderBottomWidth: 2,
+        borderBottomColor: COLORS.grey3
+    }, 
+    switch: {
+        marginTop: 7,
+        marginRight: 10
     }
 }
 

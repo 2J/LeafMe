@@ -53,6 +53,8 @@ export default class Login extends Component {
                 backgroundColor: COLORS.white
               }}
             >Log In</Button>
+
+            <Button onPress={() => this.props.navigation.navigate('Overview')}>Overview</Button>
           </View>
         </View>
         

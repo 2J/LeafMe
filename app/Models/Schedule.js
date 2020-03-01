@@ -4,14 +4,14 @@ export default class Schedule {
   };  
 
   static async getSchedule() {
-    let url = 'https://leafme.jj.ai/plant/1/schedules';
+    const url = 'https://leafme.jj.ai/plant/1/schedules';
     return fetch(url).then( response => {
       return response.json();
     });
   }
 
   static async createWaterSchedule(schedule) {
-    let url = 'https://leafme.jj.ai/plant/1/schedules/water/create';
+    const url = 'https://leafme.jj.ai/plant/1/schedules/water/create';
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -24,7 +24,7 @@ export default class Schedule {
   }
 
   static async deleteWaterSchedule(scheduleId) {
-    let url = 'https://leafme.jj.ai/plant/1/schedules/water/delete/' + scheduleId;
+    const url = 'https://leafme.jj.ai/plant/1/schedules/water/delete/' + scheduleId;
     return fetch(url, {
       method: 'DELETE',
       headers: {
@@ -37,7 +37,7 @@ export default class Schedule {
   }
 
   static async createLightingSchedule(schedule) {
-    let url = 'https://leafme.jj.ai/plant/1/schedules/light/create';
+    const url = 'https://leafme.jj.ai/plant/1/schedules/light/create';
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -49,7 +49,7 @@ export default class Schedule {
   }
 
   static async deleteLightingSchedule(scheduleId) {
-    let url = 'https://leafme.jj.ai/plant/1/schedules/light/delete/' + scheduleId;
+    const url = 'https://leafme.jj.ai/plant/1/schedules/light/delete/' + scheduleId;
     return fetch(url, {
       method: 'DELETE',
       headers: {
@@ -58,7 +58,29 @@ export default class Schedule {
     }).then( response => {
       return response.json();
     });
-      
+  }
+
+  static async waterNow(amount) {
+    const url ='https://leafme.jj.ai/plant/1/manual/water'
+    return fetch(url, {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify({amount: amount})
+    }).then( response => 
+      response.json());
+  }
+
+  static async toggleLight() {
+    const url ='https://leafme.jj.ai/plant/1/manual/light'
+    return fetch(url, {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then( response => 
+      response.json());
   }
 
 }
