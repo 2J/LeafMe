@@ -1,9 +1,11 @@
 package api
 
-import "fmt"
-import "strconv"
-import "net/http"
-import "github.com/gorilla/mux"
+import (
+	"fmt"
+	"github.com/gorilla/mux"
+	"net/http"
+	"strconv"
+)
 
 // Common validation filter for all bulk requests.
 func validateBulkRequest(w http.ResponseWriter, r *http.Request) (isValid bool) {
