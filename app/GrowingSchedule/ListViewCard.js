@@ -138,7 +138,7 @@ export default class ListViewCard extends Component {
               onPress={() => this.viewMore(eventList)}>
               View More
             </Button>
-            </View> }
+          </View> }
           
           <View style={{paddingTop: 20}}></View> 
           <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingTop: '25%'})}> 
