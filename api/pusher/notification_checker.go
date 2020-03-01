@@ -7,7 +7,7 @@ import (
 )
 
 // Number of seconds between checking for notification
-const checkNotificationInterval = 5
+const checkNotificationInterval = 60
 
 // Block same notification for X number of seconds since last notification
 const notificationInterval = 600
