@@ -42,6 +42,12 @@ func CheckTankNotification() []int64 {
 			continue
 		}
 
+		// Only send notification every X seconds since last notification
+		if plant.LastTankNotification.Valid && !time.Now().After(plant.LastTankNotification.Time.Add(notificationInterval*time.Second)) {
+			log.Info("Not sending notification because last notification too recent...")
+			return nil
+		}
+
 		// Check if needs to be sent
 		sensorReading, err := models.GetLatestSensorReadingByType(plant.ID, "TANK_LEVEL")
 		if err != nil {
@@ -65,12 +71,6 @@ func SendTankNotification(plantID int64) error {
 	err := plant.GetByID(plantID)
 	if err != nil {
 		log.Info("Failed to get Plant ID: ", plantID)
-	}
-
-	// Only send notification every X seconds since last notification
-	if plant.LastTankNotification.Valid && !time.Now().After(plant.LastTankNotification.Time.Add(notificationInterval*time.Second)) {
-		log.Info("Not sending notification because last notification too recent...")
-		return nil
 	}
 
 	notification := Notification{}
