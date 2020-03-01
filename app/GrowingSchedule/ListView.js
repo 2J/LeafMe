@@ -9,6 +9,19 @@ import { COLORS, CONTAINERS, FONTS } from '../styles';
 
 export default class ListView extends Component {
   render() {
+    const {
+      wateringSchedule,
+      lightingSchedule,
+      waterNow,
+      addWaterSchedule,
+      deleteWateringSchedule,
+      toggleLight,
+      lightOn,
+      addLightingSchedule,
+      deleteLightingSchedule,
+      manual
+    } = this.props;
+
     let watering = []; 
     let lighting = [];
 
@@ -70,20 +83,22 @@ export default class ListView extends Component {
           iconName='ios-water'
           message='Your plant needs very wet soil'
           mainButtonName='Water Now'
-          mainButtonFunction={this.props.waterNow}
-          addSchedule={this.props.addWaterSchedule}
-          fullSchedule={this.props.wateringSchedule}
-          deleteSchedule={this.props.deleteWateringSchedule}
+          mainButtonFunction={waterNow}
+          addSchedule={addWaterSchedule}
+          fullSchedule={wateringSchedule}
+          deleteSchedule={deleteWateringSchedule}
+          manual={manual}
         />
         <ListViewCard
           items={lighting}
           message='Your plant needs a lot of light'
           iconName='lightbulb-o'
-          mainButtonName='Turn Light On'
-          mainButtonFunction={this.props.turnLightOn}
-          addSchedule={this.props.addLightingSchedule}
-          fullSchedule={this.props.lightingSchedule}
-          deleteSchedule={this.props.deleteLightingSchedule}
+          mainButtonName={lightOn ? 'Turn Light Off' : 'Turn Light On'}
+          mainButtonFunction={toggleLight}
+          addSchedule={addLightingSchedule}
+          fullSchedule={lightingSchedule}
+          deleteSchedule={deleteLightingSchedule}
+          manual={manual}
         />
       </View>
     );

@@ -27,7 +27,9 @@ export default class GrowingSchedule extends Component {
     plantName: '',
     calendarView: false,
     waterNowDialog: false,
-    waterNowAmount: ''
+    waterNowAmount: '', 
+    lightOn: true,
+    manual: true,
   };
 
   getSchedules = async () => {
@@ -52,8 +54,9 @@ export default class GrowingSchedule extends Component {
   async componentDidMount(){
     await Plant.getPlant().then(data => {
       this.setState({
-        plantName: data.name
-      })
+        plantName: data.name,
+        lightOn: data.manual_light
+      });
     })
     .catch((error) => {
       Alert.alert(
@@ -72,10 +75,6 @@ export default class GrowingSchedule extends Component {
 
   waterGo = async () => {
     await Schedule.waterNow(this.state.waterNowAmount).then(data => {
-      console.log(data);
-      this.setState({
-        waterNowDialog: false
-      })
       Alert.alert(
         'Watering go!'
       );
@@ -115,15 +114,19 @@ export default class GrowingSchedule extends Component {
     await this.getSchedules();
   }
 
-  toggleLight = () => { //show confirmation message
-    Alert.alert(
-      'Turn light on',
-      'My Alert Msg',
-      [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')}
-      ]
-    );
+  toggleLight = async () => { //show confirmation message
+    await Schedule.toggleLight().then(data => {
+      this.setState({
+        lightOn: !this.state.lightOn
+      })
+      Alert.alert(
+        'Lighting Go'
+      );
+    }).catch((error) => {
+      throw error;
+    }); 
   }
+  
 
   addLightingSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
     let save = {
@@ -180,9 +183,11 @@ export default class GrowingSchedule extends Component {
       wateringSchedule,
       lightingSchedule, 
       waterNowAmount,
+      lightOn,
       plantName,
       waterNowDialog,
-      calendarView
+      calendarView,
+      manual
     } = this.state;
     
     if(this.state.calendarView) {
@@ -200,9 +205,11 @@ export default class GrowingSchedule extends Component {
                     addWaterSchedule={this.addWaterSchedule}
                     deleteWateringSchedule={this.deleteWateringSchedule}
 
-                    turnLightOn={this.toggleLight}
+                    toggleLight={this.toggleLight}
+                    lightOn={lightOn}
                     addLightingSchedule={this.addLightingSchedule}
                     deleteLightingSchedule={this.deleteLightingSchedule}
+                    manual={manual}
                   >
                   </ListView>
     }
