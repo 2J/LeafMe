@@ -90,7 +90,7 @@ func (lightingSchedule *LightingSchedule) CreateLightingEvent() (err error) {
 
 		lightingEvents = append(lightingEvents, lightingEvent)
 
-		t = t.AddDate(0, 0, lightingSchedule.Schedule.RepeatDays)
+		t = t.AddDate(0, 0, max(lightingSchedule.Schedule.RepeatDays, 1))
 	}
 
 	// Chunk lighting events by 100 events each

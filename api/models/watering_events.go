@@ -90,7 +90,7 @@ func (wateringSchedule *WateringSchedule) CreateWateringEvent() (err error) {
 
 		wateringEvents = append(wateringEvents, wateringEvent)
 
-		t = t.AddDate(0, 0, wateringSchedule.Schedule.RepeatDays)
+		t = t.AddDate(0, 0, max(wateringSchedule.Schedule.RepeatDays, 1))
 	}
 
 	// Chunk watering events by 100 events each
