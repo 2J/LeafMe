@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
-import { Button, Dialog, Portal } from 'react-native-paper';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Button } from 'react-native-paper';
 import _ from 'lodash';
 
 //Model imports
@@ -13,7 +12,7 @@ import Event from '../Models/Event';
 import CalendarView from './CalendarView';
 import ListView from './ListView';
 import CustomBanner from '../Components/CustomBanner';
-import { WATERINGLABELS } from './AddScheduleSelects';
+import { ManualWater, GenericConfirmation } from '../Dialogs';
 
 //Styles
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
@@ -24,12 +23,17 @@ export default class GrowingSchedule extends Component {
     lightingSchedule: ' ', 
     wateringEvents: ' ', 
     lightingEvents: ' ',
+
     plantName: '',
+    manual: true,
+
     calendarView: false,
-    waterNowDialog: false,
     waterNowAmount: '', 
     lightOn: true,
-    manual: true,
+
+    waterNowDialog: false,
+    deleteLightingDialog: false,
+    addWaterDialog: false
   };
 
   getSchedules = async () => {
@@ -55,7 +59,8 @@ export default class GrowingSchedule extends Component {
     await Plant.getPlant().then(data => {
       this.setState({
         plantName: data.name,
-        lightOn: data.manual_light
+        lightOn: data.manual_light,
+        manual: data.manual_mode
       });
     })
     .catch((error) => {
@@ -67,7 +72,7 @@ export default class GrowingSchedule extends Component {
     await this.getSchedules();
   }
 
-  waterNow = () => { //confirmation message or something probably
+  waterNow = () => { 
     this.setState({
       waterNowDialog: true
     });
@@ -76,8 +81,11 @@ export default class GrowingSchedule extends Component {
   waterGo = async () => {
     await Schedule.waterNow(this.state.waterNowAmount).then(data => {
       Alert.alert(
-        'Watering go!'
+        'Plant has been watered.'
       );
+      this.setState({
+        waterNowDialog: false
+      });
     }).catch((error) => {
       throw error;
     }); 
@@ -94,7 +102,7 @@ export default class GrowingSchedule extends Component {
     };
 
     await Schedule.createWaterSchedule(save).then( data => {
-      this.setState({ addWaterSnackVisible: true });
+      this.setState({ addWaterDialog: true });
     })
     .catch((error) => {
       throw error;
@@ -105,7 +113,7 @@ export default class GrowingSchedule extends Component {
 
   deleteWateringSchedule = async (scheduleId) => {
     await Schedule.deleteWaterSchedule(scheduleId).then( data => {
-      this.setState({ deleteWaterSnackVisible: true });
+      this.setState({ deleteWateringDialog: true });
     })    
     .catch((error) => {
       throw error;
@@ -139,9 +147,7 @@ export default class GrowingSchedule extends Component {
     };
 
     await Schedule.createLightingSchedule(save).then( data => {
-      Alert.alert(
-        'Watering Schedule added successfully'
-      );
+      this.setState({addLightingDialog: true})
     })
     .catch((error) => {
       Alert.alert(
@@ -155,9 +161,7 @@ export default class GrowingSchedule extends Component {
 
   deleteLightingSchedule = async (scheduleId) => {
     await Schedule.deleteLightingSchedule(scheduleId).then( data => {
-      Alert.alert(
-        'Watering Schedule deleted successfully'
-      );
+      this.setState({deleteLightingDialog: true})
     })
     .catch((error) => {
       Alert.alert(
@@ -178,16 +182,23 @@ export default class GrowingSchedule extends Component {
   render() {
     let childView;
     const { 
-      wateringEvents, 
-      lightingEvents,
       wateringSchedule,
       lightingSchedule, 
-      waterNowAmount,
-      lightOn,
+      wateringEvents, 
+      lightingEvents,
+
       plantName,
-      waterNowDialog,
+      manual,
+
       calendarView,
-      manual
+      waterNowAmount, 
+      lightOn,
+
+      waterNowDialog,
+      addWaterDialog, 
+      deleteWateringDialog,
+      addLightingDialog,
+      deleteLightingDialog
     } = this.state;
     
     if(this.state.calendarView) {
@@ -235,33 +246,38 @@ export default class GrowingSchedule extends Component {
             {childView}
           </View>
 
-          <Portal>
-            <Dialog
-              visible={waterNowDialog}
-              onDismiss={() => {this.setState({waterNowDialog: false})}}>
-              <Dialog.Title>How much do you want to water? </Dialog.Title>
-              <Dialog.Content>
-                <Dropdown
-                  label={WATERINGLABELS.unitsPlaceholder}
-                  data={WATERINGLABELS.unitsData}
-                  value={waterNowAmount}
-                  containerStyle={COMPONENTS.dropdown}
-                  dropdownOffset = {{
-                    top: 10, 
-                    left: 0
-                  }}
-                  rippleOpacity={0}
-                  baseColor={COLORS.grey7}
-                  fontSize={14}
-                  onChangeText={(text) => this.setState({waterNowAmount: text})}
-                />
-              </Dialog.Content>
-              <Dialog.Actions>
-                <Button color={COLORS.green5} onPress={() => {this.setState({waterNowDialog: false})}}>Cancel</Button>
-                <Button color={COLORS.green5} onPress={this.waterGo}>Go</Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
+          {/* Confirmation dialogs below */}
+          <ManualWater          
+            visible={waterNowDialog}
+            onDismiss={() => {this.setState({waterNowDialog: false})}}
+            waterNowAmount={waterNowAmount}
+            onChangeText={(text) => this.setState({waterNowAmount: text})}
+            onPress={this.waterGo}
+          />
+
+          <GenericConfirmation 
+            message='Watering schedule successfully added.'
+            onDismiss={() => {this.setState({addWaterDialog: false})}}
+            visible={addWaterDialog}
+          />
+
+          <GenericConfirmation 
+            message='Watering schedule successfully deleted.'
+            onDismiss={() => {this.setState({deleteWateringDialog: false})}}
+            visible={deleteWateringDialog}
+          />
+
+          <GenericConfirmation 
+            message='Lighting schedule successfully added.'
+            onDismiss={() => {this.setState({addLightingDialog: false})}}
+            visible={addLightingDialog}
+          />
+
+          <GenericConfirmation 
+            message='Lighting schedule successfully deleted.'
+            onDismiss={() => {this.setState({deleteLightingDialog: false})}}
+            visible={deleteLightingDialog}
+          />
 
         </ScrollView>
     );

@@ -21,6 +21,7 @@ export default class Overview extends Component {
     brightness: '',
     temperature: '',
     humidity: '', 
+    tankLevel: '',
     plantName: ''
   }
 
@@ -31,7 +32,8 @@ export default class Overview extends Component {
         moisture: data.soil_moisture.value,
         brightness: data.brightness.value,
         temperature: data.ambient_temperature.value + 'C',
-        humidity: data.ambient_humidity.value + '%'
+        humidity: data.ambient_humidity.value + '%',
+        tankLevel: data.tank_level
       });
     });
   }
@@ -56,7 +58,8 @@ export default class Overview extends Component {
       moisture,
       brightness,
       temperature,
-      humidity, 
+      humidity,
+      tankLevel, 
       plantName
     } = this.state;
 
@@ -122,8 +125,7 @@ export default class Overview extends Component {
                 }}> 
                   <Icon name='ios-beaker' size={100} color={COLORS.green5}/>
                   <View style={{flexDirection: 'column', textAlign: 'center', width: 225, padding: 5}}>
-                    <Text style={_.assignIn(FONTS.h1, {textAlign: 'center'})}>Good</Text>
-                    <Text style={FONTS.h3}>Refill in: 10 days</Text>
+                    <Text style={FONTS.h1}>{tankLevel === 1 ? 'Good' : 'Needs Refill'}</Text>
                   </View>
                 </View>
               </Card.Content>
