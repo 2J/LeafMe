@@ -72,6 +72,7 @@ func (wateringSchedule *WateringSchedule) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {
@@ -101,6 +102,7 @@ func GetWateringSchedulesByPlantID(plantID int64) ([]WateringSchedule, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		wateringSchedule.getRow(rows)

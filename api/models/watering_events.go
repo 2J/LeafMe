@@ -80,7 +80,7 @@ func (wateringSchedule *WateringSchedule) CreateWateringEvent() (err error) {
 
 	// Create watering events until repeat ends
 	t := *wateringSchedule.Schedule.Time
-	for t.Before(*wateringSchedule.Schedule.RepeatEndDate) {
+	for t.Equal(*wateringSchedule.Schedule.RepeatEndDate) || t.Before(*wateringSchedule.Schedule.RepeatEndDate) {
 		wateringEvent := WateringEvent{}
 		wateringEvent.PlantID = wateringSchedule.PlantID
 		wateringEvent.WateringScheduleID = null.IntFrom(wateringSchedule.ID)
@@ -131,6 +131,7 @@ func GetWateringEventsByScheduleID(scheduleID int64) ([]WateringEvent, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		wateringEvent.getRow(rows)
@@ -156,6 +157,7 @@ func GetWateringEventsByPlantID(plantID int64) ([]WateringEvent, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		wateringEvent.getRow(rows)
@@ -178,6 +180,7 @@ func (wateringEvent *WateringEvent) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {

@@ -97,6 +97,7 @@ func (preset *Preset) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {
@@ -127,6 +128,7 @@ func GetPresetsByType(presetType string) ([]Preset, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		preset.getRow(rows)

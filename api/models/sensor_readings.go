@@ -119,6 +119,7 @@ func (sensorReading *SensorReading) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {
@@ -144,10 +145,11 @@ func GetLatestSensorReadingsByType(plantID int64, sensorType string) ([]SensorRe
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC", sensorType, plantID)
+	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC LIMIT 100", sensorType, plantID)
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		sensorReading.getRow(rows)
@@ -172,6 +174,7 @@ func GetLatestSensorReadingByType(plantID int64, sensorType string) (SensorReadi
 	if err != nil {
 		return sensorReading, err
 	}
+	defer rows.Close()
 
 	rows.Next()
 	sensorReading.getRow(rows)

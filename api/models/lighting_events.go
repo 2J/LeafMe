@@ -80,7 +80,7 @@ func (lightingSchedule *LightingSchedule) CreateLightingEvent() (err error) {
 
 	// Create lighting events until repeat ends
 	t := *lightingSchedule.Schedule.Time
-	for t.Before(*lightingSchedule.Schedule.RepeatEndDate) {
+	for t.Equal(*lightingSchedule.Schedule.RepeatEndDate) || t.Before(*lightingSchedule.Schedule.RepeatEndDate) {
 		lightingEvent := LightingEvent{}
 		lightingEvent.PlantID = lightingSchedule.PlantID
 		lightingEvent.LightingScheduleID = null.IntFrom(lightingSchedule.ID)
@@ -131,6 +131,7 @@ func GetLightingEventsByScheduleID(scheduleID int64) ([]LightingEvent, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		lightingEvent.getRow(rows)
@@ -156,6 +157,7 @@ func GetLightingEventsByPlantID(plantID int64) ([]LightingEvent, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		lightingEvent.getRow(rows)
@@ -178,6 +180,7 @@ func (lightingEvent *LightingEvent) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {
