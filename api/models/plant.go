@@ -47,6 +47,7 @@ func (plant *Plant) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {
@@ -76,6 +77,7 @@ func GetAllPlants() ([]Plant, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		plant.getRow(rows)

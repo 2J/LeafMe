@@ -76,6 +76,7 @@ func (lightingSchedule *LightingSchedule) GetByID(id int64) error {
 	if err != nil {
 		return err
 	}
+	defer rows.Close()
 
 	found := false
 	for rows.Next() {
@@ -105,6 +106,7 @@ func GetLightingSchedulesByPlantID(plantID int64) ([]LightingSchedule, error) {
 	if err != nil {
 		return res, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		lightingSchedule.getRow(rows)

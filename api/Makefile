@@ -15,7 +15,7 @@ rundb:
 	docker run -d --restart always \
 	--name mysql \
 	--network=leafme \
-	-e MYSQL_ROOT_PASSWORD=MssMt87Tcnka4tN \
+	-e MYSQL_ROOT_PASSWORD=DB_PASSWORD \
 	-p 3306:3306 \
 	mysql:5
 
