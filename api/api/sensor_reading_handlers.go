@@ -117,7 +117,7 @@ func GetLatestSensorReadingsForTypeHandler(w http.ResponseWriter, r *http.Reques
 		}
 
 		// Get time
-		t := latestTime.Add(-time.Duration(i*groupInterval*i) * time.Minute)
+		t := latestTime.Add(-time.Duration(groupInterval*i) * time.Minute)
 		sensorReading := models.SensorReading{
 			Time:  t,
 			Value: avg,
