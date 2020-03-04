@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import _ from 'lodash';
+import moment from 'moment';
 
 //Model imports
 import Schedule from '../Models/Schedule';
@@ -92,22 +93,23 @@ export default class GrowingSchedule extends Component {
   }
 
   addWaterSchedule  = async (schedule) => { //rerender list view so that it shows the schedule that was just added
+    const endTime = this.getEndTime(schedule.startDate, schedule.endDate);
+
     let save = {
       schedule: {
         time: schedule.startDate, 
         repeat_days: schedule.repeatValue,
-        repeat_end_date: schedule.endDate
+        repeat_end_date: endTime
       }, 
       amount: schedule.unitsValue
     };
 
-    await Schedule.createWaterSchedule(save).then( data => {
+    await Schedule.createWaterSchedule(save).then( async data => {
       this.setState({ addWaterDialog: true });
     })
     .catch((error) => {
       throw error;
     });
-    
     await this.getSchedules();
   }
 
@@ -135,19 +137,32 @@ export default class GrowingSchedule extends Component {
     }); 
   }
   
+  getEndTime = (start, end) => {
+    if(moment(start).format('YYYY-MM-DD') === moment(end).format('YYYY-MM-DD')) {
+      end = moment(end).hour(23);
+      end = moment(end).minute(59);
+      end = moment(end).seconds(59);
+      return end;
+    } else {
+      return end;
+    }
+  }
 
   addLightingSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
+    const endTime = this.getEndTime(schedule.startDate, schedule.endDate);
+    
     let save = {
       schedule: {
         time: schedule.startDate, 
         repeat_days: schedule.repeatValue,
-        repeat_end_date: schedule.endDate
+        repeat_end_date: endTime
       }, 
       length: schedule.unitsValue*60
     };
 
-    await Schedule.createLightingSchedule(save).then( data => {
-      this.setState({addLightingDialog: true})
+    await Schedule.createLightingSchedule(save).then( async data => {
+      this.setState({addLightingDialog: true});
+      await this.getSchedules();
     })
     .catch((error) => {
       Alert.alert(
@@ -156,7 +171,7 @@ export default class GrowingSchedule extends Component {
       throw error;
     });
     
-    await this.getSchedules();
+    
   }
 
   deleteLightingSchedule = async (scheduleId) => {

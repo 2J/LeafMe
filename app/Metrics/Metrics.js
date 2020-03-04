@@ -39,17 +39,16 @@ export default class Metrics extends Component {
     await Sensors.getSoilMoistureHistory().then( data => {
       let labels = [];
       let values = [];
-
       _.forEachRight(data, entry => {
-        labels.push(moment(entry.time).format("MMM DD"));
+        labels.push(moment(entry.time).format("ha"));
         values.push(entry.value);
       })
       this.setState({
         soilData: {
-          labels: _.slice(labels, labels.length-6, labels.length),
+          labels: labels,
           datasets: [
             {
-              data: _.slice(values, values.length-6, values.length),
+              data:values,
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -63,15 +62,15 @@ export default class Metrics extends Component {
       let values = [];
 
       _.forEachRight(data, entry => {
-        labels.push(moment(entry.time).format("MMM DD"));
+        labels.push(moment(entry.time).format("ha"));
         values.push(entry.value);
       })
       this.setState({
         brightnessData: {
-          labels: _.slice(labels, labels.length-6, labels.length),
+          labels: labels,
           datasets: [
             {
-              data: _.slice(values, values.length-6, values.length),
+              data: values,
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -85,15 +84,15 @@ export default class Metrics extends Component {
       let values = [];
 
       _.forEachRight(data, entry => {
-        labels.push(moment(entry.time).format("MMM DD"));
+        labels.push(moment(entry.time).format("ha"));
         values.push(entry.value);
       })
       this.setState({
         temperatureData: {
-          labels: _.slice(labels, labels.length-6, labels.length),
+          labels: labels,
           datasets: [
             {
-              data: _.slice(values, values.length-6, values.length),
+              data: values,
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -107,15 +106,15 @@ export default class Metrics extends Component {
       let values = [];
 
       _.forEachRight(data, entry => {
-        labels.push(moment(entry.time).format("MMM DD"));
+        labels.push(moment(entry.time).format("ha"));
         values.push(entry.value);
       })
       this.setState({
         humidityData: {
-          labels: _.slice(labels, labels.length-6, labels.length),
+          labels: labels,
           datasets: [
             {
-              data: _.slice(values, values.length-6, values.length),
+              data: values,
               color: (opacity = 1) => `rgba(17, 201, 14, ${opacity})`, // optional
               strokeWidth: 2 // optional
             }
@@ -148,6 +147,8 @@ export default class Metrics extends Component {
       humidityData
     } = this.state;
 
+    const now = moment(new Date()).subtract(1, 'days').format('MMM DD YYYY') + ' - ' + moment(new Date()).format('MMM DD YYYY');
+
     return (
       <ScrollView>
         <CustomBanner 
@@ -172,7 +173,7 @@ export default class Metrics extends Component {
             <ChartCard 
               data={soilData}
               yLabel="Bars (atm)"
-              xLabel="Date"
+              xLabel={now}
             /> : <EmptyChartCard />
           }
             
@@ -181,7 +182,7 @@ export default class Metrics extends Component {
             <ChartCard 
               data={brightnessData}
               yLabel="Candela (cd)"
-              xLabel="Date"
+              xLabel={now}
             /> : <EmptyChartCard />
           }  
 
@@ -190,13 +191,15 @@ export default class Metrics extends Component {
             <ChartCard 
               data={temperatureData}
               yLabel="Celsius (C)"
-              xLabel="Date"
+              xLabel={now}
             /> : <EmptyChartCard />
           }  
           <Text style={FONTS.h4}>Ambient Humidity</Text>
           {humidityData ? 
             <ChartCard 
             data={humidityData}
+            yLabel='Percentage%'
+            xLabel={now}
             /> : <EmptyChartCard />
           }
         </View>
