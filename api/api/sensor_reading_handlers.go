@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"github.com/2J/LeafMe/api/models"
+	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -77,13 +78,62 @@ func GetLatestSensorReadingsForTypeHandler(w http.ResponseWriter, r *http.Reques
 	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 	sensorType := urlParamAsString(r, "type")
 
-	sensorReadings, err := models.GetLatestSensorReadingsByType(int64(plantID), sensorType)
+	// Group into X hours
+	groupInterval := 240 // Interval in mins
+	numGroups := 6       // Number of groups
 
-	responseJSON, err := json.Marshal(sensorReadings)
+	minTime := time.Now().Add(-time.Duration(groupInterval*numGroups) * time.Minute)
+	sensorReadings, err := models.GetLatestSensorReadingsByType(int64(plantID), sensorType, minTime)
 	if err != nil {
+		writeErrorResponse(w, 500, "582")
+		return
+	}
+
+	latestTime := time.Now().Round(time.Minute)
+	sensorIndex := 0
+
+	res := []models.SensorReading{}
+
+	for i := 0; i < numGroups; i++ {
+		sensorGroup := []models.SensorReading{}
+		for ; sensorIndex < len(sensorReadings); sensorIndex++ {
+			if sensorReadings[sensorIndex].Time.Unix() < latestTime.Add(-time.Duration(groupInterval*(i+1))*time.Minute).Unix() {
+				// Sensor reading is out of scope
+				break
+			}
+
+			sensorGroup = append(sensorGroup, sensorReadings[sensorIndex])
+		}
+
+		// Get average of group
+		var avg float64
+		if len(sensorGroup) == 0 {
+			avg = 0
+		} else {
+			for j := 0; j < len(sensorGroup); j++ {
+				avg += sensorGroup[j].Value
+			}
+			avg = avg / float64(len(sensorGroup))
+		}
+
+		// Get time
+		t := latestTime.Add(-time.Duration(i*groupInterval*i) * time.Minute)
+		sensorReading := models.SensorReading{
+			Time:  t,
+			Value: avg,
+		}
+
+		// Add to response
+		res = append(res, sensorReading)
+	}
+
+	responseJSON, err := json.Marshal(res)
+	if err != nil {
+		log.Error(err)
 		writeErrorResponse(w, 500, "125")
 		return
 	}
+
 	writeJSONResponse(w, 200, responseJSON)
 }
 

@@ -139,13 +139,13 @@ func (sensorReading *SensorReading) GetByID(id int64) error {
 }
 
 // GetLatestSensorReadingsByType TODO
-func GetLatestSensorReadingsByType(plantID int64, sensorType string) ([]SensorReading, error) {
+func GetLatestSensorReadingsByType(plantID int64, sensorType string, minTime time.Time) ([]SensorReading, error) {
 	sensorReading := SensorReading{}
 	res := []SensorReading{}
 
 	db := database.Open()
 	defer database.Close(db)
-	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? ORDER BY id DESC LIMIT 100", sensorType, plantID)
+	rows, err := db.Query("SELECT * FROM sensorReadings WHERE type LIKE ? AND plantId = ? AND time >= ? ORDER BY id DESC", sensorType, plantID, minTime)
 	if err != nil {
 		return res, err
 	}
