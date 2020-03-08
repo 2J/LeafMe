@@ -32,14 +32,13 @@ export default class Account extends Component {
 
   async componentDidMount(){
     await Plant.getPlant().then(data => {
-      console.log(data);
       this.setState({
         modeToggle: data.manual_mode
       });
     })
     .catch((error) => {
       Alert.alert(
-        'Error getting Plant Name: ' + error
+        'Error getting Plant data: ' + error
       );
       throw error;
     });

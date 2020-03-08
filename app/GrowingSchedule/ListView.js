@@ -63,7 +63,7 @@ export default class ListView extends Component {
         
         while(start <= end) {
           
-          let formattedLength = (schedule.length/60).toString() + " hrs";
+          let formattedLength = (schedule.length/60).toFixed(2).toString() + " hrs";
           lighting.push({
             date: moment(start).format("DD MMM"),
             time: moment(start).format("h:mm a"),
@@ -88,7 +88,9 @@ export default class ListView extends Component {
           fullSchedule={wateringSchedule}
           deleteSchedule={deleteWateringSchedule}
           manual={manual}
+          key={1}
         />
+        <Text style={FONTS.h4}>Lighting Schedule</Text>
         <ListViewCard
           items={lighting}
           message='Your plant needs a lot of light'
@@ -99,6 +101,7 @@ export default class ListView extends Component {
           fullSchedule={lightingSchedule}
           deleteSchedule={deleteLightingSchedule}
           manual={manual}
+          key={2}
         />
       </View>
     );

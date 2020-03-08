@@ -64,7 +64,7 @@ export default class ListViewCard extends Component {
 
     let eventList = [];
     _.forEach(this.props.items, event => {
-      eventList.push(<Divider key={event.id}/>); //push separately because elements need parents
+      eventList.push(<Divider/>); //push separately because elements need parents
       eventList.push(      
         <View style={{ 
           flex: 1, 
@@ -97,21 +97,21 @@ export default class ListViewCard extends Component {
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
-            <ScrollView
-              style={{
-                padding: 10
-              }}>
-              <AddScheduleForm
-                hide={this.setModalVisible}
-                parent={iconName /* ios-water or lightbulb-o */}
-                main={true /* coming from main flow or setup flow */}
-                schedules={fullSchedule}
-                addSchedule={addSchedule}
-                deleteSchedule={deleteSchedule}
-              />
-            </ScrollView>
+          <ScrollView
+            style={{
+              padding: 10
+            }}>
+            <AddScheduleForm
+              hide={this.setModalVisible}
+              parent={iconName /* ios-water or lightbulb-o */}
+              main={true /* coming from main flow or setup flow */}
+              schedules={fullSchedule}
+              addSchedule={addSchedule}
+              deleteSchedule={deleteSchedule}
+            />
+          </ScrollView>
+        </Modal>
 
-          </Modal>
         <Card.Content>
           <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingTop: '12%'})}> 
             {iconComponent}
@@ -141,27 +141,36 @@ export default class ListViewCard extends Component {
           </View> }
           
           <View style={{paddingTop: 20}}></View> 
-          <View style={_.assignIn(CONTAINERS.spaceBetween, {paddingTop: '25%'})}> 
-            {manual && <Button 
-              mode='contained'
-              color={COLORS.green5}
-              onPress={mainButtonFunction}>
-              {mainButtonName /* water now or turn light on/off */}
-            </Button>}
+          <View style={{
+            flex: 1, 
+            flexDirection: 'row-reverse', 
+            justifyContent: 'space-between'
+          }}> 
             <Text               
               onPress={() => {
                 this.setModalVisible(true);
               }}
               style={{
                 color: COLORS.green5,
-                width: 150,
                 textTransform: 'uppercase',
-                paddingLeft: 25,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                width: 100, 
+                marginLeft: 50,
+                flexDirection: 'column'
               }}
             >
               Add/Remove Schedules
-            </Text>
+            </Text>            
+            <Button 
+              mode='contained'
+              color={COLORS.green5}
+              onPress={mainButtonFunction}
+              style={{
+                padding: 3,
+                opacity: manual ? 100 : 0
+              }}>
+              {mainButtonName /* water now or turn light on/off */}
+            </Button>
           </View>
         </Card.Content>
       </Card>

@@ -235,7 +235,7 @@ export default class GrowingSchedule extends Component {
                     lightOn={lightOn}
                     addLightingSchedule={this.addLightingSchedule}
                     deleteLightingSchedule={this.deleteLightingSchedule}
-                    manual={manual}
+                    manual={this.props.navigation.getParam('mode', true)}
                   >
                   </ListView>
     }

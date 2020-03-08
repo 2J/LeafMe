@@ -33,7 +33,9 @@ export default class InfoCard extends Component {
           paddingTop: '15%'
         }}> 
           {iconComponent}
-          <Text style={_.assignIn(FONTS.h1, {textAlign: 'center'})}>{this.props.status}</Text>
+          <View style={{paddingLeft: 5, width: 80}}>
+            <Text style={_.assignIn(FONTS.h2)}>{this.props.status}</Text>
+          </View>
         </View>
       </Card.Content>
     </Card>

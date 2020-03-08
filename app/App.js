@@ -9,6 +9,9 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 
+//Model Imports
+import Plant from './Models/Plant';
+
 //AppStack Imports
 import Overview from './Overview/Overview';
 import Account from './Account/Account';
@@ -84,6 +87,15 @@ const TabNavigator = createBottomTabNavigator(
 
         return <Icon name={iconName} size={30} color={tintColor} />;
       },
+      tabBarOnPress: async ({ navigation, defaultHandler }) => {
+        if(navigation.state.routeName ==='GrowingSchedule'){
+          let mode = await Plant.getPlant().then(data => {
+            return data.manual_mode
+          });
+          navigation.navigate('GrowingSchedule', { mode: mode })
+        }
+        defaultHandler();
+      }
     }),
     tabBarOptions: {
       activeTintColor: COLORS.green5,

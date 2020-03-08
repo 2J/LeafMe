@@ -26,11 +26,25 @@ export default class Overview extends Component {
   }
 
   refreshSensors = async () => {
+    const moisture = {
+      1: 'Very Dry', 
+      2: 'Dry', 
+      3: 'Wet',
+      4: 'Very Wet'
+    }
+
+    const brightness = {
+      1: 'Very Dark', 
+      2: 'Dark', 
+      3: 'Bright',
+      4: 'Very Bright'
+    }
+
     let sensors = await Sensors.getSensors().then( data => {
       //TODO: change these to ranges to display words
       this.setState({ 
-        moisture: data.soil_moisture.value,
-        brightness: data.brightness.value,
+        moisture: moisture[data.soil_moisture.value],
+        brightness: brightness[data.brightness.value],
         temperature: data.ambient_temperature.value + 'C',
         humidity: data.ambient_humidity.value + '%',
         tankLevel: data.tank_level

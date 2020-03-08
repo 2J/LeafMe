@@ -216,7 +216,7 @@ export const FONTS = {
         paddingBottom: 15
     }, 
     h2: {
-        fontSize: 24, 
+        fontSize: 26, 
         color: COLORS.grey9, 
         fontWeight: 'bold'
     }, 
