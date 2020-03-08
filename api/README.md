@@ -230,9 +230,11 @@ example payload:
 
     [
         {"type": "SOIL_MOISTURE","value": 16.02},
+        {"type": "SOIL_TEMPERATURE","value": 16.02},
         {"type": "BRIGHTNESS","value": 17.44},
         {"type": "AMBIENT_TEMPERATURE","value": 18.2},
         {"type": "AMBIENT_HUMIDITY","value": 19}
+        {"type": "AMBIENT_LIGHT","value": 19}
         {"type": "PUMP_STATUS","value": 1}
         {"type": "LIGHT_STATUS","value": 1}
         {"type": "TANK_LEVEL","value": 1}
