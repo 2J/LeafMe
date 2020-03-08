@@ -11,9 +11,11 @@ import (
 // SensorTypes is the list of sensor types
 var SensorTypes = map[string]string{
 	"SOIL_MOISTURE":       "SOIL_MOISTURE",
+	"SOIL_TEMPERATURE":    "SOIL_TEMPERATURE",
 	"BRIGHTNESS":          "BRIGHTNESS",
 	"AMBIENT_TEMPERATURE": "AMBIENT_TEMPERATURE",
 	"AMBIENT_HUMIDITY":    "AMBIENT_HUMIDITY",
+	"AMBIENT_LIGHT":       "AMBIENT_LIGHT",
 	"PUMP_STATUS":         "PUMP_STATUS",
 	"LIGHT_STATUS":        "LIGHT_STATUS",
 	"TANK_LEVEL":          "TANK_LEVEL",
