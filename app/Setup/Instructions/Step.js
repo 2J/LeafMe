@@ -10,7 +10,7 @@ export default class Step extends Component {
       <View style={CONTAINERS.login}>
         <Text style={FONTS.smallerWhiteText}>{this.props.instruction}</Text>
         <Image 
-          style={{width: '100%'}}
+          style={{width: '90%', height: '60%'}}
           source={this.props.image} />
       </View>
     );

@@ -144,7 +144,7 @@ export default class ListViewCard extends Component {
           <View style={{
             flex: 1, 
             flexDirection: 'row-reverse', 
-            justifyContent: 'space-between'
+            justifyContent: 'space-evenly'
           }}> 
             <Text               
               onPress={() => {
@@ -168,7 +168,8 @@ export default class ListViewCard extends Component {
               style={{
                 padding: 3,
                 opacity: manual ? 100 : 0
-              }}>
+              }}
+              disabled={!manual}>
               {mainButtonName /* water now or turn light on/off */}
             </Button>
           </View>

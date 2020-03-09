@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, View, TextInput, KeyboardAvoidingView } from 'react-native';
-import { Button} from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import _ from 'lodash';
 
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
@@ -52,9 +52,9 @@ export default class Login extends Component {
                 width: 100, 
                 backgroundColor: COLORS.white
               }}
-            >Log In</Button>
-
-            <Button onPress={() => this.props.navigation.navigate('Overview')}>Overview</Button>
+            >
+              Log In
+            </Button>
           </View>
         </View>
         
@@ -62,7 +62,7 @@ export default class Login extends Component {
           <Text>Don't have an account?</Text>
           <Button mode='text' color={COLORS.white}>Sign Up</Button>
         </View>
-
+        <Button mode='text' color={COLORS.white} onPress={() => this.props.navigation.navigate('Overview')}>Overview (Dev)</Button>
        </KeyboardAvoidingView>
     )
   }
