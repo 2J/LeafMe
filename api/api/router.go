@@ -69,7 +69,7 @@ func NewRouter() *mux.Router {
 
 	// Preset handlers
 	router.HandleFunc("/presets/type/{presetType}", addDefaultHeaders(GetPresetsByTypeHandler)).Methods("GET", "OPTIONS")
-	router.HandleFunc("/presets/{presetId}", addDefaultHeaders(GetPresetByIDHandler)).Methods("GET", "OPTIONS")
+	router.HandleFunc("/presets/{presetID}", addDefaultHeaders(GetPresetByIDHandler)).Methods("GET", "OPTIONS")
 
 	// Notification handlers
 	router.HandleFunc("/notification/pushtoken", addDefaultHeaders(UpdatePushTokenHandler)).Methods("POST", "OPTIONS")
