@@ -25,7 +25,7 @@ export default class ManualOrPreset extends Component {
         value: 'preset' 
       },
       { 
-        label: 'Set up my own watering and lighing schedules (recommended for seasoned gardeners)', 
+        label: 'Set up my own watering and lighting schedules (recommended for seasoned gardeners)', 
         value: 'manual'
       }
     ];

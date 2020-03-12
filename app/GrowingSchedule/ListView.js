@@ -39,6 +39,7 @@ export default class ListView extends Component {
           
           let formattedAmount = event.amount.toString() + ' ml';
           watering.push({
+            id: event.id,
             date: moment(start).format("DD MMM"),
             time: moment(start).format("h:mm a"),
             amount: formattedAmount
@@ -64,6 +65,7 @@ export default class ListView extends Component {
           
           let formattedLength = (event.length/60).toFixed(2).toString() + " hrs";
           lighting.push({
+            id: event.id,
             date: moment(start).format("DD MMM"),
             time: moment(start).format("h:mm a"),
             amount: formattedLength

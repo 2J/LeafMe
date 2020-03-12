@@ -84,10 +84,10 @@ export default class ListViewCard extends Component {
     }
 
     let eventList = [];
-    _.forEach(this.props.items, event => {
+    _.forEach(items, event => {
       //eventList.push(<Divider/>); //push separately because elements need parents
       eventList.push(
-        <Fragment key={event.id}>      
+        <Fragment key={"event-" + iconName + event.id}>      
           <Divider/>
           <View style={{ 
             flex: 1, 

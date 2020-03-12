@@ -108,7 +108,7 @@ export default class AddScheduleForm extends Component {
         
       //TODO: add delete button + function to delete, delete should bubble up and render all the children that depend on this value so the thing that was just deleted doesn't show anymore
         currentSchedules.push( 
-          <Fragment key={schedule.id}>
+          <Fragment key={"schedule-" + schedule.id}>
             <Divider />
             <View style={{padding: 10}}>
               <MaterialIcons name='delete' size={25} color={COLORS.grey5} onPress={() => this.deleteSchedule(schedule.id)} style={{

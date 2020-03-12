@@ -22,21 +22,22 @@ export default class PresetCategory extends Component {
   }
 
   selectType = (type) => {
-    _.forIn(this.state, stateVar => {
-      if(stateVar === type) {
+    let types = ["PEPPER", "ROOT_VEG", "FRUIT_VEG", "HERB", "LEGUME"];
+    _.forIn(types, (v) => {
+      if(v === type) {
         this.setState({
           [type] : true
         });
       } else {
         this.setState({
-          [stateVar] : false
+          [v] : false
         });
       }
     });
 
     this.setState({
       selected: type
-    })
+    });
   }
 
   render() {
