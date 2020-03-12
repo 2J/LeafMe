@@ -26,6 +26,7 @@ export default class Overview extends Component {
   }
 
   refreshSensors = async () => {
+    console.log('REFRESHING SENSORS');
     const moisture = {
       1: 'Very Dry', 
       2: 'Dry', 
@@ -47,7 +48,7 @@ export default class Overview extends Component {
         brightness: brightness[data.brightness.value],
         temperature: data.ambient_temperature.value + 'C',
         humidity: data.ambient_humidity.value + '%',
-        tankLevel: data.tank_level
+        tankLevel: data.tank_level.value
       });
     });
   }
@@ -139,7 +140,7 @@ export default class Overview extends Component {
                 }}> 
                   <Icon name='ios-beaker' size={100} color={COLORS.green5}/>
                   <View style={{flexDirection: 'column', textAlign: 'center', width: 225, padding: 5}}>
-                    <Text style={FONTS.h1}>{tankLevel === 1 ? 'Good' : 'Needs Refill'}</Text>
+                    <Text style={FONTS.h1}>{tankLevel == 1 ? 'Good' : 'Needs Refill'}</Text>
                   </View>
                 </View>
               </Card.Content>

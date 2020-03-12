@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 import { Button } from 'react-native-paper';
 import _ from 'lodash';
 import moment from 'moment';
@@ -18,13 +19,13 @@ import { ManualWater, GenericConfirmation } from '../Dialogs';
 //Styles
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
-export default class GrowingSchedule extends Component {
+class GrowingSchedule extends Component {
   state = {
     wateringEvents: [], 
     lightingEvents: [],
 
     plantName: '',
-    manual: true,
+    manual: false,
 
     calendarView: false,
     waterNowAmount: '', 
@@ -32,7 +33,7 @@ export default class GrowingSchedule extends Component {
 
     waterNowDialog: false,
     deleteLightingDialog: false,
-    addWaterDialog: false
+    addWaterDialog: false,
   };
 
   getSchedules = async () => {
@@ -55,20 +56,31 @@ export default class GrowingSchedule extends Component {
   }
 
   async componentDidMount(){
-    await Plant.getPlant().then(data => {
-      this.setState({
-        plantName: data.name,
-        lightOn: data.manual_light,
-        manual: data.manual_mode
-      });
-    })
+    this.updatePlant()
     .catch((error) => {
       Alert.alert(
         'Error getting Plant Name: ' + error
       );
       throw error;
     });
+
     await this.getSchedules();
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.isFocused && !prevProps.isFocused) {
+      this.updatePlant();
+    }
+  }
+
+  async updatePlant(){
+    Plant.getPlant().then(data => {
+      this.setState({
+        plantName: data.name,
+        lightOn: data.manual_light,
+        manual: data.manual_mode
+      });
+    })
   }
 
   waterNow = () => { 
@@ -234,7 +246,7 @@ export default class GrowingSchedule extends Component {
                     lightOn={lightOn}
                     addLightingSchedule={this.addLightingSchedule}
                     deleteLightingSchedule={this.deleteLightingSchedule}
-                    manual={this.props.navigation.getParam('mode', true)}
+                    manual={this.state.manual}
                   >
                   </ListView>
     }
@@ -297,3 +309,5 @@ export default class GrowingSchedule extends Component {
     );
   }
 }
+
+export default withNavigationFocus(GrowingSchedule);
