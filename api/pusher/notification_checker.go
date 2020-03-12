@@ -55,9 +55,11 @@ func CheckTankNotification() []int64 {
 			continue
 		}
 
-		if sensorReading.Value == 0 {
-			// Send a notification every X seconds
-			plantIDs = append(plantIDs, plant.ID)
+		if !plant.LastTankNotification.Valid || sensorReading.Time.Before(plant.LastTankNotification.ValueOrZero()) {
+			if sensorReading.Value == 0 {
+				// Send a notification every X seconds
+				plantIDs = append(plantIDs, plant.ID)
+			}
 		}
 
 	}
