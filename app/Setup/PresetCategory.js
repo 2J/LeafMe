@@ -9,12 +9,12 @@ import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class PresetCategory extends Component {
   state = {
-    PEPPER: false,
+    PEPPER: true,
     ROOT_VEG: false, 
     FRUIT_VEG: false, 
     HERB: false, 
     LEGUME: false,
-    selected: ''
+    selected: 'PEPPER'
   }
 
   goToNetworkSettings = () => { 
