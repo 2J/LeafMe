@@ -135,10 +135,11 @@ class GrowingSchedule extends Component {
   }
 
   toggleLight = async () => { //show confirmation message
+    this.setState({
+      lightOn: !this.state.lightOn
+    });
     await Schedule.toggleLight().then(data => {
-      this.setState({
-        lightOn: !this.state.lightOn
-      })
+      this.updatePlant();
       Alert.alert(
         'Lighting Go'
       );
