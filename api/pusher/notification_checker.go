@@ -7,10 +7,10 @@ import (
 )
 
 // Number of seconds between checking for notification
-const checkNotificationInterval = 60
+const checkNotificationInterval = 10
 
 // Block same notification for X number of seconds since last notification
-const notificationInterval = 600
+const notificationInterval = 30
 
 // NotificationChecker checks if notifications need to be sent and sends them
 func NotificationChecker() {

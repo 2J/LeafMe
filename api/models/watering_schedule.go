@@ -92,13 +92,19 @@ func (wateringSchedule *WateringSchedule) GetByID(id int64) error {
 }
 
 // GetWateringSchedulesByPlantID TODO
-func GetWateringSchedulesByPlantID(plantID int64) ([]WateringSchedule, error) {
+func GetWateringSchedulesByPlantID(plantID int64, onlyActive bool) ([]WateringSchedule, error) {
 	wateringSchedule := WateringSchedule{}
 	res := []WateringSchedule{}
 
 	db := database.Open()
 	defer db.Close()
-	rows, err := db.Query("SELECT * FROM wateringSchedules WHERE plantId = ?", plantID)
+
+	query := "SELECT * FROM wateringSchedules WHERE plantId = ?"
+	if onlyActive {
+		query += " AND repeatEndDate >= CURRENT_TIMESTAMP"
+	}
+
+	rows, err := db.Query(query, plantID)
 	if err != nil {
 		return res, err
 	}
