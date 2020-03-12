@@ -54,11 +54,11 @@ func GetWateringScheduleByIDHandler(w http.ResponseWriter, r *http.Request) {
 func GetSchedulesByPlantIDHandler(w http.ResponseWriter, r *http.Request) {
 	plantID, _ := strconv.Atoi(urlParamAsString(r, "plantID"))
 
-	lightingSchedules, err := models.GetLightingSchedulesByPlantID(int64(plantID))
+	lightingSchedules, err := models.GetLightingSchedulesByPlantID(int64(plantID), true)
 	if err != nil {
 		panic(err.Error())
 	}
-	wateringSchedules, err := models.GetWateringSchedulesByPlantID(int64(plantID))
+	wateringSchedules, err := models.GetWateringSchedulesByPlantID(int64(plantID), true)
 	if err != nil {
 		panic(err.Error())
 	}
