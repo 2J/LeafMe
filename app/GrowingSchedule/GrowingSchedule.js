@@ -46,7 +46,7 @@ export default class GrowingSchedule extends Component {
     }).catch((error) => {
       throw error;
     });;
-
+    console.log(this.state.wateringSchedule)
     let eventData = await Event.getEvent().then(data => {
       this.setState({ 
         wateringEvents: data.watering_events,
@@ -103,7 +103,7 @@ export default class GrowingSchedule extends Component {
       }, 
       amount: schedule.unitsValue
     };
-
+    console.log(save);
     await Schedule.createWaterSchedule(save).then( async data => {
       this.setState({ addWaterDialog: true });
     })
@@ -157,7 +157,7 @@ export default class GrowingSchedule extends Component {
         repeat_days: schedule.repeatValue,
         repeat_end_date: endTime
       }, 
-      length: schedule.unitsValue*60
+      length: schedule.unitsValue
     };
 
     await Schedule.createLightingSchedule(save).then( async data => {

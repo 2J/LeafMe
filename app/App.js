@@ -87,15 +87,15 @@ const TabNavigator = createBottomTabNavigator(
 
         return <Icon name={iconName} size={30} color={tintColor} />;
       },
-      tabBarOnPress: async ({ navigation, defaultHandler }) => {
-        if(navigation.state.routeName ==='GrowingSchedule'){
-          let mode = await Plant.getPlant().then(data => {
-            return data.manual_mode
-          });
-          navigation.navigate('GrowingSchedule', { mode: mode })
-        }
-        defaultHandler();
-      }
+      // tabBarOnPress: async ({ navigation, defaultHandler }) => {
+      //   if(navigation.state.routeName ==='GrowingSchedule'){
+      //     let mode = await Plant.getPlant().then(data => {
+      //       return data.manual_mode
+      //     });
+      //     navigation.navigate('GrowingSchedule', { mode: mode })
+      //   }
+      //   defaultHandler();
+      // }
     }),
     tabBarOptions: {
       activeTintColor: COLORS.green5,

@@ -29,8 +29,17 @@ export default class ListViewCard extends Component {
       })
     } else {
       this.setState({
-        eventListEnd: this.state.eventListEnd + 6
+        eventListEnd: this.state.eventListEnd + 6, 
+        viewable: true
       })
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.items.length <= 3) {
+      this.setState({
+        viewable: false
+      });
     }
   }
 
@@ -63,8 +72,10 @@ export default class ListViewCard extends Component {
     }
 
     let eventList = [];
-    _.forEach(this.props.items, event => {
-      eventList.push(<Divider/>); //push separately because elements need parents
+    _.forEach(items, event => {
+      let eventKey = 0;
+      eventKey = eventKey + items.length + 1; 
+      eventList.push(<Divider key={eventKey}/>); //push separately because elements need parents
       eventList.push(      
         <View style={{ 
           flex: 1, 
@@ -80,11 +91,12 @@ export default class ListViewCard extends Component {
           <Text>{event.amount}</Text>
         </View>
         );
+      eventKey = eventKey + 1;
     });
 
     if(eventList.length === 0) {
       eventList.push(
-        <Text style={{textAlign: 'center', paddingBottom: 15}}>No events to show.</Text>
+        <Text style={{textAlign: 'center', paddingBottom: 15}} key={99999999}>No events to show.</Text>
       );
     }
 
@@ -148,6 +160,7 @@ export default class ListViewCard extends Component {
           }}> 
             <Text               
               onPress={() => {
+                console.log("TOUCHHHHH");
                 this.setModalVisible(true);
               }}
               style={{

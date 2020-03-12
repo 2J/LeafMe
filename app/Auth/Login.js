@@ -62,6 +62,7 @@ export default class Login extends Component {
           <Text>Don't have an account?</Text>
           <Button mode='text' color={COLORS.white}>Sign Up</Button>
         </View>
+        {/* Jump to overview button for testing mode only */}
         <Button mode='text' color={COLORS.white} onPress={() => this.props.navigation.navigate('Overview')}>Overview (Dev)</Button>
        </KeyboardAvoidingView>
     )
