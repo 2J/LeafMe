@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Text, View, ScrollView } from 'react-native';
 import { Button, Card, TextInput } from 'react-native-paper';
+import moment from 'moment';
 
 import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
@@ -37,7 +38,7 @@ export default class ManualSetup extends Component {
   addWaterSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
     let save = {
       schedule: {
-        time: schedule.startDate, 
+        time: moment(schedule.startDate).seconds(0).milliseconds(0).toDate(), 
         repeat_days: schedule.repeatValue,
         repeat_end_date: schedule.endDate
       }, 
@@ -78,11 +79,11 @@ export default class ManualSetup extends Component {
   addLightingSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
     let save = {
       schedule: {
-        time: schedule.startDate, 
+        time: moment(schedule.startDate).seconds(0).milliseconds(0).toDate(), 
         repeat_days: schedule.repeatValue,
         repeat_end_date: schedule.endDate
       }, 
-      length: schedule.unitsValue*60
+      length: schedule.unitsValue
     };
 
     await Schedule.createLightingSchedule(save).then( data => {

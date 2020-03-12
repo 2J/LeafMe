@@ -107,7 +107,7 @@ class GrowingSchedule extends Component {
 
     let save = {
       schedule: {
-        time: schedule.startDate, 
+        time: moment(schedule.startDate).seconds(0).milliseconds(0).toDate(), 
         repeat_days: schedule.repeatValue,
         repeat_end_date: endTime
       }, 
@@ -163,11 +163,11 @@ class GrowingSchedule extends Component {
     
     let save = {
       schedule: {
-        time: schedule.startDate, 
+        time: moment(schedule.startDate).seconds(0).milliseconds(0).toDate(), 
         repeat_days: schedule.repeatValue,
         repeat_end_date: endTime
       }, 
-      length: schedule.unitsValue*60
+      length: schedule.unitsValue
     };
 
     await Schedule.createLightingSchedule(save).then( async data => {
