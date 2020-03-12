@@ -39,10 +39,7 @@ export default class ListViewCard extends Component {
   }
 
   getSchedules = async () => {
-    console.log("Modal Open");
     await Schedule.getSchedule().then( data => {
-      console.log("Schedules");
-      console.log(data);
       this.setState({
         wateringSchedule: data.watering_schedules, 
         lightingSchedule: data.lighting_schedules

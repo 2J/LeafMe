@@ -21,7 +21,8 @@ export default class PresetSpecies extends Component {
   async componentDidMount(){
     let presetData = await Presets.getSpecies(this.props.navigation.getParam('selected', 'PEPPER')).then( data => {
       this.setState({
-        species: data
+        species: data,
+        selected: data[0].id,
       });
     }).catch((error) => {
       throw error;

@@ -19,15 +19,19 @@ export default class ManualSetup extends Component {
     newPlantName: 'Basil',
   }
 
+  async componentDidMount() {
+    this.getSchedules();
+  }
+
   getSchedules = async () => {
-    let scheduleData = await Schedule.getSchedule().then( data => {
+    await Schedule.getSchedule().then( data => {
       this.setState({
         wateringSchedule: data.watering_schedules, 
         lightingSchedule: data.lighting_schedules
       });
     }).catch((error) => {
       throw error;
-    });;
+    });
   }
 
   addWaterSchedule = async (schedule) => { //rerender list view so that it shows the schedule that was just added
@@ -165,7 +169,7 @@ export default class ManualSetup extends Component {
             hide={() => {}}
             parent={'ios-water' /* ios-water or lightbulb-o */}
             main={false /* coming from main flow or setup flow */}
-            schedules={this.state.wateringSchedule}
+            wateringSchedule = {this.state.wateringSchedule}
             addSchedule={this.addWaterSchedule}
             deleteSchedule={this.deleteWateringSchedule}
           />
@@ -174,7 +178,7 @@ export default class ManualSetup extends Component {
           <AddScheduleForm
             hide={() => {}}
             parent={'lightbulb-o' /* ios-water or lightbulb-o */}
-            schedules={this.state.lightingSchedule}
+            lightingSchedule = {this.state.lightingSchedule}
             addSchedule={this.addLightingSchedule}
             deleteSchedule={this.deleteLightingSchedule}
           />

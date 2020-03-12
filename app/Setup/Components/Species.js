@@ -17,7 +17,7 @@ export default class Species extends Component {
             borderBottomColor: COLORS.grey3
           },
           { 
-            backgroundColor: this.props.id === this.props.selected ? COLORS.green1 : COLORS.grey1 
+            backgroundColor: this.props.id == this.props.selected ? COLORS.green1 : COLORS.grey1 
           },
         ]}
       >

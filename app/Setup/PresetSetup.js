@@ -32,6 +32,8 @@ export default class Preset extends Component {
     }).catch((error) => {
       throw error;
     });
+
+    this.getSchedules();
   }
 
   getSchedules = async () => {
@@ -142,6 +144,17 @@ export default class Preset extends Component {
     });
   }
 
+  getSchedules = async () => {
+    await Schedule.getSchedule().then( data => {
+      this.setState({
+        wateringSchedule: data.watering_schedules, 
+        lightingSchedule: data.lighting_schedules
+      });
+    }).catch((error) => {
+      throw error;
+    });
+  }
+
   render() {
     const icons = {
       PEPPER: 'pepper-hot',
@@ -217,7 +230,7 @@ export default class Preset extends Component {
             hide={() => {}}
             parent={'ios-water' /* ios-water or lightbulb-o */}
             main={false /* coming from main flow or setup flow */}
-            schedules={this.state.wateringSchedule}
+            wateringSchedule = {this.state.wateringSchedule}
             addSchedule={this.addWaterSchedule}
             deleteSchedule={this.deleteWateringSchedule}
           />
@@ -226,7 +239,7 @@ export default class Preset extends Component {
           <AddScheduleForm
             hide={() => {}}
             parent={'lightbulb-o' /* ios-water or lightbulb-o */}
-            schedules={this.state.lightingSchedule}
+            lightingSchedule = {this.state.lightingSchedule}
             addSchedule={this.addLightingSchedule}
             deleteSchedule={this.deleteLightingSchedule}
           />
