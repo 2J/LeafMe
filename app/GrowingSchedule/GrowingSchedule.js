@@ -20,10 +20,8 @@ import { COLORS, COMPONENTS, CONTAINERS, FONTS } from '../styles';
 
 export default class GrowingSchedule extends Component {
   state = {
-    wateringSchedule: ' ',
-    lightingSchedule: ' ', 
-    wateringEvents: ' ', 
-    lightingEvents: ' ',
+    wateringEvents: [], 
+    lightingEvents: [],
 
     plantName: '',
     manual: true,
@@ -38,14 +36,14 @@ export default class GrowingSchedule extends Component {
   };
 
   getSchedules = async () => {
-    let scheduleData = await Schedule.getSchedule().then( data => {
-      this.setState({
-        wateringSchedule: data.watering_schedules, 
-        lightingSchedule: data.lighting_schedules
-      });
-    }).catch((error) => {
-      throw error;
-    });;
+    // let scheduleData = await Schedule.getSchedule().then( data => {
+    //   this.setState({
+    //     wateringSchedule: data.watering_schedules, 
+    //     lightingSchedule: data.lighting_schedules
+    //   });
+    // }).catch((error) => {
+    //   throw error;
+    // });
 
     let eventData = await Event.getEvent().then(data => {
       this.setState({ 
@@ -215,7 +213,6 @@ export default class GrowingSchedule extends Component {
       addLightingDialog,
       deleteLightingDialog
     } = this.state;
-    
     if(this.state.calendarView) {
       childView = <CalendarView 
                     wateringEvents={wateringEvents}
@@ -224,8 +221,10 @@ export default class GrowingSchedule extends Component {
                   </CalendarView>
     } else {
       childView = <ListView 
-                    wateringSchedule={wateringSchedule} 
-                    lightingSchedule={lightingSchedule}
+                    // wateringSchedule={wateringSchedule} 
+                    // lightingSchedule={lightingSchedule}
+                    wateringEvents={wateringEvents}
+                    lightingEvents={lightingEvents}
 
                     waterNow={this.waterNow}
                     addWaterSchedule={this.addWaterSchedule}

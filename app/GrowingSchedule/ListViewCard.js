@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
 import { Button, Card, Divider } from 'react-native-paper';
 import { StyleSheet, Modal, Text, TouchableHighlight, View, ScrollView } from 'react-native';
@@ -7,9 +7,12 @@ import { default as AwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 
 import { COLORS, CONTAINERS, COMPONENTS, FONTS } from '../styles';
 import AddScheduleForm from './AddScheduleForm';
+import Schedule from '../Models/Schedule';
 
 export default class ListViewCard extends Component {
   state = {
+    wateringSchedule: [],
+    lightingSchedule: [],
     eventListEnd: 6, //initially the list has 3 elements, the array is from 0 to 2, then add the dividers
     viewable: true, //remove View More button if end of eventList is reached
     modalVisible: false,
@@ -29,9 +32,24 @@ export default class ListViewCard extends Component {
       })
     } else {
       this.setState({
-        eventListEnd: this.state.eventListEnd + 6
+        eventListEnd: this.state.eventListEnd + 6,
+        viewable: true
       })
     }
+  }
+
+  getSchedules = async () => {
+    console.log("Modal Open");
+    await Schedule.getSchedule().then( data => {
+      console.log("Schedules");
+      console.log(data);
+      this.setState({
+        wateringSchedule: data.watering_schedules, 
+        lightingSchedule: data.lighting_schedules
+      });
+    }).catch((error) => {
+      throw error;
+    });
   }
 
   render() {
@@ -44,15 +62,18 @@ export default class ListViewCard extends Component {
       mainButtonName,
       mainButtonFunction,
       addSchedule,
-      fullSchedule,
       deleteSchedule,
       manual
     } = this.props;
+
+    
 
     const {
       eventListEnd, //initially the list has 3 elements, the array is from 0 to 2, then add the dividers
       viewable, //remove View More button if end of eventList is reached
       modalVisible,
+      wateringSchedule,
+      lightingSchedule,
       count
     } = this.state;
 
@@ -64,27 +85,29 @@ export default class ListViewCard extends Component {
 
     let eventList = [];
     _.forEach(this.props.items, event => {
-      eventList.push(<Divider/>); //push separately because elements need parents
-      eventList.push(      
-        <View style={{ 
-          flex: 1, 
-          flexDirection: 'row', 
-          justifyContent: 'space-between',
-          paddingTop: 10, 
-          paddingBottom: 10
-        }}
-        key={event.id}
-        >
-          <Text style={{fontWeight: 'bold'}}>{event.date}</Text>     
-          <Text>{event.time}</Text>
-          <Text>{event.amount}</Text>
-        </View>
+      //eventList.push(<Divider/>); //push separately because elements need parents
+      eventList.push(
+        <Fragment key={event.id}>      
+          <Divider/>
+          <View style={{ 
+            flex: 1, 
+            flexDirection: 'row', 
+            justifyContent: 'space-between',
+            paddingTop: 10, 
+            paddingBottom: 10
+          }}
+          >
+            <Text style={{fontWeight: 'bold'}}>{event.date}</Text>     
+            <Text>{event.time}</Text>
+            <Text>{event.amount}</Text>
+          </View>
+        </Fragment>
         );
     });
 
     if(eventList.length === 0) {
       eventList.push(
-        <Text style={{textAlign: 'center', paddingBottom: 15}}>No events to show.</Text>
+        <Text style={{textAlign: 'center', paddingBottom: 15}} key={99}>No events to show.</Text>
       );
     }
 
@@ -96,7 +119,8 @@ export default class ListViewCard extends Component {
           visible={modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
-          }}>
+          }}
+          onShow={this.getSchedules}>
           <ScrollView
             style={{
               padding: 10
@@ -105,7 +129,8 @@ export default class ListViewCard extends Component {
               hide={this.setModalVisible}
               parent={iconName /* ios-water or lightbulb-o */}
               main={true /* coming from main flow or setup flow */}
-              schedules={fullSchedule}
+              wateringSchedule = {wateringSchedule}
+              lightingSchedule = {lightingSchedule}
               addSchedule={addSchedule}
               deleteSchedule={deleteSchedule}
             />

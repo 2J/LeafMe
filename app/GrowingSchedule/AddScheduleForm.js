@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
 import { Button, Card, Divider } from 'react-native-paper';
 import { Text, TouchableHighlight, View } from 'react-native';
@@ -16,8 +16,8 @@ export default class AddScheduleForm extends Component {
     endDate: new Date(),
     showStartDate: false, 
     showEndDate: false,
-    unitsValue: '',
-    repeatValue:''
+    unitsValue: 10,
+    repeatValue: 1
   }
 
   setStartDate = (event, date) => {
@@ -78,17 +78,24 @@ export default class AddScheduleForm extends Component {
       repeatValue
     } = this.state;
 
-    let labels;
-    if(this.props.parent == 'ios-water') {
-      labels = WATERINGLABELS;
-    } else {
-      labels = LIGHTINGLABELS;
-    }
+    const {
+      wateringSchedule,
+      lightingSchedule,
+      parent
+    } = this.props;
 
+    let labels = parent === 'ios-water' ? WATERINGLABELS : LIGHTINGLABELS;
+    // if(this.props.parent == 'ios-water') {
+    //   labels = WATERINGLABELS;
+    // } else {
+    //   labels = LIGHTINGLABELS;
+    // }
+
+    let schedules = parent === 'ios-water' ? wateringSchedule : lightingSchedule;
     let currentSchedules = [];
-    _.forEach(this.props.schedules, schedule => {
+    _.forEach(schedules, schedule => {
       if(schedule.active) {
-        currentSchedules.push(<Divider />);
+        currentSchedules.push();
         let start = new Date(schedule.schedule.time);
         let end = new Date(schedule.schedule.repeat_end_date);
         let magnitude;
@@ -101,28 +108,30 @@ export default class AddScheduleForm extends Component {
         
       //TODO: add delete button + function to delete, delete should bubble up and render all the children that depend on this value so the thing that was just deleted doesn't show anymore
         currentSchedules.push( 
-          <View style={{padding: 10}}>
-            <MaterialIcons name='delete' size={25} color={COLORS.grey5} onPress={() => this.deleteSchedule(schedule.id)} style={{
-              alignSelf: 'flex-end',
-              zIndex: 5
-            }}/>
-            <View style={{
-              marginTop: -25
-            }}>
-              <Text>Starts On: {moment(start).format("DD MMM")}</Text>
-              <Text>Start Time: {moment(start).format("h:mm a")}</Text>
-              <Text>Ends On: {moment(end).format("DD MMM")}</Text>
-              <Text>Repeats Every: {schedule.schedule.repeat_days} days</Text>
-              <Text>{labels.unitLabel}: {magnitude}</Text>
+          <Fragment key={schedule.id}>
+            <Divider />
+            <View style={{padding: 10}}>
+              <MaterialIcons name='delete' size={25} color={COLORS.grey5} onPress={() => this.deleteSchedule(schedule.id)} style={{
+                alignSelf: 'flex-end',
+                zIndex: 5
+              }}/>
+              <View style={{
+                marginTop: -25
+              }}>
+                <Text>Starts On: {moment(start).format("DD MMM")}</Text>
+                <Text>Start Time: {moment(start).format("h:mm a")}</Text>
+                <Text>Ends On: {moment(end).format("DD MMM")}</Text>
+                <Text>Repeats Every: {schedule.schedule.repeat_days} days</Text>
+                <Text>{labels.unitLabel}: {magnitude}</Text>
+              </View>
             </View>
-
-          </View>);
+          </Fragment>);
       }
     });
 
     if(currentSchedules.length == 0) {
       currentSchedules.push(
-      <View style={{padding: 10}}>
+      <View style={{padding: 10}} key={99}>
         <Text>No schedules configured.</Text>
       </View>)
     }
